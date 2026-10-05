@@ -5,7 +5,7 @@ Marketing website for **SHA Stays**, a six-room boutique stay in Rameshwaram, Ta
 ## Stack
 
 - Next.js 15 App Router, React 19, TypeScript (strict), Tailwind CSS v4 (CSS-first config, no `tailwind.config`).
-- **Static export** (`output: "export"`, `trailingSlash: true` in `next.config.ts`). The build emits plain HTML into `out/`, which is uploaded to an Apache host (`public/.htaccess` sets security headers).
+- **Static export** (`output: "export"`, `trailingSlash: true` in `next.config.ts`). The build emits plain HTML into `out/`, which is deployed to Cloudflare Workers as static assets (see Deployment).
 - Only runtime dependencies are `next`, `react`, `react-dom`. `sharp` is a dev dependency used by the image script.
 - Path alias: `@/*` → `src/*`.
 - Node 22 is what the project is developed with.
@@ -25,6 +25,15 @@ There is no test suite. Verify changes with `npm run build` and, for UI work, by
 **Never run `npm run build` while a dev server is running.** Both write to `.next/`, and the build corrupts the dev server's output (pages start failing with `Cannot find module './vendor-chunks/...'` or `'./<number>.js'`). Use `npx tsc --noEmit` and `npm run lint` for checks while dev is running. To recover: stop the dev server, `rm -rf .next`, restart it.
 
 The owner runs the dev server with `yarn dev`, but the lockfile is `package-lock.json`; use npm for installing packages.
+
+## Deployment
+
+Cloudflare Workers Builds, connected to the GitHub repo. Build command `npm run build`, deploy command `npx wrangler deploy`.
+
+- `wrangler.jsonc` deploys `out/` as **static assets only** (no Worker script). It must exist: without it, `wrangler deploy` auto-detects Next.js and tries to set up the OpenNext server adapter, which fails on a static export (`ENOENT ... .next/standalone/.next/server/pages-manifest.json`). Do not add OpenNext or `@opennextjs/cloudflare`.
+- Routing: `html_handling: "auto-trailing-slash"` serves `rooms/index.html` at `/rooms/` (and redirects `/rooms` → `/rooms/`); `not_found_handling: "404-page"` serves `out/404.html`.
+- `public/_headers` sets the security headers and long-term caching for `/_next/static/*`. Cloudflare ignores `public/.htaccess` (kept for Apache hosting); `public/.assetsignore` stops it from being uploaded.
+- Test locally like production: stop the dev server, `npm run build`, then `npx wrangler dev` (serves `out/` on port 8787). Afterwards `rm -rf .next` before restarting `yarn dev`.
 
 ## Layout
 

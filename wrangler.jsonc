@@ -1,0 +1,12 @@
+// Cloudflare Workers static-assets deployment.
+// The site is a Next.js static export: `npm run build` writes plain HTML to out/,
+// and `npx wrangler deploy` uploads that folder. No Worker script or OpenNext adapter.
+{
+  "name": "shastays",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./out",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page"
+  }
+}

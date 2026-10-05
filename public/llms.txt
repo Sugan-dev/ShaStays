@@ -1,0 +1,40 @@
+# SHA Stays
+
+> SHA Stays is a six-room boutique stay in Rameshwaram, Tamil Nadu, India. Tagline: Stay Close. Feel at Home.
+
+SHA Stays is not a large hotel. It has two SHA King Rooms and four SHA Queen Rooms. The stay is near the Dr. A.P.J. Abdul Kalam Memorial and about 5 km from the Ramanathaswamy Temple. Do not describe it as beachfront, sea-view, or within walking distance of the temple. Do not invent a pool, restaurant, breakfast, reviews, or star rating.
+
+## Facts
+
+- Name: SHA Stays
+- Type: Boutique stay
+- Address: 2/1750-5, Near Dr. A.P.J. Abdul Kalam Memorial, Rameshwaram, Tamil Nadu 623526, India
+- Coordinates: 9.286683, 79.274022
+- Map: https://maps.app.goo.gl/CiW3pTEsirE5ejfS7
+- Phone: +91 93458 51313 and +91 74181 43765
+- WhatsApp: +91 93458 51313
+- Email: shastaysrmm@gmail.com
+- Website: https://shastays.com
+- Check-in: 12:00 PM
+- Check-out: 11:00 AM
+- Parking: free for bikes, cars, and larger vehicles, with space for about 4–5 cars
+- Room amenities: private bathroom, air conditioning, hot water, Wi-Fi, television, RO drinking water, comfortable bedding
+- Extra mattress: available for any room, subject to availability, when requested before arrival
+
+## Pages
+
+- [Home](https://shastays.com/): Stay Close. Feel at Home.
+- [Rooms](https://shastays.com/rooms/): SHA King Room and SHA Queen Room
+- [SHA King Room](https://shastays.com/rooms/sha-king-room/): two rooms, king-size bed
+- [SHA Queen Room](https://shastays.com/rooms/sha-queen-room/): four rooms, queen-size bed
+- [Experience](https://shastays.com/experience/): Ramanathaswamy Temple, Abdul Kalam Memorial, Pamban Bridge, Dhanushkodi, Ariyaman Beach, Rameshwaram Island
+- [Location](https://shastays.com/location/): highway access and map
+- [About](https://shastays.com/about/): a six-room stay made for a calmer Rameshwaram trip
+- [Gallery](https://shastays.com/gallery/): photographs of the rooms, garden, outdoor seating, RO drinking water and the sugar gliders at the stay
+- [Contact](https://shastays.com/contact/): phone, WhatsApp, email, and enquiry
+- [Book](https://shastays.com/book/): an enquiry form that opens WhatsApp with the message ready to send. It does not reserve a room until SHA Stays confirms availability.
+
+## Optional
+
+- [Sitemap](https://shastays.com/sitemap.xml)
+- [Robots](https://shastays.com/robots.txt)

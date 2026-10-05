@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import { contact, rooms } from "@/lib/site";
 import { hasEmail, hasWhatsapp, whatsappHref } from "@/lib/links";
 
@@ -14,10 +14,47 @@ export function InquiryForm({ initialRoom = "" }: { initialRoom?: string }) {
   const [error, setError] = useState("");
   const [draft, setDraft] = useState("");
   const [room, setRoom] = useState(initialRoom);
+  const [formKey, setFormKey] = useState(0);
+  const handedOff = useRef(false);
+  const leftPage = useRef(false);
 
   useEffect(() => {
     const selected = new URLSearchParams(window.location.search).get("room") ?? "";
     if (rooms.some((item) => item.slug === selected)) setRoom(selected);
+  }, []);
+
+  function clearForm() {
+    setRoom("");
+    setError("");
+    setFormKey((key) => key + 1);
+  }
+
+  useEffect(() => {
+    function onVisibility() {
+      if (!handedOff.current) return;
+      if (document.visibilityState === "hidden") {
+        leftPage.current = true;
+        return;
+      }
+      if (!leftPage.current) return;
+      leftPage.current = false;
+      handedOff.current = false;
+      clearForm();
+    }
+
+    function onPageShow(event: PageTransitionEvent) {
+      if (!event.persisted || !handedOff.current) return;
+      handedOff.current = false;
+      leftPage.current = false;
+      clearForm();
+    }
+
+    document.addEventListener("visibilitychange", onVisibility);
+    window.addEventListener("pageshow", onPageShow);
+    return () => {
+      document.removeEventListener("visibilitychange", onVisibility);
+      window.removeEventListener("pageshow", onPageShow);
+    };
   }, []);
 
   function onSubmit(event: FormEvent<HTMLFormElement>) {
@@ -64,13 +101,17 @@ export function InquiryForm({ initialRoom = "" }: { initialRoom?: string }) {
       document.body.appendChild(link);
       link.click();
       link.remove();
+      handedOff.current = true;
+      clearForm();
       setStatus("whatsapp");
       return;
     }
 
     if (hasEmail()) {
-      window.location.href = `mailto:${contact.email}?subject=${encodeURIComponent("Stay enquiry — SHA Stays")}&body=${encodeURIComponent(message)}`;
+      handedOff.current = true;
+      clearForm();
       setStatus("email");
+      window.location.href = `mailto:${contact.email}?subject=${encodeURIComponent("Stay enquiry — SHA Stays")}&body=${encodeURIComponent(message)}`;
       return;
     }
 
@@ -84,7 +125,14 @@ export function InquiryForm({ initialRoom = "" }: { initialRoom?: string }) {
   }
 
   return (
-    <form onSubmit={onSubmit} className="rounded-[1.75rem] bg-paper p-6 shadow-[0_18px_50px_rgba(24,60,53,0.06)] ring-1 ring-black/5 sm:p-8">
+    <form
+      key={formKey}
+      onSubmit={onSubmit}
+      onInput={() => {
+        handedOff.current = false;
+      }}
+      className="rounded-[1.75rem] bg-paper p-6 shadow-[0_18px_50px_rgba(24,60,53,0.06)] ring-1 ring-black/5 sm:p-8"
+    >
       <div className="grid gap-5 sm:grid-cols-2">
         <label className="block text-sm font-medium text-charcoal">
           Name

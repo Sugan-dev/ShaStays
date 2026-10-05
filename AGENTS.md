@@ -84,6 +84,8 @@ Almost all copy and data lives in `src/lib/site.ts` and `src/lib/private-resort.
 - `sitemap.ts` lists paths **by hand** and has a hardcoded `lastModified`.
 
 ### Styling
+Full brand, colour and typography guide (logo usage, palette roles, contrast rules, voice): **`BRANDING.md`**. Summary:
+
 - Tailwind v4 utilities with design tokens defined in `@theme` in `globals.css`: colours `forest`, `forest-deep`, `forest-soft`, `sand`, `sand-deep`, `ivory`, `paper`, `terracotta`, `terracotta-deep`, `terracotta-ink`, `charcoal`, `muted`, `line`; fonts `font-serif` (Cormorant Garamond, headings) and `font-sans` (DM Sans, body).
 - Recurring patterns: large rounded corners (`rounded-[1.75rem]` / `rounded-[1.5rem]`), pill buttons via `ButtonLink` variants, uppercase tracked eyebrow text in `text-terracotta-deep`, `Container` for page width, `PageHero` for inner-page headers, `FinalCta` at the bottom of most pages.
 - Web fonts are loaded **3 seconds after load** by `DeferredFonts` (performance choice; metric-matched Arial fallbacks avoid layout shift). Don't switch to `next/font` or eager loading without a reason.

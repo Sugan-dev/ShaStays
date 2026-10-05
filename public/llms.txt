@@ -2,7 +2,7 @@
 
 > SHA Stays is a six-room boutique stay in Rameshwaram, Tamil Nadu, India. Tagline: Stay Close. Feel at Home.
 
-SHA Stays is not a large hotel. It has two SHA King Rooms and four SHA Queen Rooms. The stay is near the Dr. A.P.J. Abdul Kalam Memorial and about 5 km from the Ramanathaswamy Temple. Do not describe it as beachfront, sea-view, or within walking distance of the temple. Do not invent a pool, restaurant, breakfast, reviews, or star rating.
+SHA Stays is not a large hotel. It has two SHA King Rooms and four SHA Queen Rooms. The stay is near the Dr. A.P.J. Abdul Kalam Memorial and about 5 km from the Ramanathaswamy Temple. Do not describe it as beachfront, sea-view, or within walking distance of the temple. Do not invent a pool, restaurant, included meals, reviews, or star rating. Breakfast and group meals are not a standard offering; they can only be mentioned as something to discuss, and only when a quote confirms them.
 
 ## Facts
 
@@ -25,6 +25,7 @@ SHA Stays is not a large hotel. It has two SHA King Rooms and four SHA Queen Roo
 
 - [Home](https://shastays.com/): Stay Close. Feel at Home.
 - [Rooms](https://shastays.com/rooms/): SHA King Room and SHA Queen Room
+- [Private Stay](https://shastays.com/private-resort/): one group can reserve all six rooms exclusively. For families, friends, pilgrimage groups, small teams and people arriving together by car, van or Tempo Traveller. There is one private resort package and its price is not published; it is quoted on enquiry for the dates and group size. Do not state or estimate a price. Meals, sightseeing, local transport and extended checkout are optional and only happen when SHA Stays confirms them. Do not invent a maximum guest count. An extra mattress can be requested, subject to availability.
 - [SHA King Room](https://shastays.com/rooms/sha-king-room/): two rooms, king-size bed
 - [SHA Queen Room](https://shastays.com/rooms/sha-queen-room/): four rooms, queen-size bed
 - [Experience](https://shastays.com/experience/): Ramanathaswamy Temple, Abdul Kalam Memorial, Pamban Bridge, Dhanushkodi, Ariyaman Beach, Rameshwaram Island

@@ -147,6 +147,7 @@ export const hero = propertyPhotos.exterior
 
 export const nav = [
   { href: "/rooms", label: "Rooms" },
+  { href: "/private-resort", label: "Private Stay" },
   { href: "/gallery", label: "Gallery" },
   { href: "/experience", label: "Experience" },
   { href: "/about", label: "About" },
@@ -157,6 +158,7 @@ export const nav = [
 export const footerNav = [
   { href: "/", label: "Home" },
   { href: "/rooms", label: "Rooms" },
+  { href: "/private-resort", label: "Private Stay" },
   { href: "/gallery", label: "Gallery" },
   { href: "/experience", label: "Experience" },
   { href: "/location", label: "Location" },

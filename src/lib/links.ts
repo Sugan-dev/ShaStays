@@ -47,3 +47,6 @@ export const whatsappGreeting =
 
 export const whatsappBooking =
   "Hello SHA Stays, I would like to book a stay in Rameshwaram.";
+
+export const whatsappPrivateStay =
+  "Hi SHA Stays, I'm interested in booking the entire resort privately. Travel date: __, Guests: __, Vehicle: __, Nights: __.";

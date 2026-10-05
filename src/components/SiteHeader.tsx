@@ -58,7 +58,7 @@ export function SiteHeader() {
       <header className="border-b border-line/80 bg-ivory">
         <div className="mx-auto flex h-[4.5rem] max-w-6xl items-center justify-between gap-4 px-5 sm:px-8">
           <Logo />
-          <nav className="hidden items-center gap-5 lg:flex" aria-label="Primary">
+          <nav className="hidden items-center gap-3 xl:gap-5 lg:flex" aria-label="Primary">
             {nav.map((item) => {
               const active = pathname === item.href || pathname.startsWith(`${item.href}/`);
               return (
@@ -67,7 +67,7 @@ export function SiteHeader() {
                   href={item.href}
                   aria-current={active ? "page" : undefined}
                   className={cx(
-                    "text-sm tracking-wide transition",
+                    "text-[0.8125rem] tracking-wide whitespace-nowrap transition xl:text-sm",
                     active ? "text-terracotta-deep" : "text-charcoal/80 hover:text-forest",
                   )}
                 >
@@ -132,7 +132,7 @@ export function SiteHeader() {
               Close
             </button>
           </div>
-          <nav className="mt-12 flex flex-col gap-1" aria-label="Mobile">
+          <nav className="mt-8 flex min-h-0 flex-1 flex-col gap-1 overflow-y-auto" aria-label="Mobile">
             {nav.map((item) => (
               <Link
                 key={item.href}

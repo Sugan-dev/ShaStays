@@ -4,10 +4,11 @@ import { site } from "@/lib/site";
 export const dynamic = "force-static";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const lastModified = new Date("2026-10-04");
+  const lastModified = new Date("2026-10-05");
   const paths = [
     { path: "", priority: 1, changeFrequency: "weekly" as const },
     { path: "/rooms", priority: 0.9, changeFrequency: "monthly" as const },
+    { path: "/private-resort", priority: 0.9, changeFrequency: "monthly" as const },
     { path: "/rooms/sha-king-room", priority: 0.8, changeFrequency: "monthly" as const },
     { path: "/rooms/sha-queen-room", priority: 0.8, changeFrequency: "monthly" as const },
     { path: "/experience", priority: 0.7, changeFrequency: "monthly" as const },

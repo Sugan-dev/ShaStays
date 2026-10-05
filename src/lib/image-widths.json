@@ -1,0 +1,107 @@
+{
+  "/images/dhanushkodi.webp": [
+    640,
+    960
+  ],
+  "/images/gallery/amenity-pets.webp": [
+    640,
+    960
+  ],
+  "/images/gallery/amenity-seating.webp": [
+    640,
+    960,
+    1280
+  ],
+  "/images/gallery/amenity-water.webp": [
+    640
+  ],
+  "/images/gallery/outdoor-arch.webp": [
+    640,
+    960,
+    1280
+  ],
+  "/images/gallery/outdoor-gate.webp": [
+    640,
+    960,
+    1280
+  ],
+  "/images/gallery/outdoor-night.webp": [
+    640,
+    960,
+    1280
+  ],
+  "/images/gallery/outdoor-swing.webp": [
+    640,
+    960
+  ],
+  "/images/gallery/outdoor-tree.webp": [
+    640,
+    960
+  ],
+  "/images/gallery/outdoor-walkway.webp": [
+    640
+  ],
+  "/images/kalam.webp": [
+    640,
+    960
+  ],
+  "/images/pamban.webp": [
+    640,
+    960
+  ],
+  "/images/rooms/king-bathroom.webp": [
+    640,
+    960
+  ],
+  "/images/rooms/king-bed.webp": [
+    640,
+    960
+  ],
+  "/images/rooms/king-entrance.webp": [
+    640,
+    960
+  ],
+  "/images/rooms/king-room.webp": [
+    640,
+    960,
+    1280
+  ],
+  "/images/rooms/king-tv.webp": [
+    640,
+    960
+  ],
+  "/images/rooms/queen-bathroom.webp": [
+    640,
+    960
+  ],
+  "/images/rooms/queen-bed.webp": [
+    640,
+    960,
+    1280
+  ],
+  "/images/rooms/queen-entrance.webp": [
+    640,
+    960,
+    1280
+  ],
+  "/images/rooms/queen-room-2.webp": [
+    640,
+    960,
+    1280
+  ],
+  "/images/rooms/queen-room.webp": [
+    640,
+    960,
+    1280
+  ],
+  "/images/rooms/queen-washbasin.webp": [
+    640,
+    960
+  ],
+  "/images/temple-corridor.webp": [
+    640
+  ],
+  "/images/temple-gopuram.webp": [
+    640
+  ]
+}

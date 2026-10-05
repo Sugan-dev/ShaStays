@@ -40,7 +40,7 @@ export const contact = {
 };
 
 export const propertyPhotos = {
-  exterior: "/images/hero-banner.webp",
+  exterior: "/images/hero-1600.webp",
   king: "/images/rooms/king-room.webp",
   queen: "/images/rooms/queen-room.webp",
   entrance: "",
@@ -69,7 +69,7 @@ const ccBySa4 = {
 
 export const photos = {
   kalam: {
-    src: "/images/kalam.jpg",
+    src: "/images/kalam.webp",
     alt: "Dr. A.P.J. Abdul Kalam Memorial in Rameshwaram, a sandstone building with a dome and palm trees",
     fit: "object-[center_40%]",
     credit: {
@@ -82,7 +82,7 @@ export const photos = {
     },
   },
   corridor: {
-    src: "/images/temple-corridor.jpg",
+    src: "/images/temple-corridor.webp",
     alt: "The long painted corridor of Ramanathaswamy Temple in Rameshwaram",
     fit: "object-center",
     credit: {
@@ -95,7 +95,7 @@ export const photos = {
     },
   },
   gopuram: {
-    src: "/images/temple-gopuram.jpg",
+    src: "/images/temple-gopuram.webp",
     alt: "The gopuram of Ramanathaswamy Temple rising above the street in Rameshwaram",
     fit: "object-top",
     credit: {
@@ -107,7 +107,7 @@ export const photos = {
     },
   },
   pamban: {
-    src: "/images/pamban.jpg",
+    src: "/images/pamban.webp",
     alt: "The Pamban rail bridge opening over the sea between the mainland and Rameshwaram Island",
     fit: "object-[center_70%]",
     credit: {
@@ -119,7 +119,7 @@ export const photos = {
     },
   },
   dhanushkodi: {
-    src: "/images/dhanushkodi.jpg",
+    src: "/images/dhanushkodi.webp",
     alt: "The sea and a narrow spit of land at Dhanushkodi, on the eastern edge of Rameshwaram Island",
     fit: "object-center",
     credit: {

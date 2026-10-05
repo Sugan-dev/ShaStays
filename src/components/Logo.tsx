@@ -19,6 +19,7 @@ export function Logo({ tone = "forest" }: { tone?: Tone }) {
         width={175}
         height={104}
         fetchPriority="low"
+        unoptimized
         className="h-11 w-auto"
       />
     </Link>

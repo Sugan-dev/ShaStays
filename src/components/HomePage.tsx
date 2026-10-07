@@ -58,8 +58,8 @@ export function HomePage() {
             <br />
             Feel at Home.
           </h1>
-          <p className="rise rise-delay-2 mt-6 max-w-xl text-lg leading-relaxed text-white">
-            A peaceful boutique stay in Rameshwaram, thoughtfully located near the Abdul Kalam Memorial and just a short drive from the Ramanathaswamy Temple.
+          <p className="mt-8 max-w-xl text-sm leading-relaxed text-white">
+            6 thoughtfully prepared rooms • Easy road access • A peaceful base for exploring Rameshwaram
           </p>
           <div className="rise rise-delay-3 mt-8 flex flex-wrap gap-3">
             <ButtonLink href="/book">Book Your Stay</ButtonLink>
@@ -67,9 +67,7 @@ export function HomePage() {
               Explore Rooms
             </ButtonLink>
           </div>
-          <p className="mt-8 max-w-xl text-sm leading-relaxed text-white">
-            6 thoughtfully prepared rooms • Easy road access • A peaceful base for exploring Rameshwaram
-          </p>
+
           {hero.caption ? (
             <p className="mt-4 text-xs tracking-wide text-white/70">{hero.caption}</p>
           ) : null}

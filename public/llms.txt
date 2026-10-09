@@ -2,7 +2,7 @@
 
 > SHA Stays is a six-room boutique stay in Rameshwaram, Tamil Nadu, India. Tagline: Stay Close. Feel at Home.
 
-SHA Stays is not a large hotel. It has two SHA King Rooms and four SHA Queen Rooms. The stay is near the Dr. A.P.J. Abdul Kalam Memorial and about 5 km from the Ramanathaswamy Temple. Do not describe it as beachfront, sea-view, or within walking distance of the temple. Do not invent a pool, restaurant, included meals, reviews, or star rating. Quote room rates only as "from" prices. Breakfast and group meals are not a standard offering; they can only be mentioned as something to discuss, and only when a quote confirms them.
+SHA Stays is not a large hotel. It has two SHA King Rooms and four SHA Queen Rooms. The stay is on NH 87, about 200 m from the Dr. A.P.J. Abdul Kalam Memorial and about 5 km from the Ramanathaswamy Temple. Do not describe it as beachfront, sea-view, or within walking distance of the temple. Do not invent a pool, restaurant, included meals, reviews, or star rating. Quote room rates only as "from" prices. Breakfast and group meals are not a standard offering; they can only be mentioned as something to discuss, and only when a quote confirms them.
 
 ## Facts
 
@@ -18,21 +18,34 @@ SHA Stays is not a large hotel. It has two SHA King Rooms and four SHA Queen Roo
 - Instagram: https://www.instagram.com/sha.stays/
 - Languages spoken: Tamil, English
 - Website: https://shastays.com
+- Highway: NH 87
+- Distances: about 200 m from the Dr. A.P.J. Abdul Kalam Memorial; about 5 km by road from Ramanathaswamy Temple
 - Check-in: 12:00 PM
 - Check-out: 11:00 AM
-- Parking: free for bikes, cars, and larger vehicles, with space for about 4–5 cars
+- Reception: open 24 hours; late arrivals welcome
+- Parking: free for bikes and cars, with space for about 4–5 cars; a 15–21 seater van or mini bus can drive in and park
+- Pets: on request, for an extra charge
+- Smoking: not allowed inside the rooms
+- Booking advance: 30% of the total confirms a room booking; for a private stay the advance is given with the quote
+- Cancellation: full refund of the advance if cancelled 7 or more days before check-in; closer to the date, contact SHA Stays
+- Payment: UPI or cash
+- ID: government photo ID for the lead guest at check-in. Couples are welcome with valid ID.
+- Children: under 5 stay free when sharing existing beds
 - Room amenities: private bathroom, air conditioning, hot water, Wi-Fi, television, RO drinking water, power backup, comfortable bedding
-- Property: 24-hour CCTV (property-wide, not inside rooms), free parking, outdoor seating
+- Property: 24-hour reception, 24-hour CCTV (property-wide, not inside rooms), free parking, outdoor seating
 - Extra mattress: available for any room, subject to availability, when requested before arrival
 - Room size: 110–120 sq ft
 - Room rates: SHA Queen Room from ₹1,800 per night; SHA King Room from ₹2,500 per night. Rates vary by date and are confirmed on enquiry.
 - Maximum occupancy: SHA Queen Room up to 4 guests, SHA King Room up to 5 guests (with extra mattresses)
 - Private stay (whole property): up to 21 guests
+- Suitable for: families, pilgrims visiting Ramanathaswamy Temple, couples and road-trip travellers; groups can book the entire property
+- Booking: direct, by WhatsApp, phone, email or the enquiry form on the website. There is no online booking engine; an enquiry does not reserve a room until SHA Stays confirms availability and the rate.
+- Last updated: 2026-10-09
 
 ## Pages
 
 - [Home](https://shastays.com/): rooms and family stays in Rameshwaram. Stay Close. Feel at Home. A peaceful boutique stay for families, pilgrims, couples and road-trip travellers.
-- [Rooms](https://shastays.com/rooms/): rooms in Rameshwaram, the SHA King Room and SHA Queen Room
+- [Rooms](https://shastays.com/rooms/): rooms in Rameshwaram, the SHA King Room and SHA Queen Room, with a comparison table (bed, occupancy, size, starting rate, amenities)
 - [Private Stay](https://shastays.com/private-resort/): one group can book the entire property (all six rooms) as a private stay. Call it "the entire property" or "a private stay", not a resort. For families, friends, pilgrimage groups, small teams and people arriving together by car, 15–21 seater van or Tempo Traveller. There is one private stay package and its price is not published; it is quoted on enquiry for the dates and group size. Do not state or estimate a price. Meals, sightseeing, local transport and extended checkout are optional and only happen when SHA Stays confirms them. The maximum group size is 21 guests. An extra mattress can be requested, subject to availability.
 - [SHA King Room](https://shastays.com/rooms/sha-king-room/): two rooms, king-size bed, sleeps up to 5, from ₹2,500 per night
 - [SHA Queen Room](https://shastays.com/rooms/sha-queen-room/): four rooms, queen-size bed, sleeps up to 4, from ₹1,800 per night
@@ -40,7 +53,7 @@ SHA Stays is not a large hotel. It has two SHA King Rooms and four SHA Queen Roo
 - [Location](https://shastays.com/location/): staying near the Dr. A.P.J. Abdul Kalam Memorial: address, map, directions from Pamban Bridge, parking and arrival times
 - [About](https://shastays.com/about/): a six-room stay made for a calmer Rameshwaram trip
 - [Gallery](https://shastays.com/gallery/): photographs of the rooms, garden, the stay at night, outdoor seating, RO drinking water and the sugar gliders at the stay
-- [Contact](https://shastays.com/contact/): phone, WhatsApp, email, and enquiry
+- [Contact](https://shastays.com/contact/): phone, WhatsApp, email, address, check-in and check-out times, and how booking works
 - [Book](https://shastays.com/book/): an enquiry form that opens WhatsApp with the message ready to send. It does not reserve a room until SHA Stays confirms availability.
 
 ## Optional

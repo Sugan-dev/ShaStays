@@ -12,14 +12,14 @@ import { cx, hasWhatsapp, phoneHref, whatsappAvailability, whatsappHref } from "
 export const metadata = pageMeta({
   title: "Stay Near Abdul Kalam Memorial, Rameshwaram",
   description:
-    "SHA Stays is on the highway near the Dr. A.P.J. Abdul Kalam Memorial in Rameshwaram, about 5 km from Ramanathaswamy Temple. Map, directions and parking.",
+    "SHA Stays is on NH 87 in Rameshwaram, about 200 m from the Dr. A.P.J. Abdul Kalam Memorial and 5 km from Ramanathaswamy Temple. Map, directions and parking.",
   path: "/location",
 });
 
 const arrival: { title: string; text: string; icon: IconName }[] = [
   {
     title: "Driving in from the mainland",
-    text: "Cross Pamban Bridge onto the island and stay on the highway towards Rameshwaram town. SHA Stays is near the Abdul Kalam Memorial, before you reach the temple area. Use Get Directions for the exact pin.",
+    text: "Cross Pamban Bridge onto the island and stay on NH 87 towards Rameshwaram town. SHA Stays is about 200 m from the Abdul Kalam Memorial, before you reach the temple area. Use Get Directions for the exact pin.",
     icon: "road",
   },
   {
@@ -29,12 +29,12 @@ const arrival: { title: string; text: string; icon: IconName }[] = [
   },
   {
     title: "Parking",
-    text: "Free parking on site for bikes, cars and larger vehicles, with space for about 4–5 cars and 24-hour CCTV across the property.",
+    text: "Free parking on site for bikes and cars (space for about 4–5 cars), and a 15–21 seater van or mini bus can drive in and park. 24-hour CCTV covers the property.",
     icon: "car",
   },
   {
     title: "Arrival times",
-    text: "Check-in is from 12:00 PM and check-out is by 11:00 AM. Send us your arrival time on WhatsApp so we know when to expect you.",
+    text: "Check-in is from 12:00 PM and check-out is by 11:00 AM. Reception is open 24 hours, so late arrivals are welcome; send us your arrival time on WhatsApp so we know when to expect you.",
     icon: "sunrise",
   },
 ];
@@ -50,7 +50,7 @@ export default function LocationPage() {
         crumb="Location"
         path="/location"
       >
-        SHA Stays is on the highway near the Dr. A.P.J. Abdul Kalam Memorial, about 5 km from Ramanathaswamy Temple. It&apos;s easy to reach whether you&apos;re arriving by car, taxi or tour vehicle.
+        SHA Stays is on NH 87 in Rameshwaram (also spelt Rameswaram), about 200 m from the Dr. A.P.J. Abdul Kalam Memorial and about 5 km from Ramanathaswamy Temple. It&apos;s easy to reach whether you&apos;re arriving by car, taxi or tour vehicle.
       </PageHero>
       <section className="py-16 md:py-20">
         <Container className="grid items-start gap-12 lg:grid-cols-2">
@@ -135,7 +135,7 @@ export default function LocationPage() {
               </figcaption>
             </figure>
             <div>
-              <p className="eyebrow text-terracotta-deep">Close to SHA Stays</p>
+              <p className="eyebrow text-terracotta-deep">About 200 m from SHA Stays</p>
               <h2 className="mt-3 font-serif text-4xl leading-[1.05] text-forest md:text-5xl">
                 Visiting the Abdul Kalam Memorial?
               </h2>
@@ -157,7 +157,7 @@ export default function LocationPage() {
             <h2 className="font-serif text-4xl text-white">Arriving by Road?</h2>
             <p className="mt-3 font-serif text-2xl text-sand">You&apos;re already on the right route.</p>
             <p className="mt-4 max-w-2xl leading-relaxed text-sand/90">
-              With direct highway access and free parking for bikes, cars and larger vehicles, SHA Stays makes a practical stop for travellers exploring Rameshwaram by car. There is space for about 4–5 cars.
+              Right on NH 87, with free parking for bikes, cars, vans and mini buses, SHA Stays makes a practical stop for travellers exploring Rameshwaram by road. There is space for about 4–5 cars, a 15–21 seater van can drive in, and reception is open 24 hours.
             </p>
             <div className="mt-6 flex flex-wrap items-center gap-x-8 gap-y-4">
               <ButtonLink href="/rooms" variant="sand">

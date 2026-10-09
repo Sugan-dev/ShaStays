@@ -85,12 +85,12 @@ function Hero() {
         <ul className="rise rise-delay-2 mt-4 flex max-w-2xl flex-wrap items-center gap-x-3 gap-y-1 text-[0.8rem] text-ivory sm:text-sm md:mt-5">
           <li className="flex items-center gap-1.5">
             <Icon name="pin" className="h-4 w-4" />
-            Near Abdul Kalam Memorial
+            200 m from Abdul Kalam Memorial
           </li>
           <li aria-hidden="true">·</li>
           <li>~5 km from Ramanathaswamy Temple</li>
           <li aria-hidden="true">·</li>
-          <li>Highway Access</li>
+          <li>On NH 87</li>
         </ul>
         <div className="rise rise-delay-3 mt-6 grid grid-cols-2 gap-3 sm:flex sm:flex-wrap md:mt-8">
           <ButtonLink href="/book" className="col-span-2 sm:col-span-1">
@@ -301,7 +301,7 @@ function Explore() {
             <Icon name="pin" className="mt-0.5 text-forest" />
             <div>
               <p className="font-medium text-forest">{contact.addressLines[0]}</p>
-              <p className="text-sm text-muted">{contact.addressLines[1]} · Easy access from the highway</p>
+              <p className="text-sm text-muted">{contact.addressLines[1]} · On NH 87</p>
             </div>
           </div>
           <div className="flex flex-wrap gap-3">

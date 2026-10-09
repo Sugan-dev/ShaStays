@@ -107,12 +107,26 @@ export function siteGraph() {
           longitude: 79.274022,
         },
         hasMap: contact.directionsUrl,
+        containedInPlace: {
+          "@type": "City",
+          name: "Rameswaram",
+          alternateName: "Rameshwaram",
+          sameAs: "https://en.wikipedia.org/wiki/Rameswaram",
+        },
         priceRange: `From ${formatRupees(Math.min(...rooms.map((room) => room.priceFrom)))} per night`,
         currenciesAccepted: "INR",
+        paymentAccepted: "UPI, Cash",
         knowsLanguage: languages,
         numberOfRooms: 6,
         checkinTime: "12:00",
         checkoutTime: "11:00",
+        openingHoursSpecification: {
+          "@type": "OpeningHoursSpecification",
+          dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+          opens: "00:00",
+          closes: "23:59",
+        },
+        petsAllowed: "On request, for an extra charge",
         amenityFeature,
         contactPoint: [
           {
@@ -139,6 +153,7 @@ export function siteGraph() {
           bed: room.bed,
           occupancy: { "@type": "QuantitativeValue", maxValue: room.maxGuests, unitText: "guests" },
           floorSize: { "@type": "QuantitativeValue", minValue: roomSize.min, maxValue: roomSize.max, unitCode: "FTK" },
+          smokingAllowed: false,
           url: `${url}/rooms/${room.slug}/`,
           image: room.image ? `${url}${room.image}` : undefined,
           amenityFeature: sharedAmenities.map(({ label }) => ({

@@ -30,7 +30,8 @@ export type IconName =
   | "instagram"
   | "star"
   | "power"
-  | "cctv";
+  | "cctv"
+  | "clock";
 
 const paths: Record<Exclude<IconName, "whatsapp" | "instagram">, ReactNode> = {
   bed: (
@@ -54,6 +55,12 @@ const paths: Record<Exclude<IconName, "whatsapp" | "instagram">, ReactNode> = {
       <circle cx="9" cy="8" r="2.1" />
       <circle cx="16" cy="9" r="1.7" />
       <path d="M4.8 18.2c.5-2.5 2.3-3.8 4.4-3.8 2 0 3.8 1.3 4.3 3.8M13.2 14.8c1.3-.5 2.7-.3 3.8.8.7.7 1.2 1.6 1.4 2.6" />
+    </>
+  ),
+  clock: (
+    <>
+      <circle cx="12" cy="12" r="8" />
+      <path d="M12 7.5V12l3 2" strokeLinejoin="round" />
     </>
   ),
   lock: (

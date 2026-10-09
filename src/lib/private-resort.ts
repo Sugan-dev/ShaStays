@@ -1,5 +1,5 @@
 import type { IconName } from "@/components/Icon";
-import { maxGroupSize, photos, places, type Place } from "@/lib/site";
+import { maxGroupSize, photos, places, rooms, type Place } from "@/lib/site";
 
 /**
  * Private Stay page content (book the entire property for one group).
@@ -73,7 +73,7 @@ export const privateInclusions: { title: string; text: string; icon: IconName }[
   },
   {
     title: "Group Parking",
-    text: "Free parking for bikes, cars and larger vehicles, with space for about 4–5 cars and 24-hour CCTV across the property.",
+    text: "Free parking for bikes and cars (about 4–5 cars), and a 15–21 seater van or mini bus can drive in and park. 24-hour CCTV covers the property.",
     icon: "car",
   },
   {
@@ -272,6 +272,8 @@ export const privateNotFit = [
   "You prefer a large hotel with many facilities",
 ] as const;
 
+const [kingRoom, queenRoom] = rooms;
+
 export const privateFaqs = [
   {
     question: "Can we book the entire property exclusively?",
@@ -283,9 +285,18 @@ export const privateFaqs = [
     answer: `Up to ${maxGroupSize} guests across the 6 rooms, using extra mattresses where needed. Contact us with your group size and we'll recommend the best arrangement.`,
   },
   {
+    question: "How are the rooms set up for a group?",
+    answer: `Two ${kingRoom.name}s with a king-size bed (up to ${kingRoom.maxGuests} guests each) and four ${queenRoom.name}s with a queen-size bed (up to ${queenRoom.maxGuests} guests each), all with a private bathroom, air conditioning and power backup. The whole property takes up to ${maxGroupSize} guests in total.`,
+  },
+  {
+    question: "How do we check availability and get a quote?",
+    answer:
+      "Send us your dates, group size and vehicle type with the quote form on this page, on WhatsApp or by phone. We reply with availability and a price for your group, along with the booking advance for your dates. The property is reserved for you once we confirm the booking and the advance is paid, by UPI or cash.",
+  },
+  {
     question: "Can we come by Tempo Traveller?",
     answer:
-      "Yes. The package is designed for groups travelling together by car, 15–21 seater van, Tempo Traveller, mini bus or multiple cars.",
+      "Yes. A 15–21 seater van, Tempo Traveller or mini bus can drive into the property and park on site, and there is space for about 4–5 cars. The package is designed for groups travelling together by road. Reception is open 24 hours, so a late arrival is fine.",
   },
   {
     question: "Can we book for one night?",

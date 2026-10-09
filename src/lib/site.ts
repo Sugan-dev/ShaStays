@@ -167,16 +167,16 @@ export const footerNav = [
 
 export const trustBar: { label: string; icon: IconName }[] = [
   { label: "6 Boutique Rooms", icon: "bed" },
-  { label: "Near Abdul Kalam Memorial", icon: "landmark" },
+  { label: "200 m from Abdul Kalam Memorial", icon: "landmark" },
   { label: "~5 km from Ramanathaswamy Temple", icon: "temple" },
-  { label: "Easy Highway Access", icon: "road" },
-  { label: "Parking Available", icon: "car" },
+  { label: "On NH 87", icon: "road" },
+  { label: "Parking for Cars & Vans", icon: "car" },
 ];
 
 export const reasons: { title: string; text: string; icon: IconName }[] = [
   {
     title: "Convenient Location",
-    text: "Near the Abdul Kalam Memorial and about 5 km from Ramanathaswamy Temple, with easy road access.",
+    text: "About 200 m from the Abdul Kalam Memorial and about 5 km from Ramanathaswamy Temple, on NH 87.",
     icon: "pin",
   },
   {
@@ -186,7 +186,7 @@ export const reasons: { title: string; text: string; icon: IconName }[] = [
   },
   {
     title: "Easy Road Access",
-    text: "On the highway, convenient for travellers arriving by car, SUV or tour vehicle.",
+    text: "On NH 87, convenient for travellers arriving by car, SUV, van or mini bus, with 24-hour reception for late arrivals.",
     icon: "road",
   },
   {
@@ -196,7 +196,7 @@ export const reasons: { title: string; text: string; icon: IconName }[] = [
   },
   {
     title: "Safe Parking",
-    text: "Free parking on site for bikes, cars and larger vehicles (about 4–5 cars), with 24-hour CCTV across the property.",
+    text: "Free parking on site for bikes, cars, vans and mini buses (about 4–5 cars), with 24-hour CCTV across the property.",
     icon: "car",
   },
   {
@@ -242,6 +242,7 @@ export const sharedAmenities: Amenity[] = [
 
 /** Property-wide, not in-room: never list CCTV as a room amenity. */
 export const propertyAmenities: Amenity[] = [
+  { label: "24-hour reception", icon: "clock" },
   { label: "24-hour CCTV", icon: "cctv" },
   { label: "Free parking", icon: "car" },
   { label: "Outdoor seating", icon: "leaf" },
@@ -249,6 +250,22 @@ export const propertyAmenities: Amenity[] = [
 
 export const mattressNote =
   "An extra mattress can be requested for any room, subject to availability. Please contact us before arrival.";
+
+/** House policies confirmed by the owner. Shown on /rooms and in llms.txt; keep the FAQs in step. */
+export const policies = [
+  { label: "Check-in", value: "From 12:00 PM" },
+  { label: "Check-out", value: "By 11:00 AM" },
+  { label: "Reception", value: "Open 24 hours; late arrivals are welcome" },
+  { label: "Booking advance", value: "30% of the room total confirms a room booking" },
+  { label: "Cancellation", value: "Full refund if cancelled 7 or more days before check-in" },
+  { label: "Payment", value: "UPI or cash" },
+  { label: "ID", value: "Government photo ID for the lead guest at check-in" },
+  { label: "Couples", value: "Welcome, with valid ID" },
+  { label: "Children", value: "Under 5 stay free when sharing existing beds" },
+  { label: "Extra mattress", value: "On request, subject to availability" },
+  { label: "Pets", value: "On request, for an extra charge" },
+  { label: "Smoking", value: "Not allowed inside the rooms" },
+] as const;
 
 export const roomSize = { label: "110–120 sq ft", min: 110, max: 120 };
 
@@ -387,10 +404,10 @@ export const places: Place[] = [
     name: "Abdul Kalam Memorial",
     description:
       "Discover the life and legacy of Dr. A.P.J. Abdul Kalam, India's beloved former President and scientist.",
-    short: "A meaningful stop, close to SHA Stays.",
-    distance: "Near SHA",
+    short: "A meaningful stop, about 200 m from SHA Stays.",
+    distance: "About 200 m away",
     details:
-      "Built by DRDO and opened in 2017, the memorial honours Dr. Kalam, who was born in Rameshwaram, with exhibits on his life and work. It is close to SHA Stays, which makes it an easy visit on the day you arrive or the morning you leave.",
+      "Built by DRDO and opened in 2017, the memorial honours Dr. Kalam, who was born in Rameshwaram, with exhibits on his life and work. It is about 200 m from SHA Stays, a short walk, which makes it an easy visit on the day you arrive or the morning you leave.",
     photo: photos.kalam,
   },
   {
@@ -434,8 +451,8 @@ export const places: Place[] = [
 
 export const locationFacts = [
   { value: "5 km", label: "Ramanathaswamy Temple" },
-  { value: "Near", label: "Abdul Kalam Memorial" },
-  { value: "Easy access", label: "NH" },
+  { value: "200 m", label: "Abdul Kalam Memorial" },
+  { value: "NH 87", label: "On the highway" },
   { value: "Rameshwaram", label: "Tamil Nadu" },
 ] as const;
 
@@ -455,7 +472,7 @@ export const dayPlan: { time: string; title: string; text: string; icon: IconNam
   {
     time: "Afternoon",
     title: "Abdul Kalam Memorial",
-    text: "A meaningful stop, close to the stay.",
+    text: "A meaningful stop, about 200 m from the stay.",
     icon: "sun",
   },
   {
@@ -486,11 +503,22 @@ export type Review = {
 /** Add genuine guest reviews only, copied word for word from the source. Never invent or edit them. */
 export const reviews: Review[] = [];
 
+const [kingRoom, queenRoom] = rooms;
+
 export const faqs = [
   {
     question: "Where is SHA Stays in Rameshwaram?",
     answer:
-      "SHA Stays is at 2/1750-5, near the Dr. A.P.J. Abdul Kalam Memorial, Rameshwaram, Tamil Nadu 623526, with easy access from the highway.",
+      "SHA Stays is at 2/1750-5, near the Dr. A.P.J. Abdul Kalam Memorial, Rameshwaram, Tamil Nadu 623526. It is on NH 87, about 200 m from the memorial and about 5 km from Ramanathaswamy Temple.",
+  },
+  {
+    question: "What types of rooms does SHA Stays have?",
+    answer: `Six rooms: two ${kingRoom.name}s with a king-size bed and four ${queenRoom.name}s with a queen-size bed. Every room has air conditioning, a private bathroom, hot water, Wi-Fi, a television, RO drinking water and power backup.`,
+  },
+  {
+    question: "Who is SHA Stays suitable for?",
+    answer:
+      "Families, pilgrims visiting Ramanathaswamy Temple, couples and road-trip travellers arriving by car or tour vehicle. Groups travelling together can also book the entire property as a private stay.",
   },
   {
     question: "How far is SHA Stays from Ramanathaswamy Temple?",
@@ -499,20 +527,48 @@ export const faqs = [
   },
   {
     question: "Is SHA Stays near Abdul Kalam Memorial?",
-    answer: "Yes. SHA Stays is located near the Dr. A.P.J. Abdul Kalam Memorial.",
+    answer: "Yes. SHA Stays is about 200 m from the Dr. A.P.J. Abdul Kalam Memorial, a short walk away.",
   },
   {
     question: "Do you have parking?",
     answer:
-      "Yes. Parking is free for bikes, cars and larger vehicles, with space for about 4–5 cars.",
+      "Yes. Parking is free for bikes, cars and larger vehicles, with space for about 4–5 cars. A 15–21 seater van or mini bus can also drive in and park on site.",
   },
   {
-    question: "What time is check-in?",
-    answer: "Check-in: 12:00 PM",
+    question: "What are the check-in and check-out times?",
+    answer: "Check-in is from 12:00 PM and check-out is by 11:00 AM.",
   },
   {
-    question: "What time is check-out?",
-    answer: "Check-out: 11:00 AM",
+    question: "Can we arrive late at night?",
+    answer:
+      "Yes. Reception is open 24 hours, so late arrivals are welcome. Please share your expected arrival time on WhatsApp so we can be ready for you.",
+  },
+  {
+    question: "Is an advance payment needed to book?",
+    answer:
+      "Yes. A room booking is confirmed with an advance of 30% of the total. We accept UPI and cash. For a private stay of the entire property, the advance is confirmed with your quote.",
+  },
+  {
+    question: "What is the cancellation policy?",
+    answer:
+      "If you cancel 7 or more days before check-in, the advance is refunded in full. For cancellations closer to your dates, please contact us.",
+  },
+  {
+    question: "What ID is needed at check-in? Are couples welcome?",
+    answer:
+      "The lead guest needs a valid government photo ID at check-in. Couples are welcome with valid ID.",
+  },
+  {
+    question: "Do children stay free?",
+    answer: "Children under 5 stay free when they share the existing beds.",
+  },
+  {
+    question: "Are pets allowed?",
+    answer: "Pets can be accommodated on request, for an extra charge. Please ask when you enquire, before you book.",
+  },
+  {
+    question: "Is smoking allowed?",
+    answer: "Smoking is not allowed inside the rooms.",
   },
   {
     question: "Is there power backup and security?",
@@ -524,29 +580,25 @@ export const faqs = [
   },
   {
     question: "How much does a room cost?",
-    answer:
-      "SHA Queen Rooms start from ₹1,800 per night and SHA King Rooms from ₹2,500 per night. The rate depends on your dates, and we confirm it along with availability when you enquire.",
+    answer: `${queenRoom.name}s start from ${formatRupees(queenRoom.priceFrom)} per night and ${kingRoom.name}s from ${formatRupees(kingRoom.priceFrom)} per night. The rate depends on your dates, and we confirm it along with availability when you enquire.`,
   },
   {
     question: "Are the rooms suitable for families?",
-    answer:
-      "Yes. A SHA Queen Room sleeps up to 4 guests and a SHA King Room up to 5, using extra mattresses where needed. Rooms are 110–120 sq ft. Please tell us your group when you enquire so we can arrange the bedding.",
+    answer: `Yes. A ${queenRoom.name} sleeps up to ${queenRoom.maxGuests} guests and a ${kingRoom.name} up to ${kingRoom.maxGuests}, using extra mattresses where needed. Rooms are ${roomSize.label}. Please tell us your group when you enquire so we can arrange the bedding.`,
   },
   {
     question: "Can we book the whole property for a group?",
-    answer:
-      "Yes. Families and groups of up to 21 guests can book all six rooms as a private stay in Rameshwaram. We quote for your dates and group size when you enquire.",
+    answer: `Yes. Families and groups of up to ${maxGroupSize} guests can book all six rooms as a private stay in Rameshwaram. We quote for your dates and group size when you enquire.`,
   },
   {
     question: "Which languages do you speak?",
-    answer: "We speak Tamil and English.",
+    answer: `We speak ${languages.join(" and ")}.`,
   },
   {
-    question: "Can I book directly?",
-    answer:
-      "Yes. Contact us by phone or WhatsApp for direct booking and availability.",
+    question: "How do I check availability and book?",
+    answer: `Book directly with us. Send your dates and number of guests on WhatsApp (+91 ${contact.whatsappDisplay}), call +91 ${contact.phoneDisplay} or +91 ${contact.phoneAltDisplay}, or use the enquiry form on the Book page. We reply with availability and the rate for your dates. An enquiry does not reserve a room until we confirm it.`,
   },
-] as const;
+];
 
 export const photoCredits: PhotoCredit[] = [
   photos.kalam.credit,

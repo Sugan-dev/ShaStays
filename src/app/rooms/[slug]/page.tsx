@@ -145,7 +145,7 @@ export default async function RoomPage({ params }: Props) {
             </p>
             <h2 className="mt-12 font-serif text-3xl text-forest">Where you&apos;ll stay</h2>
             <p className="mt-3 max-w-xl leading-relaxed text-muted">
-              SHA Stays is on the highway near the Dr. A.P.J. Abdul Kalam Memorial, about 5 km from Ramanathaswamy Temple, with free parking on site.
+              SHA Stays is on NH 87, about 200 m from the Dr. A.P.J. Abdul Kalam Memorial and about 5 km from Ramanathaswamy Temple, with free parking on site and 24-hour reception.
             </p>
             <div className="mt-5 flex flex-col items-start gap-3">
               <TextLink href="/location">Location and directions</TextLink>

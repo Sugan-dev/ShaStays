@@ -23,9 +23,12 @@ Peace (a calmer place to stay), Location (convenient for exploring Rameshwaram),
 - Understated claims: "comfortable", "peaceful", "thoughtfully prepared", "kept simple". Avoid superlatives and hype ("luxurious", "world-class", "best"), and avoid words that cheapen the stay ("cheap", "budget", "small rooms", "basic").
 - Say "entire property" or "private stay" for whole-property bookings, never "resort".
 - Never overpromise. Optional extras are "can be discussed" or "subject to availability". Enquiries "do not reserve a room until SHA Stays confirms".
-- Indian/British English spelling: *enquiry, cosy, travellers, personalised, colour*. Use "Rameshwaram".
-- Headline style: short, declarative pairs with full stops — "Stay Close. Feel at Home.", "Simple Rooms. Comfortable Stays.", "Comfort, kept simple." Large marketing headings and button labels use Title Case ("Book Your Stay", "WhatsApp Us", "Explore Rooms"); small section headings can be sentence case ("A closer look", "Plan the stay").
-- Factual limits (no beachfront, pool, restaurant, prices, ratings…) are listed in `AGENTS.md` → Content rules.
+- Indian/British English spelling: *enquiry, cosy, travellers, personalised, colour*. Use "Rameshwaram" (the alternative spelling "Rameswaram" is mentioned once, as "also spelt Rameswaram", in the Rameshwaram Island text and `llms.txt`).
+- Headline style: short, declarative pairs with full stops — "Stay Close. Feel at Home.", "Your Group. Your Stay. Your SHA.", "Comfort, kept simple." Large marketing headings and button labels use Title Case ("Book Your Stay", "WhatsApp Us", "Explore Rooms"); small section headings can be sentence case ("A closer look", "Plan the stay").
+- Name the place and the guest in headings where it reads naturally ("Rooms in Rameshwaram", "Comfortable rooms for couples and families.") — it helps search without sounding like keyword stuffing. Never repeat a phrase just for search.
+- Prices are only ever "from" rates, written as `From ₹1,800 / night` (use `formatRupees` / `roomFacts` in `site.ts`, Indian digit grouping). The private stay is always "price on enquiry".
+- Safety and comfort are stated plainly, not dramatised: "Power backup" is a room amenity; "24-hour CCTV" is property-wide (parking and common areas) and must never appear in an in-room list.
+- Factual limits (no beachfront, pool, restaurant, ratings, invented prices…) are listed in `AGENTS.md` → Content rules.
 
 ## Logo
 
@@ -119,9 +122,9 @@ When adding UI, use tokens (`bg-forest-deep/80`, `shadow-soft`, `rounded-card`) 
 - Only the weights above exist. Don't use `font-bold`/`font-light` etc. on serif headings; they will be synthesised by the browser.
 
 ### Type scale and patterns
-- **Hero headline:** `font-serif`, fluid `text-[clamp(3.1rem,8vw,6.75rem)]`, `leading-[0.92]`, white.
+- **Hero headline:** `font-serif`, fluid `text-[clamp(3.1rem,8vw,6.75rem)]`, `leading-[0.92]`, white. On the home and private-stay heroes this big tagline is a `<p>`; the small `eyebrow` line above it ("Rooms & family stays in Rameshwaram", "Private group stay in Rameshwaram") is the page's H1. Keep the visual hierarchy, keep the semantic one.
 - **Page H1:** `font-serif text-5xl md:text-7xl leading-[1.02] text-forest`.
-- **Section H2:** use `SectionIntro` — `font-serif text-[2.4rem] md:text-6xl leading-[1.04] text-forest`, sentence case with a full stop ("Rooms made for a comfortable stay.").
+- **Section H2:** use `SectionIntro` — `font-serif text-[2.4rem] md:text-6xl leading-[1.04] text-forest`, sentence case with a full stop ("Comfortable rooms for couples and families.").
 - **Eyebrow label** (above most headings): the `eyebrow` utility (`text-xs font-medium uppercase tracking-[0.22em]`) plus a colour: `text-terracotta-deep` on light, `text-sand` on dark.
 - **Lead paragraph:** `text-lg leading-relaxed text-muted`, max width `max-w-xl`/`max-w-2xl`.
 - **Numbers as decoration** ("01", "02"): large `font-serif` in `terracotta-deep`, or translucent white/forest on panels.

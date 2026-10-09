@@ -24,7 +24,9 @@ There is no test suite. Verify changes with `npm run build` and, for UI work, by
 
 **Never run `npm run build` while a dev server is running.** Both write to `.next/`, and the build corrupts the dev server's output (pages start failing with `Cannot find module './vendor-chunks/...'` or `'./<number>.js'`). Use `npx tsc --noEmit` and `npm run lint` for checks while dev is running. To recover: stop the dev server, `rm -rf .next`, restart it.
 
-The owner runs the dev server with `yarn dev`, but the lockfile is `package-lock.json`; use npm for installing packages.
+The owner runs the dev server with `yarn dev`, but the lockfile is `package-lock.json`; use npm for installing packages. `yarn.lock` is in `.gitignore` and must never be committed: if it is in the repo, Cloudflare builds with Yarn 4, which refuses the Yarn 1 lockfile (`YN0028 The lockfile would have been modified`) and the deploy fails.
+
+To run a production build while the dev server is up, build a copy instead: `rsync -a --exclude node_modules --exclude .next --exclude out --exclude Images --exclude .git ./ /tmp/shastays-build/`, symlink `node_modules` into it, run `npx next build` there and serve its `out/` (e.g. `python3 -m http.server`). Delete the copy afterwards.
 
 ## Deployment
 
@@ -34,6 +36,9 @@ Cloudflare Workers Builds, connected to the GitHub repo. Build command `npm run 
 - Routing: `html_handling: "auto-trailing-slash"` serves `rooms/index.html` at `/rooms/` (and redirects `/rooms` → `/rooms/`); `not_found_handling: "404-page"` serves `out/404.html`.
 - `public/_headers` sets the security headers and long-term caching for `/_next/static/*`. Cloudflare ignores `public/.htaccess` (kept for Apache hosting); `public/.assetsignore` stops it from being uploaded.
 - Test locally like production: stop the dev server, `npm run build`, then `npx wrangler dev` (serves `out/` on port 8787). Afterwards `rm -rf .next` before restarting `yarn dev`.
+- Build variables (Workers & Pages → shastays → Settings → Build → Variables and secrets, **not** the runtime variables): `NEXT_PUBLIC_GA_ID` is set. Variables are read at build time, so changing one needs a redeploy.
+- Configured in the Cloudflare dashboard, not in code: **Always Use HTTPS** (SSL/TLS → Edge Certificates) and a Redirect Rule `http*://www.shastays.com/*` → `https://shastays.com/${2}` (301, preserve query string). `http://`, `www` and `http://www` all 301 to `https://shastays.com/`. The `www` and apex DNS records are Worker records and must stay proxied.
+- DNS also holds the Google Search Console verification TXT record (the site is verified at the domain level); don't delete it. A DMARC record (`_dmarc` TXT `v=DMARC1; p=none;`) is recommended for the Gmail-based email.
 
 ## Layout
 
@@ -47,19 +52,26 @@ src/
     rooms/, rooms/[slug]/  Room list and per-room pages (generateStaticParams from `rooms`).
     private-resort/    "Private Stay" — book the whole property; renders components/PrivateResortPage.tsx.
     book/, contact/    Both embed <InquiryForm />.
-    about/, gallery/, experience/, location/, not-found.tsx
+    location/          "Stay near the Abdul Kalam Memorial": address, directions, parking, arrival.
+    experience/        "Places to visit in Rameshwaram" (renders `places` with their `details`).
+    about/, gallery/, not-found.tsx
     sitemap.ts, robots.ts, manifest.ts   Static (`dynamic = "force-static"`).
     globals.css        Tailwind import + @theme tokens + @font-face + fallbacks + `eyebrow` utility + animations.
   components/          Presentational components. Shared building blocks: `Icon` (inline SVG icon set),
                        `ButtonLink`/`buttonClass`/`TextLink`, `SectionIntro` (eyebrow + h2 + text),
                        `RoomCard` (layout "stack" | "row"), `AmenityList`, `PhotoGrid` (mosaic),
-                       `Reviews` (renders `reviews` or an empty state), `FinalCta`, `MobileActionBar`.
+                       `Reviews` (renders `reviews` or an empty state), `FinalCta`, `MobileActionBar`,
+                       `Analytics` (GA4 loader + click tracking).
   lib/
-    site.ts            SINGLE SOURCE OF TRUTH for content: name, contact, nav, trustBar, reasons, rooms + amenities,
+    site.ts            SINGLE SOURCE OF TRUTH for content: name, contact, nav, trustBar, reasons, rooms
+                       (with `priceFrom`, `maxGuests`), `sharedAmenities` (in every room), `propertyAmenities`
+                       (property-wide), `roomSize`, `maxGroupSize`, `languages`, `formatRupees()`, `roomFacts()`,
                        places, dayPlan, reviews, FAQs, galleryPhotos/galleryGroups/homeGallery, photo credits.
     private-resort.ts  Content for the /private-resort page (benefits, steps, package, add-ons, FAQs, vehicle types).
     links.ts           `cx()` classname helper, tel:/wa.me link builders, prefilled WhatsApp messages.
-    seo.ts             `pageMeta()` per-page metadata, schema.org graphs (LodgingBusiness, FAQPage, BreadcrumbList).
+    seo.ts             `pageMeta()` per-page metadata, schema.org graphs (`siteGraph`: WebSite + LodgingBusiness
+                       with a HotelRoom per room; `faqGraph`; `breadcrumbGraph`).
+    analytics.ts       `gaId`, `trackEvent()` and `linkEvent()` (maps a clicked href to a GA4 event name).
     image-loader.ts    Custom next/image loader that maps widths to pre-generated files.
     image-widths.json  GENERATED by `npm run images`. Do not hand-edit.
 assets/images/         Master photos (source of truth for the image pipeline).
@@ -103,14 +115,16 @@ Prefilled WhatsApp messages live in `links.ts`: `whatsappAvailability` (general)
 - Every page exports `metadata = pageMeta({ title, description, path })`. `path` is used for the canonical URL (trailing slash is added). `pageMeta` appends " | SHA Stays", so don't put the brand in `title`. The root layout deliberately sets no canonical (it would be inherited by the 404 page).
 - One descriptive H1 per page that names the page's subject and "Rameshwaram". On the home and private-stay heroes the small eyebrow line is the H1 and the big tagline ("Stay Close. Feel at Home.", "Your Group. Your Stay. Your SHA.") is a `<p>`; keep it that way.
 - Search intent per page: `/` rooms and family stays in Rameshwaram; `/rooms` rooms; `/private-resort` private group stay; `/location` stay near the Abdul Kalam Memorial (address, directions, parking); `/experience` places to visit in Rameshwaram. Strengthen these pages rather than adding near-duplicate landing pages.
-- `layout.tsx` injects the site-wide `LodgingBusiness` graph; `Breadcrumbs` injects a `BreadcrumbList`; home and /private-resort inject `FAQPage` graphs from their visible FAQs.
+- `layout.tsx` injects the site-wide graph: `WebSite` + `LodgingBusiness` (address, geo, phones, `sameAs` incl. Instagram, amenities from `sharedAmenities` + `propertyAmenities`, `priceRange` from the lowest `priceFrom`, `knowsLanguage`) containing one `HotelRoom` per room (`@id` `/rooms/<slug>/#room`, bed, `occupancy` from `maxGuests`, `floorSize` from `roomSize`). `Breadcrumbs` injects a `BreadcrumbList`; home and /private-resort inject `FAQPage` graphs from their visible FAQs. Everything is generated from `site.ts`, so updating a fact there updates the JSON-LD.
 - `sitemap.ts` lists static paths by hand, derives room URLs from `rooms`, includes image entries, and has a hardcoded `lastModified` (bump it when content changes).
 - `LazyImage` also renders a `<noscript>` image so crawlers that don't run JavaScript still find photos.
 
 ### Analytics and verification (optional, build-time env vars)
 - `NEXT_PUBLIC_GA_ID` (GA4 measurement ID): when set, `Analytics` loads gtag.js and tracks `whatsapp_click`, `phone_click`, `email_click`, `directions_click`, `booking_cta_click` (link clicks) and `generate_lead` (enquiry form submits, via `trackEvent` in `lib/analytics.ts`). When unset, nothing loads.
-- `GOOGLE_SITE_VERIFICATION`: when set, adds the Search Console `google-site-verification` meta tag.
-- Set these in the Cloudflare Workers Builds environment. Never hardcode IDs, and never send names, phone numbers, emails, dates or free text to analytics.
+- `GOOGLE_SITE_VERIFICATION`: when set, adds the Search Console `google-site-verification` meta tag. **Not needed today**: Search Console is verified through a DNS TXT record (a Domain property covering http/https and www), so leave it unset.
+- Status: GA4 is live (`NEXT_PUBLIC_GA_ID` is set as a Cloudflare **build** variable, see Deployment). Google Tag Manager is not used and isn't needed; add it only if a non-developer must manage tags.
+- Click events are only counted for real user clicks (`event.isTrusted`), so the forms' programmatic WhatsApp/email opens are counted once, as `generate_lead`. Mark `generate_lead` as a key event in GA4 (Admin → Events) to see enquiries as conversions.
+- Never hardcode IDs, and never send names, phone numbers, emails, dates or free text to analytics.
 
 ### Styling
 Full brand, colour and typography guide (logo usage, palette roles, contrast rules, voice): **`BRANDING.md`**. Summary:
@@ -138,9 +152,13 @@ This is a real business; inaccurate claims are a problem. From `public/llms.txt`
 
 **Adding a page:** create `src/app/<route>/page.tsx` exporting `metadata = pageMeta(...)`; use `PageHero` (which renders breadcrumbs); add to `nav`/`footerNav` in `site.ts` if it should be linked; add to `sitemap.ts`; add a line to `public/llms.txt`.
 
-**Adding a room type:** add to `rooms` in `site.ts` (slug, photos, etc.; `sitemap.ts` picks it up automatically); add its URL to `llms.txt`; update counts in copy (`trustBar`, `reasons`, `stayFacts`, the homepage Rooms/Private Stay copy in `HomePage.tsx`, gallery text, `numberOfRooms` in `seo.ts`, `llms.txt`). Note the layout assumes two room types: `rooms/[slug]/page.tsx` links to a single "Also at SHA Stays" room, and `RoomCard` / the room page alternate forest vs sand panels via `room.number === "01"`.
+**Adding a room type:** add to `rooms` in `site.ts` (slug, photos, confirmed `priceFrom` and `maxGuests`, etc.; `sitemap.ts` and JSON-LD pick it up automatically); add its URL to `llms.txt`; update counts in copy (`trustBar`, `reasons`, `stayFacts`, the homepage Rooms/Private Stay copy in `HomePage.tsx`, gallery text, `numberOfRooms` in `seo.ts`, `llms.txt`). Note the layout assumes two room types: `rooms/[slug]/page.tsx` links to a single "Also at SHA Stays" room, and `RoomCard` / the room page alternate forest vs sand panels via `room.number === "01"`.
 
 **Changing contact details:** edit `contact` in `site.ts`; also update `seo.ts` (address/geo are duplicated there) and `public/llms.txt`.
+
+**Changing prices, occupancy, room size or group size:** edit `priceFrom` / `maxGuests` on the room, `roomSize` or `maxGroupSize` in `site.ts` (room cards, room pages, the private stay page/form and JSON-LD follow). These spots repeat the numbers as plain text and must be edited by hand: the price, families and whole-property answers in `faqs` (`site.ts`), the "Groups of up to 21 guests" highlight in `HomePage.tsx`, the `description`s in `app/rooms/page.tsx` and `app/private-resort/page.tsx`, the group line in `app/rooms/page.tsx`, and `public/llms.txt`. Then bump `lastModified` in `sitemap.ts`.
+
+**Adding an amenity:** in-room items go in `sharedAmenities`, property-wide ones (parking, CCTV, seating) in `propertyAmenities`; add an `Icon` name if needed. Both feed the rooms pages and `amenityFeature` in JSON-LD. Update the amenity lines in `public/llms.txt`.
 
 **Adding photos:** master into `assets/images/...` → `npm run images` → reference `/images/...webp` with good `alt` → commit both `assets/` and the generated `public/images/` + `image-widths.json`.
 
@@ -149,10 +167,10 @@ This is a real business; inaccurate claims are a problem. From `public/llms.txt`
 - No genuine reviews yet (`reviews` is empty).
 - `privateGallery` in `private-resort.ts` has placeholder slots without `src` (van arrival, group at entrance, parking, group relaxing) awaiting real group photos.
 - `propertyPhotos.entrance` and `propertyPhotos.greenery` in `site.ts` are empty.
-- The header comment in `site.ts` ("fill in phone, WhatsApp...") predates the real contact details being added.
 - `next lint` is deprecated; migrate to the ESLint CLI before upgrading to Next 16.
 - `InquiryForm` accepts an `initialRoom` prop that no caller passes (the `?room=` query param is used instead).
-- Cloudflare does not yet redirect `http://` → `https://` or `www.shastays.com` → `shastays.com` (both return 200); fix with "Always Use HTTPS" and a redirect rule in the dashboard, not in code. Canonical tags already point to `https://shastays.com/`.
+- Off-site, not code: submit `https://shastays.com/sitemap.xml` in Search Console, complete the Google Business Profile with the same name/address/phone, website and photos, and ask past guests for genuine Google reviews.
+
 ## Git conventions
 
-Single `main` branch, remote on GitHub (`Sugan-dev/ShaStays`). Commit messages are imperative, sentence-case summaries (e.g. "Add Private Stay page for booking the entire resort") with an optional body explaining what and why. `out/`, `.next/`, `node_modules/` are ignored; generated `public/images/` is committed.
+Single `main` branch, remote on GitHub (`Sugan-dev/ShaStays`). Commit messages are imperative, sentence-case summaries (e.g. "Add Private Stay page for booking the entire resort") with an optional body explaining what and why. `out/`, `.next/`, `node_modules/` and `yarn.lock` are ignored; generated `public/images/` is committed. Every push to `main` triggers a Cloudflare build and deploy.

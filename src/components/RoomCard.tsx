@@ -1,5 +1,5 @@
 import Link from "next/link";
-import type { Room } from "@/lib/site";
+import { formatRupees, roomSize, type Room } from "@/lib/site";
 import { AmenityList } from "@/components/AmenityList";
 import { Icon } from "@/components/Icon";
 import { LazyImage } from "@/components/LazyImage";
@@ -50,6 +50,15 @@ export function RoomCard({
           </Link>
         </Title>
         <p className="mt-3 max-w-lg leading-relaxed text-muted">{room.description}</p>
+        <p className="mt-4 flex flex-wrap items-baseline gap-x-3 gap-y-1 text-sm text-muted">
+          <span>
+            From <span className="font-serif text-2xl text-forest">{formatRupees(room.priceFrom)}</span> / night
+          </span>
+          <span aria-hidden="true">·</span>
+          <span>Sleeps up to {room.maxGuests}</span>
+          <span aria-hidden="true">·</span>
+          <span>{roomSize.label}</span>
+        </p>
         <AmenityList amenities={room.amenities} className="mt-6 max-w-md" />
         <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-3">
           <Link href={`/rooms/${room.slug}`} className={buttonClass("forest")}>

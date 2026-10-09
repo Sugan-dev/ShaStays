@@ -6,9 +6,9 @@ import { pageMeta } from "@/lib/seo";
 import { galleryGroups } from "@/lib/site";
 
 export const metadata = pageMeta({
-  title: "Gallery",
+  title: "Photo Gallery: Rooms & Garden in Rameshwaram",
   description:
-    "Photographs of the rooms, garden and amenities at SHA Stays, a six-room boutique stay in Rameshwaram.",
+    "Real photographs of SHA Stays in Rameshwaram: the King and Queen rooms, private bathrooms, the garden walkway, the entrance at night and parking.",
   path: "/gallery",
 });
 

@@ -28,7 +28,7 @@ const privateHighlights = [
   "Ideal for families and groups",
   "Suits road trips by car or 15–21 seater van",
   "Convenient parking",
-  "A private group experience",
+  "Groups of up to 21 guests",
   "Your base for Rameshwaram sightseeing",
 ];
 
@@ -73,12 +73,12 @@ function Hero() {
       </picture>
       <div className="absolute inset-0 -z-10 bg-gradient-to-t from-forest-deep via-forest-deep/60 to-forest-deep/10 lg:bg-[linear-gradient(100deg,rgba(16,40,34,0.9)_0%,rgba(16,40,34,0.75)_36%,rgba(16,40,34,0.3)_64%,rgba(16,40,34,0.08)_100%)]" />
       <Container className="flex min-h-[calc(100svh-6.5rem)] flex-col justify-end pt-12 pb-8 md:pt-24 md:pb-16 lg:min-h-[min(calc(100svh-6.5rem),52rem)]">
-        <p className="rise eyebrow text-sand">Boutique stay · Rameshwaram</p>
-        <h1 className="rise rise-delay-1 mt-4 max-w-4xl font-serif text-[clamp(3.1rem,8vw,6.75rem)] leading-[0.92] text-white [text-shadow:0_2px_24px_rgba(8,20,17,0.5)]">
+        <h1 className="rise eyebrow text-sand">Rooms &amp; family stays in Rameshwaram</h1>
+        <p className="rise rise-delay-1 mt-4 max-w-4xl font-serif text-[clamp(3.1rem,8vw,6.75rem)] leading-[0.92] text-white [text-shadow:0_2px_24px_rgba(8,20,17,0.5)]">
           Stay Close.
           <br />
           Feel at Home.
-        </h1>
+        </p>
         <p className="rise rise-delay-2 mt-4 max-w-lg text-[1.05rem] leading-relaxed text-white md:mt-5 md:text-xl">
           A peaceful boutique stay in Rameshwaram, close to the places that matter.
         </p>
@@ -141,10 +141,14 @@ function Intro() {
         <div className="reveal">
           <SectionIntro eyebrow="Welcome to SHA Stays" title="A quieter way to experience Rameshwaram.">
             <p>
-              SHA Stays is a thoughtfully designed, six-room boutique stay in Rameshwaram: a comfortable, convenient base for exploring the island.
+              SHA Stays is a thoughtfully designed, six-room boutique stay in Rameshwaram: a comfortable, convenient base for families, pilgrims, couples and road-trip travellers exploring the island.
             </p>
             <p className="mt-4">
-              Stay near the Abdul Kalam Memorial, about 5 km from Ramanathaswamy Temple, and come back each evening to a calm garden and a restful room.
+              Stay near the{" "}
+              <Link href="/location" className="text-forest underline underline-offset-4">
+                Dr. A.P.J. Abdul Kalam Memorial
+              </Link>
+              , about 5 km from Ramanathaswamy Temple, and come back each evening to a calm garden and a restful room.
             </p>
           </SectionIntro>
           <div className="mt-8">
@@ -168,7 +172,7 @@ function Rooms() {
   return (
     <section id="rooms" className="border-y border-line bg-paper py-20 md:py-28">
       <Container>
-        <SectionIntro eyebrow="Rooms in Rameshwaram" title="Rooms made for a comfortable stay.">
+        <SectionIntro eyebrow="Rooms in Rameshwaram" title="Comfortable rooms for couples and families.">
           Two SHA King Rooms and four SHA Queen Rooms, each with a private bathroom, air conditioning and Wi-Fi.
         </SectionIntro>
         <div className="mt-12 grid gap-16 md:grid-cols-2 md:gap-8 lg:gap-12">
@@ -181,7 +185,7 @@ function Rooms() {
         <div className="mt-14 flex flex-col gap-5 border-t border-line pt-8 md:flex-row md:items-center md:justify-between">
           <p className="max-w-xl text-sm leading-relaxed text-muted">{mattressNote}</p>
           <ButtonLink href="/rooms" variant="outline" className="shrink-0">
-            View Rooms
+            View all rooms
           </ButtonLink>
         </div>
       </Container>
@@ -199,7 +203,7 @@ function PrivateStay() {
       </div>
       <Container className="py-14 md:py-20 lg:py-32">
         <div className="reveal max-w-xl">
-          <p className="eyebrow text-sand">Private Stay · The entire property</p>
+          <p className="eyebrow text-sand">Private group stay · The entire property</p>
           <h2 id="private-stay-title" className="mt-3 font-serif text-[2.6rem] leading-[1.02] text-white md:text-6xl">
             Your group. Your stay. Your SHA.
           </h2>
@@ -215,7 +219,7 @@ function PrivateStay() {
             ))}
           </ul>
           <div className="mt-9 grid gap-3 sm:flex sm:flex-wrap">
-            <ButtonLink href="/private-resort">Explore Private Stay</ButtonLink>
+            <ButtonLink href="/private-resort">Explore Private Group Stay</ButtonLink>
             <ButtonLink href="/private-resort#quote" variant="ghost">
               Plan Your Group Stay
             </ButtonLink>
@@ -230,7 +234,7 @@ function WhySha() {
   return (
     <section className="py-20 md:py-28">
       <Container>
-        <SectionIntro eyebrow="Why SHA Stays" title="Why stay with SHA?">
+        <SectionIntro eyebrow="Why SHA Stays" title="A convenient stay for families and pilgrims.">
           Small, personal, convenient and comfortable. That&apos;s the whole idea.
         </SectionIntro>
         <ul className="mt-12 grid gap-x-10 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
@@ -256,9 +260,9 @@ function Explore() {
     <section className="bg-sand/40 py-20 md:py-28">
       <Container>
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-          <SectionIntro eyebrow="Explore Rameshwaram" title="Start your Rameshwaram journey from SHA." />
+          <SectionIntro eyebrow="Explore Rameshwaram" title="Plan your Rameshwaram trip from SHA." />
           <div className="shrink-0">
-            <TextLink href="/experience">Explore Rameshwaram</TextLink>
+            <TextLink href="/experience">Places to visit in Rameshwaram</TextLink>
           </div>
         </div>
         <ul className="mt-12 grid grid-cols-2 gap-3 md:gap-4 lg:grid-cols-4">
@@ -305,7 +309,7 @@ function Explore() {
               Get Directions
             </ButtonLink>
             <ButtonLink href="/location" variant="outline">
-              Location &amp; Map
+              Location &amp; Directions
             </ButtonLink>
           </div>
         </div>

@@ -3,13 +3,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { AmenityList } from "@/components/AmenityList";
-import { ButtonLink } from "@/components/Buttons";
+import { ButtonLink, TextLink } from "@/components/Buttons";
 import { Container } from "@/components/Container";
 import { FinalCta } from "@/components/FinalCta";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { Icon } from "@/components/Icon";
 import { LazyImage } from "@/components/LazyImage";
-import { getRoom, mattressNote, rooms, stayFacts } from "@/lib/site";
+import { formatRupees, getRoom, mattressNote, roomFacts, roomSize, rooms, stayFacts } from "@/lib/site";
 import { pageMeta } from "@/lib/seo";
 import { cx, hasWhatsapp, whatsappHref, whatsappRoom } from "@/lib/links";
 
@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!room) return {};
   return pageMeta({
     title: `${room.name} in Rameshwaram`,
-    description: `${room.description} ${room.countLabel} at SHA Stays, a peaceful boutique stay in Rameshwaram near the Abdul Kalam Memorial.`,
+    description: `${room.name} at SHA Stays, Rameshwaram: from ${formatRupees(room.priceFrom)} a night, sleeps up to ${room.maxGuests}, ${room.bed.toLowerCase()}, AC, private bathroom and Wi-Fi. Near the Abdul Kalam Memorial.`,
     path: `/rooms/${room.slug}`,
   });
 }
@@ -50,10 +50,14 @@ export default async function RoomPage({ params }: Props) {
               ]}
             />
             <p className="eyebrow text-terracotta-deep">
-              {room.bed} · {room.countLabel}
+              {room.bed} · {room.countLabel} · Rameshwaram
             </p>
             <h1 className="mt-4 font-serif text-5xl leading-[1.02] text-forest md:text-7xl">{room.name}</h1>
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted">{room.description}</p>
+            <p className="mt-4 text-muted">
+              From <span className="font-serif text-3xl text-forest">{formatRupees(room.priceFrom)}</span> / night · Sleeps up to{" "}
+              {room.maxGuests} · {roomSize.label}
+            </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <ButtonLink href={`/book?room=${room.slug}`}>Book Your Stay</ButtonLink>
               <ButtonLink
@@ -126,13 +130,25 @@ export default async function RoomPage({ params }: Props) {
             <AmenityList amenities={room.amenities} className="mt-6 max-w-lg" />
             <p className="mt-8 max-w-xl text-sm leading-relaxed text-muted">{mattressNote}</p>
             <p className="mt-4 max-w-xl text-sm leading-relaxed text-muted">
-              Our rooms are suitable for couples and small families depending on the selected room and sleeping arrangement.
+              The {room.name} sleeps up to {room.maxGuests} guests using extra mattresses, so it suits couples and families. Tell us your group when you enquire and we&apos;ll arrange the bedding.
             </p>
+            <h2 className="mt-12 font-serif text-3xl text-forest">Where you&apos;ll stay</h2>
+            <p className="mt-3 max-w-xl leading-relaxed text-muted">
+              SHA Stays is on the highway near the Dr. A.P.J. Abdul Kalam Memorial, about 5 km from Ramanathaswamy Temple, with free parking on site.
+            </p>
+            <div className="mt-5 flex flex-col items-start gap-3">
+              <TextLink href="/location">Location and directions</TextLink>
+              <TextLink href="/private-resort">Travelling as a group? Book the entire property</TextLink>
+            </div>
           </div>
           <aside className="h-fit rounded-panel bg-sand/70 p-7">
             <h2 className="font-serif text-3xl text-forest">Plan the stay</h2>
             <dl className="mt-5 space-y-3">
-              {stayFacts.map((fact) => (
+              {[
+                ...roomFacts(room),
+                { label: "Rooms of this type", value: room.countLabel },
+                ...stayFacts.filter((fact) => fact.label !== "Rooms"),
+              ].map((fact) => (
                 <div key={fact.label} className="flex items-baseline justify-between gap-4 border-b border-forest/10 pb-3">
                   <dt className="text-sm text-muted">{fact.label}</dt>
                   <dd className="font-medium text-forest">{fact.value}</dd>

@@ -70,7 +70,7 @@ Images/                Raw, uncurated photos from the owner. Not used by the bui
 scripts/optimize-images.mjs   The image pipeline.
 ```
 
-Client components (`"use client"`) are only: `SiteHeader` (mobile menu, scrolled shadow), `MobileActionBar`, `InquiryForm`, `PrivateStayForm`, `LazyImage`. Keep everything else as server components.
+Client components (`"use client"`) are only: `SiteHeader` (mobile menu, scrolled shadow), `MobileActionBar`, `InquiryForm`, `PrivateStayForm`, `LazyImage`, `Analytics`. Keep everything else as server components.
 
 Navigation labels: Home, Rooms, Private Stay (`/private-resort`), Rameshwaram (`/experience`), Gallery, Contact, plus a "Book Now" button. The `/private-resort` and `/experience` URLs are kept for SEO stability; only the labels changed.
 
@@ -100,9 +100,17 @@ Prefilled WhatsApp messages live in `links.ts`: `whatsappAvailability` (general)
 - Every image needs a descriptive, factual `alt`. Third-party photos (Wikimedia) need a `credit` entry in `photos` in `site.ts`; credits are listed in the footer.
 
 ### SEO
-- Every page exports `metadata = pageMeta({ title, description, path })`. `path` is used for the canonical URL (trailing slash is added).
-- `layout.tsx` injects the site-wide `LodgingBusiness` graph; `Breadcrumbs` injects a `BreadcrumbList`; home injects the `FAQPage` graph from `faqs`.
-- `sitemap.ts` lists paths **by hand** and has a hardcoded `lastModified`.
+- Every page exports `metadata = pageMeta({ title, description, path })`. `path` is used for the canonical URL (trailing slash is added). `pageMeta` appends " | SHA Stays", so don't put the brand in `title`. The root layout deliberately sets no canonical (it would be inherited by the 404 page).
+- One descriptive H1 per page that names the page's subject and "Rameshwaram". On the home and private-stay heroes the small eyebrow line is the H1 and the big tagline ("Stay Close. Feel at Home.", "Your Group. Your Stay. Your SHA.") is a `<p>`; keep it that way.
+- Search intent per page: `/` rooms and family stays in Rameshwaram; `/rooms` rooms; `/private-resort` private group stay; `/location` stay near the Abdul Kalam Memorial (address, directions, parking); `/experience` places to visit in Rameshwaram. Strengthen these pages rather than adding near-duplicate landing pages.
+- `layout.tsx` injects the site-wide `LodgingBusiness` graph; `Breadcrumbs` injects a `BreadcrumbList`; home and /private-resort inject `FAQPage` graphs from their visible FAQs.
+- `sitemap.ts` lists static paths by hand, derives room URLs from `rooms`, includes image entries, and has a hardcoded `lastModified` (bump it when content changes).
+- `LazyImage` also renders a `<noscript>` image so crawlers that don't run JavaScript still find photos.
+
+### Analytics and verification (optional, build-time env vars)
+- `NEXT_PUBLIC_GA_ID` (GA4 measurement ID): when set, `Analytics` loads gtag.js and tracks `whatsapp_click`, `phone_click`, `email_click`, `directions_click`, `booking_cta_click` (link clicks) and `generate_lead` (enquiry form submits, via `trackEvent` in `lib/analytics.ts`). When unset, nothing loads.
+- `GOOGLE_SITE_VERIFICATION`: when set, adds the Search Console `google-site-verification` meta tag.
+- Set these in the Cloudflare Workers Builds environment. Never hardcode IDs, and never send names, phone numbers, emails, dates or free text to analytics.
 
 ### Styling
 Full brand, colour and typography guide (logo usage, palette roles, contrast rules, voice): **`BRANDING.md`**. Summary:
@@ -118,8 +126,8 @@ Full brand, colour and typography guide (logo usage, palette roles, contrast rul
 
 This is a real business; inaccurate claims are a problem. From `public/llms.txt` and the code comments:
 
-- Facts: 6 rooms = 2 SHA King Rooms + 4 SHA Queen Rooms. Near the Dr. A.P.J. Abdul Kalam Memorial, about 5 km from Ramanathaswamy Temple. Check-in 12:00 PM, check-out 11:00 AM. Free parking for about 4–5 cars. Extra mattress on request, subject to availability.
-- **Do not** describe it as beachfront, sea-view or walking distance to the temple. **Do not** invent a pool, restaurant, included meals, reviews, ratings, prices or a maximum guest count.
+- Facts: 6 rooms = 2 SHA King Rooms + 4 SHA Queen Rooms. Near the Dr. A.P.J. Abdul Kalam Memorial, about 5 km from Ramanathaswamy Temple. Check-in 12:00 PM, check-out 11:00 AM. Free parking for about 4–5 cars. Extra mattress on request, subject to availability. Rooms are 110–120 sq ft. Queen Room from ₹1,800/night and sleeps up to 4; King Room from ₹2,500/night and sleeps up to 5 (both with extra mattresses). Private stay: up to 21 guests. Staff speak Tamil and English. These live in `site.ts` (`priceFrom`, `maxGuests`, `roomSize`, `maxGroupSize`, `languages`); change them there.
+- **Do not** describe it as beachfront, sea-view or walking distance to the temple. **Do not** invent a pool, restaurant, included meals, reviews, ratings, or prices beyond the confirmed "from" rates. No `Offer` markup for rooms (no live booking engine).
 - The private stay package is "price on enquiry"; never show or estimate a price. Meals, sightseeing, transport and late checkout are only "can be discussed/requested". In copy, say "entire property" or "private stay", never "resort". Groups arriving by car or 15–21 seater van are a key audience.
 - Reviews: `reviews` in `site.ts` is empty on purpose. Only add genuine guest reviews (with source); `Reviews` then renders them, otherwise it shows "Your stay could be our next story." Never add ratings/reviews to JSON-LD.
 - Avoid the words cheap, budget, small rooms, basic, best hotel, luxury resort. Don't oversell.
@@ -130,7 +138,7 @@ This is a real business; inaccurate claims are a problem. From `public/llms.txt`
 
 **Adding a page:** create `src/app/<route>/page.tsx` exporting `metadata = pageMeta(...)`; use `PageHero` (which renders breadcrumbs); add to `nav`/`footerNav` in `site.ts` if it should be linked; add to `sitemap.ts`; add a line to `public/llms.txt`.
 
-**Adding a room type:** add to `rooms` in `site.ts` (slug, photos, etc.); add its URL to `sitemap.ts` and `llms.txt`; update counts in copy (`trustBar`, `reasons`, `stayFacts`, the homepage Rooms/Private Stay copy in `HomePage.tsx`, gallery text, `numberOfRooms` in `seo.ts`, `llms.txt`). Note the layout assumes two room types: `rooms/[slug]/page.tsx` links to a single "Also at SHA Stays" room, and `RoomCard` / the room page alternate forest vs sand panels via `room.number === "01"`.
+**Adding a room type:** add to `rooms` in `site.ts` (slug, photos, etc.; `sitemap.ts` picks it up automatically); add its URL to `llms.txt`; update counts in copy (`trustBar`, `reasons`, `stayFacts`, the homepage Rooms/Private Stay copy in `HomePage.tsx`, gallery text, `numberOfRooms` in `seo.ts`, `llms.txt`). Note the layout assumes two room types: `rooms/[slug]/page.tsx` links to a single "Also at SHA Stays" room, and `RoomCard` / the room page alternate forest vs sand panels via `room.number === "01"`.
 
 **Changing contact details:** edit `contact` in `site.ts`; also update `seo.ts` (address/geo are duplicated there) and `public/llms.txt`.
 
@@ -138,14 +146,13 @@ This is a real business; inaccurate claims are a problem. From `public/llms.txt`
 
 ## Known gaps / TODOs
 
-- `contact.instagram` is empty; set the profile URL to show Instagram in the footer/contact page and add it to `sameAs` in JSON-LD automatically.
 - No genuine reviews yet (`reviews` is empty).
 - `privateGallery` in `private-resort.ts` has placeholder slots without `src` (van arrival, group at entrance, parking, group relaxing) awaiting real group photos.
 - `propertyPhotos.entrance` and `propertyPhotos.greenery` in `site.ts` are empty.
 - The header comment in `site.ts` ("fill in phone, WhatsApp...") predates the real contact details being added.
 - `next lint` is deprecated; migrate to the ESLint CLI before upgrading to Next 16.
 - `InquiryForm` accepts an `initialRoom` prop that no caller passes (the `?room=` query param is used instead).
-
+- Cloudflare does not yet redirect `http://` → `https://` or `www.shastays.com` → `shastays.com` (both return 200); fix with "Always Use HTTPS" and a redirect rule in the dashboard, not in code. Canonical tags already point to `https://shastays.com/`.
 ## Git conventions
 
 Single `main` branch, remote on GitHub (`Sugan-dev/ShaStays`). Commit messages are imperative, sentence-case summaries (e.g. "Add Private Stay page for booking the entire resort") with an optional body explaining what and why. `out/`, `.next/`, `node_modules/` are ignored; generated `public/images/` is committed.

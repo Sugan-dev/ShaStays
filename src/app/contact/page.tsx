@@ -2,7 +2,7 @@ import { ButtonLink } from "@/components/Buttons";
 import { Container } from "@/components/Container";
 import { InquiryForm } from "@/components/InquiryForm";
 import { PageHero } from "@/components/PageHero";
-import { contact, site } from "@/lib/site";
+import { contact, languages, site } from "@/lib/site";
 import {
   displayEmail,
   displayWhatsapp,
@@ -17,7 +17,7 @@ import {
 import { pageMeta } from "@/lib/seo";
 
 export const metadata = pageMeta({
-  title: "Contact SHA Stays",
+  title: "Contact Us: Phone, WhatsApp & Directions",
   description:
     "Contact SHA Stays in Rameshwaram for rooms, availability and directions. Call, WhatsApp or email a peaceful boutique stay near the Abdul Kalam Memorial.",
   path: "/contact",
@@ -28,7 +28,7 @@ const linkClass = "underline decoration-transparent underline-offset-4 hover:dec
 export default function ContactPage() {
   return (
     <>
-      <PageHero eyebrow="SHA Stays" title="We'd Love to Welcome You." crumb="Contact" path="/contact">
+      <PageHero eyebrow="We'd love to welcome you" title="Contact SHA Stays, Rameshwaram" crumb="Contact" path="/contact">
         Planning your Rameshwaram trip? Have a question about rooms, availability or directions? Get in touch with us.
       </PageHero>
       <section className="py-16 md:py-20" id="details">
@@ -69,6 +69,10 @@ export default function ContactPage() {
                     {displayEmail()}
                   </a>
                 </dd>
+              </div>
+              <div>
+                <dt className="eyebrow text-terracotta-deep">Languages</dt>
+                <dd className="mt-1 text-lg">We speak {languages.join(" and ")}</dd>
               </div>
               {hasInstagram() ? (
                 <div>

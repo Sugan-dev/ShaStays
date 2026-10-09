@@ -24,7 +24,13 @@ export function LazyImage(props: ImageProps) {
 
   return (
     <div ref={ref} className="absolute inset-0">
-      {visible ? <Image {...props} alt={props.alt ?? ""} /> : null}
+      {visible ? (
+        <Image {...props} alt={props.alt ?? ""} />
+      ) : (
+        <noscript>
+          <Image {...props} alt={props.alt ?? ""} loading="lazy" />
+        </noscript>
+      )}
     </div>
   );
 }

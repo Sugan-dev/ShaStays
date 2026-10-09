@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { preload } from "react-dom";
+import { Analytics } from "@/components/Analytics";
 import { JsonLd } from "@/components/JsonLd";
 import { MobileActionBar } from "@/components/MobileActionBar";
 import { SiteFooter } from "@/components/SiteFooter";
@@ -26,7 +27,9 @@ export const metadata: Metadata = {
   authors: [{ name: site.name, url: site.url }],
   creator: site.name,
   category: "travel",
-  alternates: { canonical: "/" },
+  ...(process.env.GOOGLE_SITE_VERIFICATION
+    ? { verification: { google: process.env.GOOGLE_SITE_VERIFICATION } }
+    : {}),
   robots: {
     index: true,
     follow: true,
@@ -44,7 +47,6 @@ export const metadata: Metadata = {
     locale: site.locale,
     type: "website",
     siteName: site.name,
-    url: "/",
     images: [ogImage],
   },
   twitter: {
@@ -76,6 +78,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <SiteFooter />
         <MobileActionBar />
         <JsonLd data={siteGraph()} />
+        <Analytics />
       </body>
     </html>
   );

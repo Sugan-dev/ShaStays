@@ -8,16 +8,16 @@ import { pageMeta } from "@/lib/seo";
 import { hasWhatsapp, whatsappAvailability, whatsappHref } from "@/lib/links";
 
 export const metadata = pageMeta({
-  title: "Book Your Stay",
+  title: "Book a Room in Rameshwaram",
   description:
-    "Check availability at SHA Stays, a peaceful boutique stay in Rameshwaram near the Abdul Kalam Memorial and about 5 km from Ramanathaswamy Temple. An enquiry does not reserve a room.",
+    "Check room availability at SHA Stays in Rameshwaram, near the Abdul Kalam Memorial and about 5 km from Ramanathaswamy Temple. Enquire directly on WhatsApp.",
   path: "/book",
 });
 
 export default function BookPage() {
   return (
     <>
-      <PageHero eyebrow="Direct booking" title="Book Your Stay" crumb="Book" path="/book">
+      <PageHero eyebrow="Direct booking" title="Book Your Stay in Rameshwaram" crumb="Book" path="/book">
         SHA Stays is your peaceful boutique stay in Rameshwaram — close to the places you came to discover, and comfortable enough to feel at home.
       </PageHero>
       <section className="py-16 md:py-20">

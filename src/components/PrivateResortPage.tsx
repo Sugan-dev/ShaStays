@@ -1,13 +1,13 @@
 import Link from "next/link";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
-import { ButtonLink } from "@/components/Buttons";
+import { ButtonLink, TextLink } from "@/components/Buttons";
 import { Container } from "@/components/Container";
 import { Icon } from "@/components/Icon";
 import { JsonLd } from "@/components/JsonLd";
 import { LazyImage } from "@/components/LazyImage";
 import { PrivateStayForm } from "@/components/PrivateStayForm";
 import { hasWhatsapp, whatsappHref, whatsappPrivateStay, cx } from "@/lib/links";
-import { mattressNote } from "@/lib/site";
+import { mattressNote, maxGroupSize } from "@/lib/site";
 import {
   privateAddOns,
   privateAudiences,
@@ -83,14 +83,14 @@ function Hero() {
         <div className="rise">
           <Breadcrumbs tone="light" items={[{ name: "Private Stay", path: "/private-resort" }]} />
         </div>
-        <p className="rise eyebrow text-sand">Private stay in Rameshwaram</p>
-        <h1 className="rise rise-delay-1 mt-5 max-w-4xl font-serif text-[clamp(2.9rem,6.4vw,5.75rem)] leading-[0.95] text-white [text-shadow:0_2px_24px_rgba(8,20,17,0.55)]">
+        <h1 className="rise eyebrow text-sand">Private group stay in Rameshwaram</h1>
+        <p className="rise rise-delay-1 mt-5 max-w-4xl font-serif text-[clamp(2.9rem,6.4vw,5.75rem)] leading-[0.95] text-white [text-shadow:0_2px_24px_rgba(8,20,17,0.55)]">
           Your Group.
           <br />
           Your Stay.
           <br />
           Your SHA.
-        </h1>
+        </p>
         <p className="rise rise-delay-2 mt-6 max-w-xl text-lg leading-relaxed text-white">
           Travelling to Rameshwaram with family, friends or a group? Book the entire SHA Stays property exclusively for yourselves.
         </p>
@@ -290,8 +290,16 @@ function Capacity() {
           Ideal for Small & Medium Groups
         </h2>
         <p className="mt-5 max-w-2xl text-lg leading-relaxed text-sand/90">
-          The property has 6 rooms and is best suited for small and medium-sized groups. Contact us with your group size and we&apos;ll recommend the best arrangement.
+          The property has 6 rooms and sleeps groups of up to {maxGroupSize} guests, using extra mattresses where needed. Contact us with your group size and we&apos;ll recommend the best arrangement.
         </p>
+        <div className="mt-8 flex flex-wrap gap-x-8 gap-y-3">
+          <TextLink href="/rooms" light>
+            See the King and Queen rooms
+          </TextLink>
+          <TextLink href="/location" light>
+            Location, parking and directions
+          </TextLink>
+        </div>
       </Container>
     </section>
   );
@@ -574,6 +582,7 @@ function Quote() {
             <li>Check-in: 12:00 PM</li>
             <li>Check-out: 11:00 AM</li>
             <li>All 6 rooms, reserved for one group</li>
+            <li>Up to {maxGroupSize} guests</li>
           </ul>
         </div>
         <PrivateStayForm />

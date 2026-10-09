@@ -1,5 +1,15 @@
 import type { Metadata } from "next";
-import { contact, faqs, galleryPhotos, rooms, sharedAmenities, site } from "@/lib/site";
+import {
+  contact,
+  faqs,
+  formatRupees,
+  galleryPhotos,
+  languages,
+  roomSize,
+  rooms,
+  sharedAmenities,
+  site,
+} from "@/lib/site";
 
 export const ogImage = {
   url: "/images/hero-banner.jpg",
@@ -45,15 +55,7 @@ export function pageMeta({
   };
 }
 
-const amenityFeature = [
-  "Air conditioning",
-  "Private bathroom",
-  "Hot water",
-  "Wi-Fi",
-  "Television",
-  "RO drinking water",
-  "Free parking",
-].map((name) => ({
+const amenityFeature = [...sharedAmenities.map(({ label }) => label), "Free parking"].map((name) => ({
   "@type": "LocationFeatureSpecification",
   name,
   value: true,
@@ -104,6 +106,9 @@ export function siteGraph() {
           longitude: 79.274022,
         },
         hasMap: contact.directionsUrl,
+        priceRange: `From ${formatRupees(Math.min(...rooms.map((room) => room.priceFrom)))} per night`,
+        currenciesAccepted: "INR",
+        knowsLanguage: languages,
         numberOfRooms: 6,
         checkinTime: "12:00",
         checkoutTime: "11:00",
@@ -115,21 +120,24 @@ export function siteGraph() {
             contactType: "reservations",
             email: contact.email,
             areaServed: "IN",
-            availableLanguage: "English",
+            availableLanguage: languages,
           },
           {
             "@type": "ContactPoint",
             telephone: contact.phoneAlt,
             contactType: "reservations",
             areaServed: "IN",
-            availableLanguage: "English",
+            availableLanguage: languages,
           },
         ],
         containsPlace: rooms.map((room) => ({
           "@type": "HotelRoom",
+          "@id": `${url}/rooms/${room.slug}/#room`,
           name: room.name,
           description: `${room.description} ${room.countLabel}.`,
           bed: room.bed,
+          occupancy: { "@type": "QuantitativeValue", maxValue: room.maxGuests, unitText: "guests" },
+          floorSize: { "@type": "QuantitativeValue", minValue: roomSize.min, maxValue: roomSize.max, unitCode: "FTK" },
           url: `${url}/rooms/${room.slug}/`,
           image: room.image ? `${url}${room.image}` : undefined,
           amenityFeature: sharedAmenities.map(({ label }) => ({

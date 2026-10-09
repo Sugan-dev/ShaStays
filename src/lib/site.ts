@@ -14,9 +14,9 @@ export const site = {
   supporting: "A peaceful boutique stay in Rameshwaram, close to the places that matter.",
   url: "https://shastays.com",
   locale: "en_IN",
-  title: "SHA Stays | Boutique Stay in Rameshwaram",
+  title: "SHA Stays | Rooms & Family Stay in Rameshwaram",
   description:
-    "Stay at SHA Stays, a boutique 6-room stay in Rameshwaram near the Abdul Kalam Memorial and close to Ramanathaswamy Temple. Comfortable rooms, easy road access and private group stays.",
+    "A six-room stay in Rameshwaram for families, pilgrims and road-trip travellers, near the Dr. A.P.J. Abdul Kalam Memorial and about 5 km from Ramanathaswamy Temple.",
 };
 
 export const contact = {
@@ -37,7 +37,7 @@ export const contact = {
   directionsUrl: "https://maps.app.goo.gl/CiW3pTEsirE5ejfS7",
   mapNote: "The pin marks SHA Stays, near the Dr. A.P.J. Abdul Kalam Memorial.",
   /** Full profile URL, e.g. https://www.instagram.com/<handle>/. Hidden while empty. */
-  instagram: "",
+  instagram: "https://www.instagram.com/sha.stays/",
 };
 
 export const propertyPhotos = {
@@ -220,6 +220,10 @@ export type Room = {
   number: string;
   bed: string;
   countLabel: string;
+  /** Maximum guests, including extra mattresses. */
+  maxGuests: number;
+  /** Starting rate per night in rupees, as confirmed by the owner. */
+  priceFrom: number;
   description: string;
   amenities: Amenity[];
   image: string;
@@ -238,6 +242,26 @@ export const sharedAmenities: Amenity[] = [
 export const mattressNote =
   "An extra mattress can be requested for any room, subject to availability. Please contact us before arrival.";
 
+export const roomSize = { label: "110–120 sq ft", min: 110, max: 120 };
+
+/** Largest group the whole property takes on a private stay. */
+export const maxGroupSize = 21;
+
+export const languages = ["Tamil", "English"];
+
+export function formatRupees(amount: number) {
+  return `₹${amount.toLocaleString("en-IN")}`;
+}
+
+export function roomFacts(room: Room) {
+  return [
+    { label: "Price", value: `From ${formatRupees(room.priceFrom)} / night` },
+    { label: "Sleeps", value: `Up to ${room.maxGuests} guests` },
+    { label: "Room size", value: roomSize.label },
+    { label: "Bed", value: room.bed },
+  ];
+}
+
 export const rooms: Room[] = [
   {
     slug: "sha-king-room",
@@ -245,6 +269,8 @@ export const rooms: Room[] = [
     number: "01",
     bed: "King-size bed",
     countLabel: "Two rooms",
+    maxGuests: 5,
+    priceFrom: 2500,
     description:
       "A comfortable room with a king-size bed, designed for couples and travellers looking for a relaxed stay.",
     amenities: [{ label: "King-size bed", icon: "bed" }, ...sharedAmenities],
@@ -282,6 +308,8 @@ export const rooms: Room[] = [
     number: "02",
     bed: "Queen-size bed",
     countLabel: "Four rooms",
+    maxGuests: 4,
+    priceFrom: 1800,
     description:
       "A welcoming room with a queen-size bed, designed for comfortable stays with family and friends.",
     amenities: [{ label: "Queen-size bed", icon: "bed" }, ...sharedAmenities],
@@ -329,6 +357,8 @@ export type Place = {
   short?: string;
   /** Only verified distances. */
   distance?: string;
+  /** Longer guide text for the Rameshwaram page. Well-documented facts only. */
+  details?: string;
   photo?: Photo;
 };
 
@@ -340,6 +370,8 @@ export const places: Place[] = [
       "One of India's most revered pilgrimage destinations and the spiritual heart of Rameshwaram.",
     short: "The spiritual heart of Rameshwaram.",
     distance: "About 5 km away",
+    details:
+      "One of the twelve Jyotirlingas and a Char Dham pilgrimage site, the temple is known for its long pillared corridors. Many pilgrims bathe in the sea at Agni Theertham and then in the sacred wells inside the temple before darshan. The temple is about 5 km from SHA Stays by road, so plan to drive rather than walk, and check timings and dress customs before you go.",
     photo: photos.gopuram,
   },
   {
@@ -349,6 +381,8 @@ export const places: Place[] = [
       "Discover the life and legacy of Dr. A.P.J. Abdul Kalam, India's beloved former President and scientist.",
     short: "A meaningful stop, close to SHA Stays.",
     distance: "Near SHA",
+    details:
+      "Built by DRDO and opened in 2017, the memorial honours Dr. Kalam, who was born in Rameshwaram, with exhibits on his life and work. It is close to SHA Stays, which makes it an easy visit on the day you arrive or the morning you leave.",
     photo: photos.kalam,
   },
   {
@@ -357,6 +391,8 @@ export const places: Place[] = [
     description:
       "Witness one of India's most iconic railway and engineering landmarks connecting the mainland with Rameshwaram Island.",
     short: "An iconic bridge over the sea to the island.",
+    details:
+      "The Pamban bridges join the island to the mainland at Mandapam. The original rail bridge, opened in 1914, was India's first sea bridge; a new vertical-lift rail bridge now stands beside it, alongside the road bridge you drive across to reach Rameshwaram.",
     photo: photos.pamban,
   },
   {
@@ -365,6 +401,8 @@ export const places: Place[] = [
     description:
       "Explore the atmospheric landscape at the eastern edge of the island, where history, sea and mythology meet.",
     short: "Dramatic landscapes at the island's edge.",
+    details:
+      "Dhanushkodi was a busy town until the 1964 cyclone left it in ruins. Today people come for the remains of the old church and railway station, the open shoreline and the road out to Arichal Munai, the island's land's end.",
     photo: photos.dhanushkodi,
   },
   {
@@ -372,12 +410,16 @@ export const places: Place[] = [
     name: "Ariyaman Beach",
     description:
       "A quieter coastal escape for guests looking to slow down and enjoy the sea.",
+    details:
+      "Ariyaman Beach is on the mainland near Mandapam, before you cross Pamban Bridge, so it fits easily into the drive in or out.",
   },
   {
     slug: "rameshwaram-island",
     name: "Rameshwaram Island",
     description:
       "Discover temples, beaches, viewpoints, historic places and local experiences across the island.",
+    details:
+      "Rameshwaram (also spelt Rameswaram) sits on Pamban Island in the Ramanathapuram district of Tamil Nadu. With a car or a hired vehicle, most of the island's sights can be covered over a day or two from SHA Stays.",
     photo: photos.corridor,
   },
 ];
@@ -438,12 +480,18 @@ export const reviews: Review[] = [];
 
 export const faqs = [
   {
+    question: "Where is SHA Stays in Rameshwaram?",
+    answer:
+      "SHA Stays is at 2/1750-5, near the Dr. A.P.J. Abdul Kalam Memorial, Rameshwaram, Tamil Nadu 623526, with easy access from the highway.",
+  },
+  {
     question: "How far is SHA Stays from Ramanathaswamy Temple?",
-    answer: "SHA Stays is approximately 5 km from Ramanathaswamy Temple.",
+    answer:
+      "SHA Stays is approximately 5 km from Ramanathaswamy Temple by road. It is not within walking distance, so plan to travel to the temple by car or another vehicle.",
   },
   {
     question: "Is SHA Stays near Abdul Kalam Memorial?",
-    answer: "Yes. SHA Stays is located near the Abdul Kalam Memorial.",
+    answer: "Yes. SHA Stays is located near the Dr. A.P.J. Abdul Kalam Memorial.",
   },
   {
     question: "Do you have parking?",
@@ -463,14 +511,23 @@ export const faqs = [
     answer: mattressNote,
   },
   {
+    question: "How much does a room cost?",
+    answer:
+      "SHA Queen Rooms start from ₹1,800 per night and SHA King Rooms from ₹2,500 per night. The rate depends on your dates, and we confirm it along with availability when you enquire.",
+  },
+  {
     question: "Are the rooms suitable for families?",
     answer:
-      "Our rooms are suitable for couples and small families depending on the selected room and sleeping arrangement. Please contact us if you need an extra mattress.",
+      "Yes. A SHA Queen Room sleeps up to 4 guests and a SHA King Room up to 5, using extra mattresses where needed. Rooms are 110–120 sq ft. Please tell us your group when you enquire so we can arrange the bedding.",
   },
   {
     question: "Can we book the whole property for a group?",
     answer:
-      "Yes. Families and groups can book all six rooms as a private stay in Rameshwaram. We quote for your dates and group size when you enquire.",
+      "Yes. Families and groups of up to 21 guests can book all six rooms as a private stay in Rameshwaram. We quote for your dates and group size when you enquire.",
+  },
+  {
+    question: "Which languages do you speak?",
+    answer: "We speak Tamil and English.",
   },
   {
     question: "Can I book directly?",

@@ -1,5 +1,5 @@
 import type { IconName } from "@/components/Icon";
-import { photos, places, type Place } from "@/lib/site";
+import { maxGroupSize, photos, places, type Place } from "@/lib/site";
 
 /**
  * Private Stay page content (book the entire property for one group).
@@ -63,7 +63,7 @@ export const privateAudiences = [
 export const privateInclusions: { title: string; text: string; icon: IconName }[] = [
   {
     title: "6 Private Rooms",
-    text: "Accommodation for your entire group across all six rooms — two king rooms and four queen rooms.",
+    text: `Accommodation for up to ${maxGroupSize} guests across all six rooms — two king rooms and four queen rooms.`,
     icon: "bed",
   },
   {
@@ -118,7 +118,7 @@ export const privateSteps = [
 
 export const privateStats = [
   { value: "6", label: "Rooms" },
-  { value: "1", label: "Private Property" },
+  { value: String(maxGroupSize), label: "Guests, maximum" },
   { value: "1", label: "Group" },
   { value: "0", label: "Unrelated Guests" },
 ] as const;
@@ -279,8 +279,7 @@ export const privateFaqs = [
   },
   {
     question: "How many people can stay?",
-    answer:
-      "The property has 6 rooms and is best suited for small and medium-sized groups. Contact us with your group size and we'll recommend the best arrangement.",
+    answer: `Up to ${maxGroupSize} guests across the 6 rooms, using extra mattresses where needed. Contact us with your group size and we'll recommend the best arrangement.`,
   },
   {
     question: "Can we come by Tempo Traveller?",

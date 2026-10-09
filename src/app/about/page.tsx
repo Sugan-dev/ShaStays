@@ -7,9 +7,9 @@ import { pageMeta } from "@/lib/seo";
 import { aboutPhotos, pillars } from "@/lib/site";
 
 export const metadata = pageMeta({
-  title: "About SHA Stays",
+  title: "About Our Six-Room Stay in Rameshwaram",
   description:
-    "SHA Stays is a six-room boutique stay in Rameshwaram, created for travellers who want comfort, easy access and a calmer place to rest.",
+    "SHA Stays is a six-room boutique stay in Rameshwaram near the Abdul Kalam Memorial, created for travellers who want comfort, easy access and a calmer place to rest.",
   path: "/about",
 });
 

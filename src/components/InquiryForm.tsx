@@ -3,6 +3,7 @@
 import { FormEvent, useEffect, useRef, useState } from "react";
 import { contact, rooms } from "@/lib/site";
 import { hasEmail, hasWhatsapp, whatsappHref } from "@/lib/links";
+import { trackEvent } from "@/lib/analytics";
 
 type Status = "idle" | "whatsapp" | "email" | "copy";
 
@@ -91,6 +92,12 @@ export function InquiryForm({ initialRoom = "" }: { initialRoom?: string }) {
     ]
       .filter(Boolean)
       .join("\n");
+
+    trackEvent("generate_lead", {
+      form_name: "room_enquiry",
+      method: hasWhatsapp() ? "whatsapp" : hasEmail() ? "email" : "copy",
+      room_type: room || "not_sure",
+    });
 
     if (hasWhatsapp()) {
       const url = whatsappHref(message);

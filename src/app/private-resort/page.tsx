@@ -6,7 +6,7 @@ import { pageMeta } from "@/lib/seo";
 export const metadata = pageMeta({
   title: "Private Group Stay in Rameshwaram",
   description:
-    "Book the entire SHA Stays property for your group in Rameshwaram. A private 6-room stay for families, friends, pilgrimage groups and travellers arriving by car, van or Tempo Traveller.",
+    "Planning a family or group trip to Rameshwaram? Book all six rooms at SHA Stays as a private group stay for up to 21 guests. Enquire about your dates and vehicle.",
   path: "/private-resort",
 });
 

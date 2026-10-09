@@ -1,9 +1,10 @@
 "use client";
 
 import { FormEvent, useEffect, useState } from "react";
-import { contact } from "@/lib/site";
+import { contact, maxGroupSize } from "@/lib/site";
 import { vehicleTypes } from "@/lib/private-resort";
 import { hasEmail, hasWhatsapp, whatsappHref } from "@/lib/links";
+import { trackEvent } from "@/lib/analytics";
 
 type Status = "idle" | "whatsapp" | "email" | "copy";
 
@@ -64,6 +65,12 @@ export function PrivateStayForm() {
       .filter(Boolean)
       .join("\n");
 
+    trackEvent("generate_lead", {
+      form_name: "private_stay_enquiry",
+      method: hasWhatsapp() ? "whatsapp" : hasEmail() ? "email" : "copy",
+      vehicle_type: vehicle,
+    });
+
     if (hasWhatsapp()) {
       const link = document.createElement("a");
       link.href = whatsappHref(message);
@@ -112,7 +119,10 @@ export function PrivateStayForm() {
         </label>
         <label className="block text-sm font-medium text-charcoal">
           Number of Guests
-          <input name="guests" type="number" required min={1} max={40} inputMode="numeric" className={fieldClass} />
+          <input name="guests" type="number" required min={1} max={maxGroupSize} inputMode="numeric" className={fieldClass} />
+          <span className="mt-2 block text-xs leading-relaxed font-normal text-muted">
+            The property sleeps up to {maxGroupSize} guests.
+          </span>
         </label>
         <label className="block text-sm font-medium text-charcoal">
           Number of Rooms Required

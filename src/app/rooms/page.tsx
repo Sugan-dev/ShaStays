@@ -1,4 +1,4 @@
-import { ButtonLink } from "@/components/Buttons";
+import { ButtonLink, TextLink } from "@/components/Buttons";
 import { Container } from "@/components/Container";
 import { FinalCta } from "@/components/FinalCta";
 import { PageHero } from "@/components/PageHero";
@@ -9,16 +9,16 @@ import { hasWhatsapp, whatsappAvailability, whatsappHref } from "@/lib/links";
 import { AmenityList } from "@/components/AmenityList";
 
 export const metadata = pageMeta({
-  title: "Rooms in Rameshwaram",
+  title: "Rooms in Rameshwaram: King & Queen Rooms",
   description:
-    "Two SHA King Rooms and four SHA Queen Rooms at SHA Stays, a peaceful boutique stay in Rameshwaram. Comfortable beds, private bathrooms, air conditioning and easy road access.",
+    "Rooms in Rameshwaram from ₹1,800 a night: SHA Queen Rooms sleep 4, SHA King Rooms sleep 5. AC, private bathroom and Wi-Fi, near the Abdul Kalam Memorial.",
   path: "/rooms",
 });
 
 export default function RoomsPage() {
   return (
     <>
-      <PageHero eyebrow="Six boutique rooms" title="Rooms made for a comfortable stay." crumb="Rooms" path="/rooms">
+      <PageHero eyebrow="Six rooms at SHA Stays" title="Rooms in Rameshwaram" crumb="Rooms" path="/rooms">
         Two SHA King Rooms and four SHA Queen Rooms: calm, clean and thoughtfully kept, with a peaceful place to rest after a day exploring Rameshwaram.
       </PageHero>
       <section className="py-16 md:py-24">
@@ -51,6 +51,14 @@ export default function RoomsPage() {
               <ButtonLink href={whatsappHref(whatsappAvailability)} variant="ghost" external={hasWhatsapp()} icon="whatsapp">
                 WhatsApp Us
               </ButtonLink>
+            </div>
+            <div className="mt-8 border-t border-white/10 pt-6">
+              <p className="text-sm leading-relaxed text-sand/90">Travelling as a family or group of up to 21?</p>
+              <div className="mt-2">
+                <TextLink href="/private-resort" light>
+                  Book all six rooms as a private group stay
+                </TextLink>
+              </div>
             </div>
           </div>
         </Container>

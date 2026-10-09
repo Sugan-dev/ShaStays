@@ -28,7 +28,9 @@ export type IconName =
   | "phone"
   | "whatsapp"
   | "instagram"
-  | "star";
+  | "star"
+  | "power"
+  | "cctv";
 
 const paths: Record<Exclude<IconName, "whatsapp" | "instagram">, ReactNode> = {
   bed: (
@@ -161,6 +163,13 @@ const paths: Record<Exclude<IconName, "whatsapp" | "instagram">, ReactNode> = {
     />
   ),
   star: <path d="m12 4 2.4 4.9 5.4.8-3.9 3.8.9 5.4L12 16.4l-4.8 2.5.9-5.4-3.9-3.8 5.4-.8z" strokeLinejoin="round" />,
+  power: <path d="M13 3.5 6 13h5l-1 7.5L17 11h-5z" strokeLinejoin="round" />,
+  cctv: (
+    <>
+      <path d="M3.5 8.2 15.6 4.5l1.8 5.8-12.1 3.7z" strokeLinejoin="round" />
+      <path d="M8.6 12.5 10 17H5.5M5.5 14.5v5M17.4 8.6l3.1-1" />
+    </>
+  ),
 };
 
 export function Icon({ name, className }: { name: IconName; className?: string }) {

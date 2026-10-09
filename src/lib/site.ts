@@ -191,12 +191,12 @@ export const reasons: { title: string; text: string; icon: IconName }[] = [
   },
   {
     title: "Comfortable Rooms",
-    text: "Clean, air-conditioned and thoughtfully prepared for a restful night.",
+    text: "Clean, air-conditioned rooms with power backup, thoughtfully prepared for a restful night.",
     icon: "bed",
   },
   {
-    title: "Parking",
-    text: "Free parking on site for bikes, cars and larger vehicles, with space for about 4–5 cars.",
+    title: "Safe Parking",
+    text: "Free parking on site for bikes, cars and larger vehicles (about 4–5 cars), with 24-hour CCTV across the property.",
     icon: "car",
   },
   {
@@ -237,6 +237,14 @@ export const sharedAmenities: Amenity[] = [
   { label: "Wi-Fi", icon: "wifi" },
   { label: "Television", icon: "tv" },
   { label: "RO drinking water", icon: "water" },
+  { label: "Power backup", icon: "power" },
+];
+
+/** Property-wide, not in-room: never list CCTV as a room amenity. */
+export const propertyAmenities: Amenity[] = [
+  { label: "24-hour CCTV", icon: "cctv" },
+  { label: "Free parking", icon: "car" },
+  { label: "Outdoor seating", icon: "leaf" },
 ];
 
 export const mattressNote =
@@ -505,6 +513,10 @@ export const faqs = [
   {
     question: "What time is check-out?",
     answer: "Check-out: 11:00 AM",
+  },
+  {
+    question: "Is there power backup and security?",
+    answer: "Yes. The rooms have power backup, and the property has 24-hour CCTV.",
   },
   {
     question: "Can we request an extra mattress?",

@@ -73,7 +73,7 @@ export const privateInclusions: { title: string; text: string; icon: IconName }[
   },
   {
     title: "Group Parking",
-    text: "Free parking for bikes, cars and larger vehicles, with space for about 4–5 cars.",
+    text: "Free parking for bikes, cars and larger vehicles, with space for about 4–5 cars and 24-hour CCTV across the property.",
     icon: "car",
   },
   {
@@ -134,6 +134,7 @@ export const privatePackage = {
     "All 6 rooms",
     "No unrelated guests",
     "Parking for your vehicles",
+    "Power backup and 24-hour CCTV",
     "Group assistance",
     "Additional sleeping arrangement where applicable",
   ],

@@ -3,7 +3,7 @@ import { Container } from "@/components/Container";
 import { FinalCta } from "@/components/FinalCta";
 import { PageHero } from "@/components/PageHero";
 import { RoomCard } from "@/components/RoomCard";
-import { mattressNote, rooms, sharedAmenities, stayFacts } from "@/lib/site";
+import { mattressNote, propertyAmenities, rooms, sharedAmenities, stayFacts } from "@/lib/site";
 import { pageMeta } from "@/lib/seo";
 import { hasWhatsapp, whatsappAvailability, whatsappHref } from "@/lib/links";
 import { AmenityList } from "@/components/AmenityList";
@@ -11,7 +11,7 @@ import { AmenityList } from "@/components/AmenityList";
 export const metadata = pageMeta({
   title: "Rooms in Rameshwaram: King & Queen Rooms",
   description:
-    "Rooms in Rameshwaram from ₹1,800 a night: SHA Queen Rooms sleep 4, SHA King Rooms sleep 5. AC, private bathroom and Wi-Fi, near the Abdul Kalam Memorial.",
+    "Rooms in Rameshwaram from ₹1,800 a night: SHA Queen Rooms sleep 4, SHA King Rooms sleep 5. AC, private bathroom, Wi-Fi, power backup and 24-hour CCTV.",
   path: "/rooms",
 });
 
@@ -35,6 +35,8 @@ export default function RoomsPage() {
           <div className="rounded-panel border border-line bg-paper p-7 md:p-10">
             <h2 className="font-serif text-3xl text-forest md:text-4xl">In every room</h2>
             <AmenityList amenities={sharedAmenities} className="mt-6" />
+            <h3 className="mt-8 font-serif text-2xl text-forest">Around the property</h3>
+            <AmenityList amenities={propertyAmenities} className="mt-4" />
             <p className="mt-8 max-w-xl text-sm leading-relaxed text-muted">{mattressNote}</p>
           </div>
           <div className="flex flex-col rounded-panel bg-forest p-7 text-ivory md:p-10">

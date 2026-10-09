@@ -29,7 +29,7 @@ const arrival: { title: string; text: string; icon: IconName }[] = [
   },
   {
     title: "Parking",
-    text: "Free parking on site for bikes, cars and larger vehicles, with space for about 4–5 cars.",
+    text: "Free parking on site for bikes, cars and larger vehicles, with space for about 4–5 cars and 24-hour CCTV across the property.",
     icon: "car",
   },
   {

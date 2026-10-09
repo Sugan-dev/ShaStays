@@ -9,7 +9,16 @@ import { FinalCta } from "@/components/FinalCta";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { Icon } from "@/components/Icon";
 import { LazyImage } from "@/components/LazyImage";
-import { formatRupees, getRoom, mattressNote, roomFacts, roomSize, rooms, stayFacts } from "@/lib/site";
+import {
+  formatRupees,
+  getRoom,
+  mattressNote,
+  propertyAmenities,
+  roomFacts,
+  roomSize,
+  rooms,
+  stayFacts,
+} from "@/lib/site";
 import { pageMeta } from "@/lib/seo";
 import { cx, hasWhatsapp, whatsappHref, whatsappRoom } from "@/lib/links";
 
@@ -128,6 +137,8 @@ export default async function RoomPage({ params }: Props) {
           <div>
             <h2 className="font-serif text-4xl text-forest">In the room</h2>
             <AmenityList amenities={room.amenities} className="mt-6 max-w-lg" />
+            <h3 className="mt-8 font-serif text-2xl text-forest">Around the property</h3>
+            <AmenityList amenities={propertyAmenities} className="mt-4 max-w-lg" />
             <p className="mt-8 max-w-xl text-sm leading-relaxed text-muted">{mattressNote}</p>
             <p className="mt-4 max-w-xl text-sm leading-relaxed text-muted">
               The {room.name} sleeps up to {room.maxGuests} guests using extra mattresses, so it suits couples and families. Tell us your group when you enquire and we&apos;ll arrange the bedding.

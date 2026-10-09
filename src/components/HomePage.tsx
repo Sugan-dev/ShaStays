@@ -173,7 +173,7 @@ function Rooms() {
     <section id="rooms" className="border-y border-line bg-paper py-20 md:py-28">
       <Container>
         <SectionIntro eyebrow="Rooms in Rameshwaram" title="Comfortable rooms for couples and families.">
-          Two SHA King Rooms and four SHA Queen Rooms, each with a private bathroom, air conditioning and Wi-Fi.
+          Two SHA King Rooms and four SHA Queen Rooms, each with a private bathroom, air conditioning, Wi-Fi and power backup.
         </SectionIntro>
         <div className="mt-12 grid gap-16 md:grid-cols-2 md:gap-8 lg:gap-12">
           {rooms.map((room) => (

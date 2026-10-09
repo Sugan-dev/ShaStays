@@ -5,6 +5,7 @@ import {
   formatRupees,
   galleryPhotos,
   languages,
+  propertyAmenities,
   roomSize,
   rooms,
   sharedAmenities,
@@ -55,7 +56,7 @@ export function pageMeta({
   };
 }
 
-const amenityFeature = [...sharedAmenities.map(({ label }) => label), "Free parking"].map((name) => ({
+const amenityFeature = [...sharedAmenities, ...propertyAmenities].map(({ label: name }) => ({
   "@type": "LocationFeatureSpecification",
   name,
   value: true,

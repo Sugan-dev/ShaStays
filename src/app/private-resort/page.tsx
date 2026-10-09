@@ -4,9 +4,9 @@ import { privateHero } from "@/lib/private-resort";
 import { pageMeta } from "@/lib/seo";
 
 export const metadata = pageMeta({
-  title: "Private Resort in Rameshwaram",
+  title: "Private Group Stay in Rameshwaram",
   description:
-    "Book SHA Stays exclusively for your group in Rameshwaram. A private 6-room resort for families, friends, pilgrimage groups and travellers arriving by van or Tempo Traveller.",
+    "Book the entire SHA Stays property for your group in Rameshwaram. A private 6-room stay for families, friends, pilgrimage groups and travellers arriving by car, van or Tempo Traveller.",
   path: "/private-resort",
 });
 

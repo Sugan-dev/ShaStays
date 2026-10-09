@@ -15,6 +15,21 @@
   "/images/gallery/amenity-water.webp": [
     640
   ],
+  "/images/gallery/entrance-forecourt-night.webp": [
+    640,
+    960,
+    1280
+  ],
+  "/images/gallery/highway-signboard.webp": [
+    640,
+    960,
+    1280
+  ],
+  "/images/gallery/king-cottage-night.webp": [
+    640,
+    960,
+    1280
+  ],
   "/images/gallery/outdoor-arch.webp": [
     640,
     960,
@@ -40,6 +55,11 @@
   ],
   "/images/gallery/outdoor-walkway.webp": [
     640
+  ],
+  "/images/gallery/walkway-arch-night.webp": [
+    640,
+    960,
+    1280
   ],
   "/images/kalam.webp": [
     640,

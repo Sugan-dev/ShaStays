@@ -51,7 +51,7 @@ export default function AboutPage() {
       <section className="pb-20">
         <Container className="grid gap-5 md:grid-cols-3">
           {pillars.map((pillar) => (
-            <article key={pillar.title} className="rounded-[1.75rem] bg-sand/70 p-8">
+            <article key={pillar.title} className="rounded-panel bg-sand/70 p-8">
               <h2 className="font-serif text-4xl text-forest">{pillar.title}</h2>
               <p className="mt-3 text-lg text-charcoal/80">{pillar.text}</p>
             </article>

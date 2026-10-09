@@ -1,9 +1,10 @@
 import type { Metadata, Viewport } from "next";
-import { DeferredFonts } from "@/components/DeferredFonts";
+import { preload } from "react-dom";
 import { JsonLd } from "@/components/JsonLd";
+import { MobileActionBar } from "@/components/MobileActionBar";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
-import { siteGraph } from "@/lib/seo";
+import { ogImage, siteGraph } from "@/lib/seo";
 import { site } from "@/lib/site";
 import "./globals.css";
 
@@ -11,6 +12,7 @@ export const viewport: Viewport = {
   themeColor: "#183C35",
   width: "device-width",
   initialScale: 1,
+  viewportFit: "cover",
 };
 
 export const metadata: Metadata = {
@@ -43,37 +45,36 @@ export const metadata: Metadata = {
     type: "website",
     siteName: site.name,
     url: "/",
-    images: [
-      {
-        url: "/images/hero-banner.jpg",
-        width: 1672,
-        height: 941,
-        alt: "The garden entrance and walkway of SHA Stays in Rameshwaram",
-      },
-    ],
+    images: [ogImage],
   },
   twitter: {
     card: "summary_large_image",
     title: site.title,
     description: site.description,
-    images: ["/images/hero-banner.jpg"],
+    images: [ogImage.url],
   },
 };
 
+const fonts = ["/fonts/cormorant.woff2", "/fonts/dm.woff2"];
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  for (const href of fonts) {
+    preload(href, { as: "font", type: "font/woff2", crossOrigin: "anonymous" });
+  }
+
   return (
     <html lang="en-IN">
       <body>
-        <DeferredFonts />
         <a
           href="#content"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[80] focus:rounded-full focus:bg-paper focus:px-4 focus:py-2"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[90] focus:rounded-full focus:bg-paper focus:px-4 focus:py-2"
         >
           Skip to content
         </a>
         <SiteHeader />
         <main id="content">{children}</main>
         <SiteFooter />
+        <MobileActionBar />
         <JsonLd data={siteGraph()} />
       </body>
     </html>

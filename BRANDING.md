@@ -9,8 +9,8 @@ How the SHA Stays brand looks and sounds on the website, and the rules for exten
 | Name | **SHA Stays** (always "SHA" in capitals, "Stays" in title case; never "Sha Stays" or "SHA STAYS" in body copy) |
 | Tagline | **Stay Close. Feel at Home.** |
 | Descriptor | A Peaceful Stay in Rameshwaram |
-| Supporting line | A peaceful boutique stay for your Rameshwaram journey. |
-| Positioning | A small, personal, six-room boutique stay — calm, clean and comfortable, near the Abdul Kalam Memorial. Not a big hotel, not a luxury resort. |
+| Supporting line | A peaceful boutique stay in Rameshwaram, close to the places that matter. |
+| Positioning | A personal, six-room boutique stay — calm, clean and comfortable, near the Abdul Kalam Memorial, with easy highway access. Not a big hotel, not a luxury resort. Two audiences: individual travellers/families booking rooms, and groups (often by car or 15–21 seater van) booking the entire property as a **private stay**. |
 | Room names | **SHA King Room**, **SHA Queen Room** (the "SHA" prefix is part of the name) |
 
 Source of truth for these strings: `site` in `src/lib/site.ts`.
@@ -20,7 +20,8 @@ Peace (a calmer place to stay), Location (convenient for exploring Rameshwaram),
 
 ### Voice and tone
 - **Calm, warm, honest, unhurried.** Short sentences. Plain words. Speak like a host, not a booking engine.
-- Understated claims: "comfortable", "peaceful", "thoughtfully prepared", "kept simple". Avoid superlatives and hype ("luxurious", "world-class", "best").
+- Understated claims: "comfortable", "peaceful", "thoughtfully prepared", "kept simple". Avoid superlatives and hype ("luxurious", "world-class", "best"), and avoid words that cheapen the stay ("cheap", "budget", "small rooms", "basic").
+- Say "entire property" or "private stay" for whole-property bookings, never "resort".
 - Never overpromise. Optional extras are "can be discussed" or "subject to availability". Enquiries "do not reserve a room until SHA Stays confirms".
 - Indian/British English spelling: *enquiry, cosy, travellers, personalised, colour*. Use "Rameshwaram".
 - Headline style: short, declarative pairs with full stops — "Stay Close. Feel at Home.", "Simple Rooms. Comfortable Stays.", "Comfort, kept simple." Large marketing headings and button labels use Title Case ("Book Your Stay", "WhatsApp Us", "Explore Rooms"); small section headings can be sentence case ("A closer look", "Plan the stay").
@@ -44,6 +45,8 @@ Peace (a calmer place to stay), Location (convenient for exploring Rameshwaram),
 ## Colour palette
 
 Defined once as Tailwind v4 theme tokens in `src/app/globals.css` (`@theme inline`) and used as utilities (`bg-forest`, `text-muted`, `border-line`, …).
+
+Semantic aliases mirror the palette for role-based use: `primary` = `forest`, `secondary` = `terracotta-deep`, `background` = `ivory`, `surface` = `paper`, `text` = `charcoal`, `border` = `line` (so `bg-surface`, `text-primary` etc. work). They are copies, so change both when the palette changes.
 
 ### Greens — primary brand colour
 | Token | Hex | Role |
@@ -101,9 +104,9 @@ These repeat token values as raw hex/rgba and must be updated by hand if the pal
 - `src/app/layout.tsx` (`themeColor`) and `src/app/manifest.ts` (`theme_color`, `background_color`): `#183C35`, `#F8F5EF`.
 - `src/app/icon.svg`, `public/favicon.svg`: `#183C35`, `#F8F5EF`, `#B86F52`.
 - `src/app/globals.css`: `::selection` (`#e8dcc8` / `#183c35`) and `:focus-visible` (`#b86f52`) use hex instead of the variables.
-- Shadows: `rgba(24,60,53, 0.05–0.16)` (= `forest`). Hero overlays and `ghost` button: `rgba(16,40,34,…)` / `#102822` (= `forest-deep`). Text shadow: `rgba(8,20,17,0.55)`.
+- Shadow tokens `--shadow-soft` / `--shadow-lift` use `rgba(24,60,53,…)` (= `forest`). Hero and Private Stay photo overlays: `rgba(16,40,34,…)` (= `forest-deep`). Hero text shadow: `rgba(8,20,17,0.5)`.
 
-When adding UI, use tokens (`bg-forest-deep/80`, `shadow-forest/10`) rather than adding more raw values.
+When adding UI, use tokens (`bg-forest-deep/80`, `shadow-soft`, `rounded-card`) rather than adding more raw values.
 
 ## Typography
 
@@ -112,23 +115,24 @@ When adding UI, use tokens (`bg-forest-deep/80`, `shadow-forest/10`) rather than
 | Headings, display, large numbers, tagline | **Cormorant Garamond** (elegant high-contrast serif) | 500, 600, plus italic 500/600 | `font-serif` |
 | Body, UI, buttons, labels | **DM Sans** (clean geometric sans) | 400, 500, 600 | `font-sans` (default on `body`) |
 
-- Self-hosted in `public/fonts/` and declared in `public/fonts.css`. Loaded ~3 seconds after page load by `DeferredFonts`; until then, metric-matched Arial fallbacks ("… Fallback" faces in `globals.css`) prevent layout shift. Expect plain-looking headings for the first few seconds — that's intentional.
+- Self-hosted in `public/fonts/`, declared with `@font-face` (`font-display: swap`) in `globals.css`, and the upright Cormorant and DM Sans files are preloaded in `layout.tsx`. Metric-matched Arial fallbacks ("… Fallback" faces) keep layout stable while they load.
 - Only the weights above exist. Don't use `font-bold`/`font-light` etc. on serif headings; they will be synthesised by the browser.
 
 ### Type scale and patterns
-- **Hero headline:** `font-serif`, fluid `text-[clamp(3.4rem,8vw,7rem)]`, `leading-[0.92]`, white.
-- **Page H1 / big section H2:** `font-serif text-5xl md:text-7xl leading-[1.02] text-forest`.
-- **Section H2:** `font-serif text-4xl` (often `md:text-5xl`) `text-forest`.
-- **Eyebrow label** (above most headings): `text-xs font-medium uppercase tracking-[0.22em] text-terracotta-deep` (on dark: `text-sand`). Letter-spacing ranges 0.14–0.24em; 0.22em is the default.
+- **Hero headline:** `font-serif`, fluid `text-[clamp(3.1rem,8vw,6.75rem)]`, `leading-[0.92]`, white.
+- **Page H1:** `font-serif text-5xl md:text-7xl leading-[1.02] text-forest`.
+- **Section H2:** use `SectionIntro` — `font-serif text-[2.4rem] md:text-6xl leading-[1.04] text-forest`, sentence case with a full stop ("Rooms made for a comfortable stay.").
+- **Eyebrow label** (above most headings): the `eyebrow` utility (`text-xs font-medium uppercase tracking-[0.22em]`) plus a colour: `text-terracotta-deep` on light, `text-sand` on dark.
 - **Lead paragraph:** `text-lg leading-relaxed text-muted`, max width `max-w-xl`/`max-w-2xl`.
 - **Numbers as decoration** ("01", "02"): large `font-serif` in `terracotta-deep`, or translucent white/forest on panels.
 
 ## Shape, depth and layout
 
-- **Radius:** generous and soft. Cards, forms, images, panels: `rounded-[1.75rem]` (main) or `rounded-[1.5rem]` (smaller cards, gallery photos). Inputs: `rounded-2xl`. Buttons, chips and icon buttons: `rounded-full` (pills/circles). No sharp corners on content blocks.
-- **Shadows:** very soft, large and green-tinted — `shadow-[0_18px_50px_rgba(24,60,53,0.06)]` plus `ring-1 ring-black/5`. Never harsh grey drop shadows.
-- **Width:** content is centred in `Container` (`max-w-6xl`); generous vertical rhythm (`py-16 md:py-20`, CTA sections `py-20 md:py-28`).
+- **Radius:** soft but restrained (more editorial than bubbly). Photos and cards: `rounded-card` (1rem). Panels, forms, large blocks: `rounded-panel` (1.25rem). Gallery mosaic tiles: `rounded-lg`. Inputs: `rounded-2xl`. Buttons, chips and icon buttons: `rounded-full`.
+- **Shadows:** very soft and green-tinted — `shadow-soft` (forms, cards) or `shadow-lift` (dark feature card, scrolled header is `shadow-soft`), often with `ring-1 ring-black/5`. Never harsh grey drop shadows.
+- **Width:** content is centred in `Container` (`max-w-6xl`); generous vertical rhythm (homepage sections `py-20 md:py-28`, inner pages `py-16 md:py-20`). Prefer whitespace and thin `border-line` dividers over boxed cards (e.g. "Why stay with SHA?" uses top borders, not cards).
 - **Photos:** mostly 4:3 frames with `object-cover`; use `focus`/`fit` classes to keep the subject in frame.
+- **Icons:** the `Icon` component (`src/components/Icon.tsx`): line icons on a 24px grid, 1.6 stroke, `currentColor`, usually in a `bg-sand/70` circle with `text-forest`. No emoji.
 
 ## Buttons and links
 
@@ -154,7 +158,7 @@ When adding UI, use tokens (`bg-forest-deep/80`, `shadow-forest/10`) rather than
 
 ## Motion
 
-Minimal and gentle: hero text fades up with `.rise` (+ `rise-delay-1..3`), cards lift slightly on hover (`motion-safe:hover:-translate-y-1`), smooth scrolling. All motion is disabled under `prefers-reduced-motion`. Don't add parallax, carousels or attention-grabbing animation.
+Minimal and gentle: hero text fades up with `.rise` (+ `rise-delay-1..3`), the hero photo settles from a slight zoom (`.hero-settle`), sections fade up as they enter the viewport (`.reveal`, CSS scroll-driven, ignored by browsers without support), photos zoom very slightly on hover, smooth scrolling. All motion is disabled under `prefers-reduced-motion`. Don't add parallax, carousels or attention-grabbing animation.
 
 ## Changing the theme — checklist
 

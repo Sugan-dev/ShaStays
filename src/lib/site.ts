@@ -1,23 +1,22 @@
+import type { IconName } from "@/components/Icon";
+
 /**
- * SHA Stays content and launch settings.
+ * SHA Stays content: the single source of truth for copy and facts.
  *
- * Before going live, fill in phone, WhatsApp, email, the website URL,
- * and the exact Google Maps pin. Add property photographs only when
- * they are photos of SHA Stays. Leave a field blank rather than guessing.
+ * Add property photographs only when they are photos of SHA Stays.
+ * Leave a field blank rather than guessing; empty fields are hidden.
  */
 
 export const site = {
   name: "SHA Stays",
   descriptor: "A Peaceful Stay in Rameshwaram",
   tagline: "Stay Close. Feel at Home.",
-  supporting:
-    "A peaceful boutique stay for your Rameshwaram journey.",
+  supporting: "A peaceful boutique stay in Rameshwaram, close to the places that matter.",
   url: "https://shastays.com",
   locale: "en_IN",
-  title:
-    "SHA Stays Rameshwaram | Boutique Stay Near Abdul Kalam Memorial",
+  title: "SHA Stays | Boutique Stay in Rameshwaram",
   description:
-    "Stay at SHA Stays, a peaceful boutique stay in Rameshwaram near the Abdul Kalam Memorial and approximately 5 km from Ramanathaswamy Temple. Comfortable rooms, easy road access and a welcoming stay.",
+    "Stay at SHA Stays, a boutique 6-room stay in Rameshwaram near the Abdul Kalam Memorial and close to Ramanathaswamy Temple. Comfortable rooms, easy road access and private group stays.",
 };
 
 export const contact = {
@@ -37,6 +36,8 @@ export const contact = {
     "https://maps.google.com/maps?q=9.286683,79.274022&z=16&hl=en&output=embed",
   directionsUrl: "https://maps.app.goo.gl/CiW3pTEsirE5ejfS7",
   mapNote: "The pin marks SHA Stays, near the Dr. A.P.J. Abdul Kalam Memorial.",
+  /** Full profile URL, e.g. https://www.instagram.com/<handle>/. Hidden while empty. */
+  instagram: "",
 };
 
 export const propertyPhotos = {
@@ -146,72 +147,72 @@ export const hero = propertyPhotos.exterior
     };
 
 export const nav = [
+  { href: "/", label: "Home" },
   { href: "/rooms", label: "Rooms" },
   { href: "/private-resort", label: "Private Stay" },
+  { href: "/experience", label: "Rameshwaram" },
   { href: "/gallery", label: "Gallery" },
-  { href: "/experience", label: "Experience" },
-  { href: "/about", label: "About" },
-  { href: "/location", label: "Location" },
   { href: "/contact", label: "Contact" },
 ] as const;
 
 export const footerNav = [
-  { href: "/", label: "Home" },
   { href: "/rooms", label: "Rooms" },
   { href: "/private-resort", label: "Private Stay" },
+  { href: "/experience", label: "Rameshwaram" },
   { href: "/gallery", label: "Gallery" },
-  { href: "/experience", label: "Experience" },
   { href: "/location", label: "Location" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
-  { href: "/book", label: "Book Now" },
 ] as const;
 
-export const highlights = [
-  { value: "6", label: "Thoughtfully prepared rooms" },
-  { value: "5 km", label: "From Ramanathaswamy Temple" },
-  { value: "Near", label: "Abdul Kalam Memorial" },
-  { value: "NH", label: "Easy road access" },
-] as const;
+export const trustBar: { label: string; icon: IconName }[] = [
+  { label: "6 Boutique Rooms", icon: "bed" },
+  { label: "Near Abdul Kalam Memorial", icon: "landmark" },
+  { label: "~5 km from Ramanathaswamy Temple", icon: "temple" },
+  { label: "Easy Highway Access", icon: "road" },
+  { label: "Parking Available", icon: "car" },
+];
 
-export const reasons = [
+export const reasons: { title: string; text: string; icon: IconName }[] = [
   {
-    number: "01",
-    title: "Peaceful Location",
-    text: "Close to Rameshwaram's major attractions, while offering a calmer place to return to after a day of exploring.",
+    title: "Convenient Location",
+    text: "Near the Abdul Kalam Memorial and about 5 km from Ramanathaswamy Temple, with easy road access.",
+    icon: "pin",
   },
   {
-    number: "02",
+    title: "Boutique Experience",
+    text: "Just six rooms, so the stay feels personal rather than crowded.",
+    icon: "leaf",
+  },
+  {
     title: "Easy Road Access",
-    text: "Located along the highway, making SHA Stays convenient for guests travelling by car, taxi or tour vehicle.",
+    text: "On the highway, convenient for travellers arriving by car, SUV or tour vehicle.",
+    icon: "road",
   },
   {
-    number: "03",
-    title: "Near Abdul Kalam Memorial",
-    text: "Stay close to one of Rameshwaram's most meaningful landmarks and explore the story of India's Missile Man.",
+    title: "Comfortable Rooms",
+    text: "Clean, air-conditioned and thoughtfully prepared for a restful night.",
+    icon: "bed",
   },
   {
-    number: "04",
-    title: "Family Friendly",
-    text: "Comfortable rooms and a welcoming environment for families, couples and travellers.",
+    title: "Parking",
+    text: "Free parking on site for bikes, cars and larger vehicles, with space for about 4–5 cars.",
+    icon: "car",
   },
   {
-    number: "05",
-    title: "Personal & Intimate",
-    text: "With just six rooms, SHA Stays offers a more personal stay experience rather than a crowded hotel atmosphere.",
+    title: "Group Friendly",
+    text: "A practical choice for families and groups, or book the whole property for yourselves.",
+    icon: "users",
   },
-  {
-    number: "06",
-    title: "Explore Rameshwaram",
-    text: "Use SHA Stays as your comfortable base while discovering temples, beaches, landmarks and the island's unique history.",
-  },
-] as const;
+];
 
 export type RoomPhoto = {
   src: string;
   alt: string;
   tall?: boolean;
 };
+
+export type Amenity = { label: string; icon: IconName };
 
 export type Room = {
   slug: string;
@@ -220,19 +221,18 @@ export type Room = {
   bed: string;
   countLabel: string;
   description: string;
-  highlights: string[];
+  amenities: Amenity[];
   image: string;
   photos: RoomPhoto[];
 };
 
-export const sharedAmenities = [
-  "Private bathroom",
-  "Air conditioning",
-  "Hot water",
-  "Wi-Fi",
-  "Television",
-  "RO drinking water",
-  "Comfortable bedding",
+export const sharedAmenities: Amenity[] = [
+  { label: "Air conditioning", icon: "ac" },
+  { label: "Private bathroom", icon: "bath" },
+  { label: "Hot water", icon: "hotWater" },
+  { label: "Wi-Fi", icon: "wifi" },
+  { label: "Television", icon: "tv" },
+  { label: "RO drinking water", icon: "water" },
 ];
 
 export const mattressNote =
@@ -246,8 +246,8 @@ export const rooms: Room[] = [
     bed: "King-size bed",
     countLabel: "Two rooms",
     description:
-      "A comfortable room featuring a king-size bed, designed for couples and guests who prefer a little more sleeping space.",
-    highlights: ["King-size bed", ...sharedAmenities],
+      "A comfortable room with a king-size bed, designed for couples and travellers looking for a relaxed stay.",
+    amenities: [{ label: "King-size bed", icon: "bed" }, ...sharedAmenities],
     image: propertyPhotos.king,
     photos: [
       {
@@ -283,8 +283,8 @@ export const rooms: Room[] = [
     bed: "Queen-size bed",
     countLabel: "Four rooms",
     description:
-      "A cosy and comfortable room with a queen-size bed — a practical choice for couples and solo travellers exploring Rameshwaram.",
-    highlights: ["Queen-size bed", ...sharedAmenities],
+      "A welcoming room with a queen-size bed, designed for comfortable stays with family and friends.",
+    amenities: [{ label: "Queen-size bed", icon: "bed" }, ...sharedAmenities],
     image: propertyPhotos.queen,
     photos: [
       {
@@ -325,6 +325,10 @@ export type Place = {
   slug: string;
   name: string;
   description: string;
+  /** One line for photo cards. */
+  short?: string;
+  /** Only verified distances. */
+  distance?: string;
   photo?: Photo;
 };
 
@@ -334,6 +338,8 @@ export const places: Place[] = [
     name: "Ramanathaswamy Temple",
     description:
       "One of India's most revered pilgrimage destinations and the spiritual heart of Rameshwaram.",
+    short: "The spiritual heart of Rameshwaram.",
+    distance: "About 5 km away",
     photo: photos.gopuram,
   },
   {
@@ -341,6 +347,8 @@ export const places: Place[] = [
     name: "Abdul Kalam Memorial",
     description:
       "Discover the life and legacy of Dr. A.P.J. Abdul Kalam, India's beloved former President and scientist.",
+    short: "A meaningful stop, close to SHA Stays.",
+    distance: "Near SHA",
     photo: photos.kalam,
   },
   {
@@ -348,6 +356,7 @@ export const places: Place[] = [
     name: "Pamban Bridge",
     description:
       "Witness one of India's most iconic railway and engineering landmarks connecting the mainland with Rameshwaram Island.",
+    short: "An iconic bridge over the sea to the island.",
     photo: photos.pamban,
   },
   {
@@ -355,6 +364,7 @@ export const places: Place[] = [
     name: "Dhanushkodi",
     description:
       "Explore the atmospheric landscape at the eastern edge of the island, where history, sea and mythology meet.",
+    short: "Dramatic landscapes at the island's edge.",
     photo: photos.dhanushkodi,
   },
   {
@@ -385,24 +395,46 @@ export const stayFacts = [
   { label: "Rooms", value: "6" },
 ] as const;
 
-export const trust = [
+export const dayPlan: { time: string; title: string; text: string; icon: IconName }[] = [
   {
-    title: "Easy Booking",
-    text: "Book directly with us or through your preferred travel platform.",
+    time: "Morning",
+    title: "Temple visit",
+    text: "Head to Ramanathaswamy Temple, about 5 km away.",
+    icon: "sunrise",
   },
   {
-    title: "Helpful Hosts",
-    text: "Have a question before your trip? We're happy to help.",
+    time: "Afternoon",
+    title: "Abdul Kalam Memorial",
+    text: "A meaningful stop, close to the stay.",
+    icon: "sun",
   },
   {
-    title: "Comfortable Rooms",
-    text: "A clean, comfortable place to rest after a day of exploring.",
+    time: "Evening",
+    title: "Pamban or Dhanushkodi",
+    text: "The bridge, the sea and the island's edge.",
+    icon: "sunset",
   },
   {
-    title: "Convenient Location",
-    text: "Easy access to Rameshwaram's major attractions and highway routes.",
+    time: "Night",
+    title: "Return to SHA",
+    text: "A quiet garden, a comfortable room, a good night's rest.",
+    icon: "moon",
   },
-] as const;
+];
+
+export type Review = {
+  name: string;
+  text: string;
+  /** e.g. "Google", "Booking.com". */
+  source: string;
+  /** Out of 5, exactly as shown on the source platform. */
+  rating?: number;
+  url?: string;
+  date?: string;
+};
+
+/** Add genuine guest reviews only, copied word for word from the source. Never invent or edit them. */
+export const reviews: Review[] = [];
 
 export const faqs = [
   {
@@ -436,6 +468,11 @@ export const faqs = [
       "Our rooms are suitable for couples and small families depending on the selected room and sleeping arrangement. Please contact us if you need an extra mattress.",
   },
   {
+    question: "Can we book the whole property for a group?",
+    answer:
+      "Yes. Families and groups can book all six rooms as a private stay in Rameshwaram. We quote for your dates and group size when you enquire.",
+  },
+  {
     question: "Can I book directly?",
     answer:
       "Yes. Contact us by phone or WhatsApp for direct booking and availability.",
@@ -465,119 +502,156 @@ export type GalleryGroup = {
   photos: GalleryPhoto[];
 };
 
+const gp = {
+  gate: {
+    src: "/images/gallery/outdoor-gate.webp",
+    alt: "The front gate of SHA Stays, with the garden walkway and trees beyond",
+    caption: "Front gate",
+  },
+  forecourt: {
+    src: "/images/gallery/entrance-forecourt-night.webp",
+    alt: "The SHA Stays entrance lit up at night, with a motorbike and an SUV parked in the open forecourt",
+    caption: "Entrance and parking at night",
+    focus: "object-[center_60%]",
+  },
+  archNight: {
+    src: "/images/gallery/walkway-arch-night.webp",
+    alt: "A paved garden walkway at SHA Stays at dusk, framed by lit arches, palms and potted plants",
+    caption: "Garden walkway at dusk",
+  },
+  cottageNight: {
+    src: "/images/gallery/king-cottage-night.webp",
+    alt: "A SHA King Room cottage at night, with palms and soft garden lighting in front",
+    caption: "A room at night",
+    focus: "object-[center_55%]",
+  },
+  nightEntrance: {
+    src: "/images/gallery/outdoor-night.webp",
+    alt: "The SHA Stays entrance at night, with lights along the garden walkway",
+    caption: "Entrance at night",
+  },
+  walkway: {
+    src: "/images/gallery/outdoor-walkway.webp",
+    alt: "A lighted walkway between the rooms at SHA Stays",
+    caption: "Lighted walkway",
+    focus: "object-center",
+  },
+  arch: {
+    src: "/images/gallery/outdoor-arch.webp",
+    alt: "The garden path at SHA Stays, shaded by trees between the rooms",
+    caption: "Garden path",
+  },
+  tree: {
+    src: "/images/gallery/outdoor-tree.webp",
+    alt: "A tree wrapped in warm lights in the SHA Stays garden",
+    caption: "Garden lights",
+    focus: "object-[center_35%]",
+  },
+  swing: {
+    src: "/images/gallery/outdoor-swing.webp",
+    alt: "A wooden swing hanging from a tree in the SHA Stays garden",
+    caption: "Garden swing",
+    focus: "object-[center_62%]",
+  },
+  signboard: {
+    src: "/images/gallery/highway-signboard.webp",
+    alt: "The SHA Stays signboard beside the highway in Rameshwaram, pointing travellers to the stay",
+    caption: "Our signboard on the highway",
+    focus: "object-[center_70%]",
+  },
+  kingRoom: {
+    src: "/images/rooms/king-room.webp",
+    alt: "SHA King Room with a king-size bed, air conditioning and a decorative door",
+    caption: "SHA King Room",
+  },
+  kingBed: {
+    src: "/images/rooms/king-bed.webp",
+    alt: "King-size bed with white pillows in the SHA King Room",
+    caption: "King-size bed",
+    focus: "object-[center_42%]",
+  },
+  queenRoom: {
+    src: "/images/rooms/queen-room.webp",
+    alt: "SHA Queen Room with a queen-size bed, a chair and a wall-mounted television",
+    caption: "SHA Queen Room",
+  },
+  queenBed: {
+    src: "/images/rooms/queen-bed.webp",
+    alt: "Queen-size bed with white pillows and a blue patterned curtain",
+    caption: "Queen-size bed",
+  },
+  queenRoom2: {
+    src: "/images/rooms/queen-room-2.webp",
+    alt: "Another SHA Queen Room, with a queen-size bed, a bench and framed pictures",
+    caption: "Another queen room",
+  },
+  queenBath: {
+    src: "/images/rooms/queen-bathroom.webp",
+    alt: "Private bathroom in a SHA Queen Room, with a shower, toilet and hot water",
+    caption: "Private bathroom",
+  },
+  kingBath: {
+    src: "/images/rooms/king-bathroom.webp",
+    alt: "Washbasin and mirror in the SHA King Room bathroom",
+    caption: "Washbasin, SHA King Room",
+  },
+  queenEntrance: {
+    src: "/images/rooms/queen-entrance.webp",
+    alt: "Two SHA Queen Room entrances, each with a short flight of steps and a small veranda",
+    caption: "Queen room entrances",
+  },
+  seating: {
+    src: "/images/gallery/amenity-seating.webp",
+    alt: "Outdoor tables and stools under palm trees at SHA Stays",
+    caption: "Outdoor seating",
+  },
+  water: {
+    src: "/images/gallery/amenity-water.webp",
+    alt: "An RO drinking-water dispenser at SHA Stays",
+    caption: "RO drinking water",
+    focus: "object-[center_28%]",
+  },
+  pets: {
+    src: "/images/gallery/amenity-pets.webp",
+    alt: "Two sugar gliders at SHA Stays, eating a guava inside their enclosure",
+    caption: "Sugar gliders at the stay",
+    focus: "object-center",
+  },
+} satisfies Record<string, GalleryPhoto>;
+
+export const galleryPhotos = gp;
+
 export const galleryGroups: GalleryGroup[] = [
+  {
+    id: "the-stay",
+    title: "The stay",
+    text: "The gate, the garden walkway and the forecourt, by day and after dark.",
+    photos: [gp.archNight, gp.gate, gp.forecourt, gp.cottageNight, gp.arch, gp.signboard],
+  },
   {
     id: "rooms",
     title: "Rooms",
     text: "Two SHA King Rooms and four SHA Queen Rooms, each with a private bathroom.",
-    photos: [
-      {
-        src: "/images/rooms/king-room.webp",
-        alt: "SHA King Room with a king-size bed, air conditioning and a decorative door",
-        caption: "SHA King Room",
-      },
-      {
-        src: "/images/rooms/king-bed.webp",
-        alt: "King-size bed with white pillows in the SHA King Room",
-        caption: "King-size bed",
-        focus: "object-[center_42%]",
-      },
-      {
-        src: "/images/rooms/queen-room.webp",
-        alt: "SHA Queen Room with a queen-size bed, a chair and a wall-mounted television",
-        caption: "SHA Queen Room",
-      },
-      {
-        src: "/images/rooms/queen-bed.webp",
-        alt: "Queen-size bed with white pillows and a blue patterned curtain",
-        caption: "Queen-size bed",
-      },
-      {
-        src: "/images/rooms/queen-room-2.webp",
-        alt: "Another SHA Queen Room, with a queen-size bed, a bench and framed pictures",
-        caption: "Another queen room",
-      },
-      {
-        src: "/images/rooms/queen-entrance.webp",
-        alt: "Two SHA Queen Room entrances, each with a short flight of steps and a small veranda",
-        caption: "Queen room entrances",
-      },
-    ],
+    photos: [gp.kingRoom, gp.kingBed, gp.queenRoom, gp.queenBath, gp.queenBed, gp.queenRoom2, gp.kingBath, gp.queenEntrance],
   },
   {
-    id: "outdoors",
-    title: "Outdoors",
-    text: "The gate, the garden walkway and a few places to sit outside.",
-    photos: [
-      {
-        src: "/images/gallery/outdoor-gate.webp",
-        alt: "The front gate of SHA Stays, with the garden walkway and trees beyond",
-        caption: "Front gate",
-      },
-      {
-        src: "/images/gallery/outdoor-night.webp",
-        alt: "The SHA Stays entrance at night, with lights along the garden walkway",
-        caption: "Entrance at night",
-      },
-      {
-        src: "/images/gallery/outdoor-walkway.webp",
-        alt: "A lighted walkway between the rooms at SHA Stays",
-        caption: "Lighted walkway",
-        focus: "object-center",
-      },
-      {
-        src: "/images/gallery/outdoor-arch.webp",
-        alt: "The garden path at SHA Stays, shaded by trees between the rooms",
-        caption: "Garden path",
-      },
-      {
-        src: "/images/gallery/outdoor-tree.webp",
-        alt: "A tree wrapped in warm lights in the SHA Stays garden",
-        caption: "Garden lights",
-        focus: "object-[center_35%]",
-      },
-      {
-        src: "/images/gallery/outdoor-swing.webp",
-        alt: "A wooden swing hanging from a tree in the SHA Stays garden",
-        caption: "Garden swing",
-        focus: "object-[center_62%]",
-      },
-    ],
+    id: "garden",
+    title: "Garden and evenings",
+    text: "Lights in the trees, a swing, and a few places to sit outside.",
+    photos: [gp.nightEntrance, gp.tree, gp.swing, gp.walkway, gp.seating],
   },
   {
     id: "amenities",
-    title: "Amenities",
-    text: "Outdoor seating, RO drinking water and the sugar gliders who live at the stay.",
-    photos: [
-      {
-        src: "/images/gallery/amenity-seating.webp",
-        alt: "Outdoor tables and stools under palm trees at SHA Stays",
-        caption: "Outdoor seating",
-      },
-      {
-        src: "/images/gallery/amenity-water.webp",
-        alt: "An RO drinking-water dispenser at SHA Stays",
-        caption: "RO drinking water",
-        focus: "object-[center_28%]",
-      },
-      {
-        src: "/images/gallery/amenity-pets.webp",
-        alt: "Two sugar gliders at SHA Stays, eating a guava inside their enclosure",
-        caption: "Sugar gliders at the stay",
-        focus: "object-center",
-      },
-    ],
+    title: "Little comforts",
+    text: "RO drinking water and the sugar gliders who live at the stay.",
+    photos: [gp.water, gp.pets],
   },
 ];
 
-export const aboutPhotos: GalleryPhoto[] = [
-  galleryGroups[1].photos[1],
-  galleryGroups[0].photos[0],
-  galleryGroups[0].photos[2],
-  galleryGroups[1].photos[3],
-  galleryGroups[2].photos[0],
-  galleryGroups[2].photos[1],
-];
+/** Home page gallery, in order: exterior, best room, bed, bathroom, garden, night. */
+export const homeGallery: GalleryPhoto[] = [gp.gate, gp.kingRoom, gp.queenBed, gp.queenBath, gp.archNight, gp.forecourt];
+
+export const aboutPhotos: GalleryPhoto[] = [gp.nightEntrance, gp.kingRoom, gp.queenRoom, gp.arch, gp.seating, gp.water];
 
 export const pillars = [
   {

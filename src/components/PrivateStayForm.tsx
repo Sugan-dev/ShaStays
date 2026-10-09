@@ -47,7 +47,7 @@ export function PrivateStayForm() {
     }
 
     const message = [
-      "Hi SHA Stays, I'm interested in booking the entire resort privately.",
+      "Hi SHA Stays, I am interested in booking the entire property for a group.",
       `Name: ${name}`,
       `Phone: ${phone}`,
       `Travel date: ${formatStayDate(travelDate)}`,
@@ -77,7 +77,7 @@ export function PrivateStayForm() {
     }
 
     if (hasEmail()) {
-      window.location.href = `mailto:${contact.email}?subject=${encodeURIComponent("Private resort enquiry — SHA Stays")}&body=${encodeURIComponent(message)}`;
+      window.location.href = `mailto:${contact.email}?subject=${encodeURIComponent("Private stay enquiry — SHA Stays")}&body=${encodeURIComponent(message)}`;
       setStatus("email");
       return;
     }
@@ -95,7 +95,7 @@ export function PrivateStayForm() {
     <form
       id="private-stay-form"
       onSubmit={onSubmit}
-      className="rounded-[1.75rem] bg-paper p-6 shadow-[0_18px_50px_rgba(24,60,53,0.06)] ring-1 ring-black/5 sm:p-8"
+      className="rounded-panel bg-paper p-6 shadow-soft ring-1 ring-black/5 sm:p-8"
     >
       <div className="grid gap-5 sm:grid-cols-2">
         <label className="block text-sm font-medium text-charcoal">
@@ -124,7 +124,7 @@ export function PrivateStayForm() {
             ))}
           </select>
           <span className="mt-2 block text-xs leading-relaxed font-normal text-muted">
-            A private resort booking reserves all 6 rooms.
+            A private stay booking reserves all 6 rooms.
           </span>
         </label>
         <label className="block text-sm font-medium text-charcoal">

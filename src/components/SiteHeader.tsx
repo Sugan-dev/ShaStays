@@ -4,35 +4,37 @@ import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Icon } from "@/components/Icon";
 import { Logo } from "@/components/Logo";
 import { nav } from "@/lib/site";
-import { cx, phoneHref, whatsappBooking, whatsappHref } from "@/lib/links";
-
-function PhoneIcon() {
-  return (
-    <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden="true">
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M8 4.5h2.1l1.1 2.8-1.4.9a11.2 11.2 0 0 0 5 5l.9-1.4 2.8 1.1V15a1.6 1.6 0 0 1-1.7 1.6A13.6 13.6 0 0 1 6.4 6.2 1.6 1.6 0 0 1 8 4.5z"
-      />
-    </svg>
-  );
-}
+import { cx, hasWhatsapp, phoneHref, whatsappAvailability, whatsappHref } from "@/lib/links";
 
 const bookNowClass =
-  "inline-flex min-h-12 items-center rounded-full bg-terracotta-deep px-5 text-sm font-medium tracking-[0.14em] text-white uppercase transition hover:bg-terracotta-ink";
+  "min-h-11 items-center rounded-full bg-terracotta-deep px-4 text-sm font-medium tracking-[0.12em] whitespace-nowrap text-white uppercase transition hover:bg-terracotta-ink sm:px-5";
 
-const callClass =
-  "grid h-12 w-12 place-items-center rounded-full border border-line text-forest transition hover:border-forest hover:bg-forest hover:text-ivory";
+const iconButtonClass =
+  "grid h-11 w-11 shrink-0 place-items-center rounded-full border border-line text-forest transition hover:border-forest hover:bg-forest hover:text-ivory";
+
+function isActive(pathname: string, href: string) {
+  if (href === "/") return pathname === "/";
+  return pathname === href || pathname.startsWith(`${href}/`);
+}
 
 export function SiteHeader() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
     setOpen(false);
   }, [pathname]);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
@@ -51,59 +53,48 @@ export function SiteHeader() {
   }, [open]);
 
   return (
-    <div className="sticky top-0 z-50">
-      <div className="bg-forest px-4 py-2 text-center text-xs font-medium tracking-[0.18em] text-sand uppercase">
+    <>
+      <div className="bg-forest px-4 py-2 text-center text-[0.7rem] font-medium tracking-[0.18em] text-sand uppercase sm:text-xs">
         Now welcoming guests in Rameshwaram
       </div>
-      <header className="border-b border-line/80 bg-ivory">
-        <div className="mx-auto flex h-[4.5rem] max-w-6xl items-center justify-between gap-4 px-5 sm:px-8">
+      <header
+        className={cx(
+          "sticky top-0 z-50 border-b bg-ivory/95 backdrop-blur-sm transition-shadow duration-300",
+          scrolled ? "border-line shadow-soft" : "border-line/70",
+        )}
+      >
+        <div className="mx-auto flex h-[4.25rem] max-w-6xl items-center justify-between gap-4 px-5 sm:px-8">
           <Logo />
-          <nav className="hidden items-center gap-3 xl:gap-5 lg:flex" aria-label="Primary">
+          <nav className="hidden items-center gap-5 lg:flex xl:gap-7" aria-label="Primary">
             {nav.map((item) => {
-              const active = pathname === item.href || pathname.startsWith(`${item.href}/`);
+              const active = isActive(pathname, item.href);
               return (
                 <Link
                   key={item.href}
                   href={item.href}
                   aria-current={active ? "page" : undefined}
                   className={cx(
-                    "text-[0.8125rem] tracking-wide whitespace-nowrap transition xl:text-sm",
-                    active ? "text-terracotta-deep" : "text-charcoal/80 hover:text-forest",
+                    "relative py-2 text-sm tracking-wide whitespace-nowrap transition after:absolute after:inset-x-0 after:bottom-0 after:h-px after:origin-left after:bg-terracotta-deep after:transition-transform after:duration-300",
+                    active
+                      ? "text-terracotta-deep after:scale-x-100"
+                      : "text-charcoal/80 after:scale-x-0 hover:text-forest hover:after:scale-x-100",
                   )}
                 >
                   {item.label}
                 </Link>
               );
             })}
-            <a href={phoneHref()} className={callClass} aria-label="Call SHA Stays">
-              <PhoneIcon />
-            </a>
-            <a
-              href={whatsappHref(whatsappBooking)}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={bookNowClass}
-            >
-              Book Now
-              <span className="sr-only"> on WhatsApp</span>
-            </a>
           </nav>
-          <div className="flex items-center gap-2 lg:hidden">
-            <a href={phoneHref()} className={callClass} aria-label="Call SHA Stays">
-              <PhoneIcon />
+          <div className="flex items-center gap-2">
+            <a href={phoneHref()} className={iconButtonClass} aria-label="Call SHA Stays">
+              <Icon name="phone" />
             </a>
-            <a
-              href={whatsappHref(whatsappBooking)}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex min-h-12 items-center rounded-full bg-terracotta-deep px-4 text-sm font-medium text-white"
-            >
+            <Link href="/book" className={cx(bookNowClass, "hidden lg:inline-flex")}>
               Book Now
-              <span className="sr-only"> on WhatsApp</span>
-            </a>
+            </Link>
             <button
               type="button"
-              className="relative z-10 grid h-12 w-12 shrink-0 cursor-pointer place-items-center rounded-full border border-line text-forest"
+              className={cx(iconButtonClass, "relative z-10 cursor-pointer lg:hidden")}
               aria-expanded={open}
               aria-controls="mobile-menu"
               aria-label={open ? "Close menu" : "Open menu"}
@@ -121,46 +112,58 @@ export function SiteHeader() {
 
       {open
         ? createPortal(
-            <div id="mobile-menu" className="fixed inset-0 z-[80] flex flex-col bg-ivory px-6 pt-5 pb-8">
-          <div className="flex items-center justify-between">
-            <Logo />
-            <button
-              type="button"
-              className="min-h-11 rounded-full border border-line px-4 text-sm text-forest"
-              onClick={() => setOpen(false)}
+            <div
+              id="mobile-menu"
+              role="dialog"
+              aria-modal="true"
+              aria-label="Menu"
+              className="fixed inset-0 z-[80] flex flex-col bg-ivory px-6 pt-5 pb-[max(2rem,env(safe-area-inset-bottom))]"
             >
-              Close
-            </button>
-          </div>
-          <nav className="mt-8 flex min-h-0 flex-1 flex-col gap-1 overflow-y-auto" aria-label="Mobile">
-            {nav.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="border-b border-line py-3 font-serif text-5xl text-forest"
-              >
-                {item.label}
-              </Link>
-            ))}
-          </nav>
-          <div className="mt-auto flex items-center gap-3">
-            <a href={phoneHref()} className={cx(callClass, "shrink-0")} aria-label="Call SHA Stays">
-              <PhoneIcon />
-            </a>
-            <a
-              href={whatsappHref(whatsappBooking)}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex min-h-12 flex-1 items-center justify-center rounded-full bg-terracotta-deep text-white"
-            >
-              Book Now
-              <span className="sr-only"> on WhatsApp</span>
-            </a>
-          </div>
-        </div>,
+              <div className="flex items-center justify-between">
+                <Logo />
+                <button
+                  type="button"
+                  className="min-h-11 rounded-full border border-line px-4 text-sm text-forest"
+                  onClick={() => setOpen(false)}
+                  autoFocus
+                >
+                  Close
+                </button>
+              </div>
+              <nav className="mt-8 flex min-h-0 flex-1 flex-col overflow-y-auto" aria-label="Mobile">
+                {nav.map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    aria-current={isActive(pathname, item.href) ? "page" : undefined}
+                    className="border-b border-line py-3 font-serif text-[2.6rem] leading-tight text-forest aria-[current=page]:text-terracotta-deep"
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </nav>
+              <div className="mt-6 grid grid-cols-2 gap-3">
+                <Link
+                  href="/book"
+                  className="inline-flex min-h-12 items-center justify-center rounded-full bg-terracotta-deep font-medium text-white"
+                >
+                  Book Now
+                </Link>
+                <a
+                  href={whatsappHref(whatsappAvailability)}
+                  target={hasWhatsapp() ? "_blank" : undefined}
+                  rel="noopener noreferrer"
+                  className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-forest/25 font-medium text-forest"
+                >
+                  <Icon name="whatsapp" />
+                  WhatsApp
+                  {hasWhatsapp() ? <span className="sr-only"> (opens in a new tab)</span> : null}
+                </a>
+              </div>
+            </div>,
             document.body,
           )
         : null}
-    </div>
+    </>
   );
 }

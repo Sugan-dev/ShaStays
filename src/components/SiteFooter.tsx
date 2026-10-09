@@ -1,102 +1,126 @@
 import Link from "next/link";
+import { ButtonLink } from "@/components/Buttons";
 import { Container } from "@/components/Container";
+import { Icon } from "@/components/Icon";
 import { Logo } from "@/components/Logo";
 import { contact, footerNav, photoCredits, site } from "@/lib/site";
-import { displayEmail, displayPhone, displayWhatsapp, phoneHref, whatsappHref, whatsappBooking, whatsappGreeting, hasPhone, hasWhatsapp, hasEmail } from "@/lib/links";
+import {
+  displayEmail,
+  displayPhone,
+  displayWhatsapp,
+  hasEmail,
+  hasInstagram,
+  hasPhone,
+  hasWhatsapp,
+  phoneHref,
+  whatsappAvailability,
+  whatsappHref,
+} from "@/lib/links";
+
+const linkClass = "text-sm text-ivory/90 transition hover:text-white";
+const headingClass = "eyebrow text-sand";
 
 export function SiteFooter() {
+  const year = new Date().getFullYear();
+
   return (
-    <footer className="bg-forest-deep text-sand">
+    <footer className="bg-forest-deep pb-24 text-sand lg:pb-0">
       <Container className="grid gap-12 py-16 md:grid-cols-12">
         <div className="md:col-span-5">
           <Logo tone="ivory" />
-          <p className="mt-6 max-w-sm font-serif text-4xl leading-tight text-ivory">
-            {site.tagline}
-          </p>
-          <p className="mt-4 max-w-sm text-sm leading-relaxed text-sand/80">
-            {site.supporting}
-          </p>
+          <p className="mt-6 max-w-sm font-serif text-4xl leading-tight text-ivory">{site.tagline}</p>
+          <p className="mt-3 text-sm text-sand/80">Boutique stay · Rameshwaram, Tamil Nadu</p>
+          <div className="mt-7">
+            <ButtonLink href="/book" variant="terracotta">
+              Book Your Stay
+            </ButtonLink>
+          </div>
         </div>
         <nav className="md:col-span-3" aria-label="Footer">
-          <p className="text-xs font-medium tracking-[0.2em] text-sand uppercase">
-            Explore
-          </p>
-          <ul className="mt-4 space-y-2">
+          <p className={headingClass}>Explore</p>
+          <ul className="mt-4 space-y-2.5">
             {footerNav.map((item) => (
               <li key={item.href}>
-                {item.href === "/book" ? (
-                  <a
-                    href={whatsappHref(whatsappBooking)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-sm text-ivory/90 hover:text-white"
-                  >
-                    {item.label}
-                  </a>
-                ) : (
-                  <Link href={item.href} className="text-sm text-ivory/90 hover:text-white">
-                    {item.label}
-                  </Link>
-                )}
+                <Link href={item.href} className={linkClass}>
+                  {item.label}
+                </Link>
               </li>
             ))}
           </ul>
         </nav>
         <div className="md:col-span-4">
-          <p className="text-xs font-medium tracking-[0.2em] text-sand uppercase">
-            Visit
-          </p>
-          <p className="mt-4 font-serif text-2xl text-ivory">{site.name}</p>
-          {contact.addressLines.map((line) => (
-            <p key={line} className="text-sm text-sand/85">
-              {line}
-            </p>
-          ))}
-          <ul className="mt-4 space-y-1 text-sm">
-            <li>
+          <p className={headingClass}>Visit</p>
+          <address className="mt-4 not-italic">
+            <p className="font-serif text-2xl text-ivory">{site.name}</p>
+            {contact.addressLines.map((line) => (
+              <p key={line} className="text-sm text-sand/85">
+                {line}
+              </p>
+            ))}
+          </address>
+          <ul className="mt-5 space-y-3 text-sm">
+            <li className="flex items-center gap-2.5">
+              <Icon name="phone" className="h-4 w-4 text-sand/80" />
               {hasPhone() ? (
                 <span>
                   <a href={phoneHref()} className="hover:text-white">
                     {contact.phoneDisplay}
                   </a>
-                  {" / "}
-                  <a href={phoneHref(contact.phoneAlt)} className="hover:text-white">
-                    {contact.phoneAltDisplay}
-                  </a>
+                  {contact.phoneAltDisplay ? (
+                    <>
+                      {" / "}
+                      <a href={phoneHref(contact.phoneAlt)} className="hover:text-white">
+                        {contact.phoneAltDisplay}
+                      </a>
+                    </>
+                  ) : null}
                 </span>
               ) : (
                 <span>{displayPhone()}</span>
               )}
             </li>
-            <li>
+            <li className="flex items-center gap-2.5">
+              <Icon name="whatsapp" className="h-4 w-4 text-sand/80" />
               {hasWhatsapp() ? (
                 <a
-                  href={whatsappHref(whatsappGreeting)}
+                  href={whatsappHref(whatsappAvailability)}
                   className="hover:text-white"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
                   WhatsApp {displayWhatsapp()}
+                  <span className="sr-only"> (opens in a new tab)</span>
                 </a>
               ) : (
                 <span>WhatsApp {displayWhatsapp()}</span>
               )}
             </li>
-            <li>
-              {hasEmail() ? (
-                <a href={`mailto:${contact.email}`} className="hover:text-white">
+            {hasEmail() ? (
+              <li className="flex items-center gap-2.5">
+                <svg viewBox="0 0 24 24" className="h-4 w-4 shrink-0 text-sand/80" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true">
+                  <rect x="3.5" y="5.5" width="17" height="13" rx="1.5" />
+                  <path d="m4 7 8 6 8-6" strokeLinejoin="round" />
+                </svg>
+                <a href={`mailto:${contact.email}`} className="break-all hover:text-white">
                   {displayEmail()}
                 </a>
-              ) : (
-                <span>{displayEmail()}</span>
-              )}
-            </li>
+              </li>
+            ) : null}
+            {hasInstagram() ? (
+              <li className="flex items-center gap-2.5">
+                <Icon name="instagram" className="h-4 w-4 text-sand/80" />
+                <a href={contact.instagram} className="hover:text-white" target="_blank" rel="noopener noreferrer">
+                  Instagram
+                  <span className="sr-only"> (opens in a new tab)</span>
+                </a>
+              </li>
+            ) : null}
           </ul>
         </div>
       </Container>
       <Container className="border-t border-white/10 py-6">
-        <p className="text-xs text-sand">© 2026 SHA Stays. All rights reserved.</p>
-        <p className="mt-3 max-w-4xl text-xs leading-relaxed text-sand/90">
+        <p className="text-xs text-sand">© {year} SHA Stays, Rameshwaram. All rights reserved.</p>
+        <p className="mt-3 max-w-4xl text-xs leading-relaxed text-sand/80">
           Landmark photographs via Wikimedia Commons:{" "}
           {photoCredits.map((credit, index) => (
             <span key={credit.sourceUrl}>

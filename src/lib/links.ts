@@ -29,6 +29,10 @@ export function hasEmail() {
   return contact.email.trim().length > 0;
 }
 
+export function hasInstagram() {
+  return contact.instagram.trim().length > 0;
+}
+
 export function displayPhone() {
   const numbers = [contact.phoneDisplay, contact.phoneAltDisplay].filter(Boolean);
   return numbers.join(" / ") || "[ Insert phone number ]";
@@ -42,11 +46,11 @@ export function displayEmail() {
   return contact.email.trim() || "[ Insert email ]";
 }
 
-export const whatsappGreeting =
-  "Hello SHA Stays, I would like to ask about a stay in Rameshwaram.";
+export const whatsappAvailability = "Hi SHA Stays, I would like to check room availability.";
 
-export const whatsappBooking =
-  "Hello SHA Stays, I would like to book a stay in Rameshwaram.";
+export function whatsappRoom(roomName: string) {
+  return `Hi SHA Stays, I would like to check availability for the ${roomName}.`;
+}
 
 export const whatsappPrivateStay =
-  "Hi SHA Stays, I'm interested in booking the entire resort privately. Travel date: __, Guests: __, Vehicle: __, Nights: __.";
+  "Hi SHA Stays, I am interested in booking the entire property for a group. Please share availability and pricing.";

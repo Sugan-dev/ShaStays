@@ -22,11 +22,11 @@ export default function LocationPage() {
       <section className="py-16 md:py-20">
         <Container className="grid items-start gap-12 lg:grid-cols-2">
           <div>
-            <dl className="grid grid-cols-2 gap-6">
+            <dl className="grid grid-cols-2 gap-3 sm:gap-6">
               {locationFacts.map((fact) => (
-                <div key={fact.label} className="rounded-[1.5rem] bg-paper p-6 ring-1 ring-line">
-                  <dt className="font-serif text-3xl text-forest">{fact.value}</dt>
-                  <dd className="mt-1 text-sm text-muted">{fact.label}</dd>
+                <div key={fact.label} className="min-w-0 rounded-card bg-paper p-4 ring-1 ring-line sm:p-6">
+                  <dt className="font-serif text-2xl text-forest sm:text-3xl">{fact.value}</dt>
+                  <dd className="mt-1 text-sm break-words text-muted">{fact.label}</dd>
                 </div>
               ))}
             </dl>
@@ -44,7 +44,7 @@ export default function LocationPage() {
       </section>
       <section className="pb-20">
         <Container>
-          <article className="rounded-[1.75rem] bg-forest px-8 py-10 text-ivory md:px-12">
+          <article className="rounded-panel bg-forest px-8 py-10 text-ivory md:px-12">
             <h2 className="font-serif text-4xl text-white">Arriving by Road?</h2>
             <p className="mt-3 font-serif text-2xl text-sand">You&apos;re already on the right route.</p>
             <p className="mt-4 max-w-2xl leading-relaxed text-sand/90">

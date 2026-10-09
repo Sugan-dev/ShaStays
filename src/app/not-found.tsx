@@ -11,7 +11,7 @@ export default function NotFound() {
   return (
     <section className="py-24">
       <Container className="max-w-2xl">
-        <p className="text-xs font-medium tracking-[0.22em] text-terracotta-deep uppercase">
+        <p className="eyebrow text-terracotta-deep">
           SHA Stays
         </p>
         <h1 className="mt-4 font-serif text-5xl text-forest md:text-7xl">

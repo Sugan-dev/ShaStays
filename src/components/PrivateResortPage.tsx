@@ -1,8 +1,8 @@
-import type { ReactNode } from "react";
 import Link from "next/link";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { ButtonLink } from "@/components/Buttons";
 import { Container } from "@/components/Container";
+import { Icon } from "@/components/Icon";
 import { JsonLd } from "@/components/JsonLd";
 import { LazyImage } from "@/components/LazyImage";
 import { PrivateStayForm } from "@/components/PrivateStayForm";
@@ -23,10 +23,9 @@ import {
   privateStats,
   privateSteps,
   privateStoryImage,
-  type FeatureIcon,
 } from "@/lib/private-resort";
 
-const eyebrow = "text-xs font-medium tracking-[0.22em] text-terracotta-deep uppercase";
+const eyebrow = "eyebrow text-terracotta-deep";
 
 const faqGraph = {
   "@context": "https://schema.org",
@@ -76,36 +75,33 @@ function Hero() {
           height={privateHero.height}
           alt={privateHero.alt}
           fetchPriority="high"
-          className="absolute inset-0 h-full w-full object-cover object-center"
+          className="hero-settle absolute inset-0 h-full w-full object-cover object-center"
         />
       </picture>
-      <div className="absolute inset-0 bg-[linear-gradient(100deg,rgba(16,40,34,0.92)_0%,rgba(16,40,34,0.78)_28%,rgba(16,40,34,0.28)_58%,rgba(16,40,34,0.18)_100%)]" />
-      <div className="absolute inset-0 bg-gradient-to-t from-[#102822]/80 via-transparent to-[#102822]/30" />
+      <div className="absolute inset-0 bg-gradient-to-t from-forest-deep via-forest-deep/55 to-forest-deep/20 lg:bg-[linear-gradient(100deg,rgba(16,40,34,0.92)_0%,rgba(16,40,34,0.75)_30%,rgba(16,40,34,0.25)_60%,rgba(16,40,34,0.15)_100%)]" />
       <Container className="relative flex min-h-[88vh] flex-col justify-end py-14 md:py-20">
         <div className="rise">
           <Breadcrumbs tone="light" items={[{ name: "Private Stay", path: "/private-resort" }]} />
         </div>
-        <p className="rise text-xs font-medium tracking-[0.24em] text-sand uppercase">
-          Private resort in Rameshwaram
-        </p>
-        <h1 className="rise rise-delay-1 mt-5 max-w-4xl font-serif text-[clamp(2.7rem,6.4vw,5.75rem)] leading-[0.95] text-white [text-shadow:0_2px_24px_rgba(8,20,17,0.55)]">
+        <p className="rise eyebrow text-sand">Private stay in Rameshwaram</p>
+        <h1 className="rise rise-delay-1 mt-5 max-w-4xl font-serif text-[clamp(2.9rem,6.4vw,5.75rem)] leading-[0.95] text-white [text-shadow:0_2px_24px_rgba(8,20,17,0.55)]">
           Your Group.
           <br />
-          Your Van.
+          Your Stay.
           <br />
-          Your Private Resort.
+          Your SHA.
         </h1>
         <p className="rise rise-delay-2 mt-6 max-w-xl text-lg leading-relaxed text-white">
-          Travelling to Rameshwaram with family or friends? Bring your group together and take the entire SHA Stays exclusively for yourselves.
+          Travelling to Rameshwaram with family, friends or a group? Book the entire SHA Stays property exclusively for yourselves.
         </p>
         <div className="rise rise-delay-3 mt-8 flex flex-wrap gap-3">
-          <ButtonLink href="#quote">Plan Your Private Stay</ButtonLink>
-          <ButtonLink href={whatsappHref(whatsappPrivateStay)} variant="ghost" external={hasWhatsapp()}>
+          <ButtonLink href="#quote">Plan Your Group Stay</ButtonLink>
+          <ButtonLink href={whatsappHref(whatsappPrivateStay)} variant="ghost" external={hasWhatsapp()} icon="whatsapp">
             WhatsApp Us
           </ButtonLink>
         </div>
-        <p className="mt-8 max-w-xl text-sm leading-relaxed text-white">
-          Perfect for groups travelling together by car, Tempo Traveller, van or multiple vehicles.
+        <p className="mt-8 max-w-xl text-sm leading-relaxed text-white/90">
+          For groups arriving together by car, 15–21 seater van, Tempo Traveller or several vehicles.
         </p>
       </Container>
     </section>
@@ -135,8 +131,8 @@ function Concept() {
             Don&apos;t book six rooms. Book the whole place.
           </p>
         </div>
-        <div className="rounded-[1.75rem] bg-paper p-7 shadow-[0_18px_50px_rgba(24,60,53,0.06)] ring-1 ring-black/5 sm:p-8">
-          <p className={eyebrow}>Your private resort</p>
+        <div className="rounded-panel bg-paper p-7 shadow-soft ring-1 ring-black/5 sm:p-8">
+          <p className={eyebrow}>Your private stay</p>
           <ul className="mt-6 space-y-4">
             {privateBenefits.map((item) => (
               <li key={item} className="flex gap-3 text-[1.02rem] leading-snug text-charcoal">
@@ -148,7 +144,7 @@ function Concept() {
         </div>
       </Container>
       <Container className="mt-12">
-        <p className="rounded-[1.75rem] bg-sand px-8 py-8 font-serif text-3xl leading-snug text-forest md:px-12 md:py-10 md:text-5xl">
+        <p className="rounded-panel bg-sand px-8 py-8 font-serif text-3xl leading-snug text-forest md:px-12 md:py-10 md:text-5xl">
           One booking. One group. One private stay.
         </p>
       </Container>
@@ -173,7 +169,7 @@ function Audiences() {
           {privateAudiences.map((item) => (
             <article
               key={item.title}
-              className="rounded-[1.5rem] bg-paper p-7 shadow-[0_16px_40px_rgba(24,60,53,0.05)] ring-1 ring-black/5 motion-safe:transition motion-safe:hover:-translate-y-1"
+              className="rounded-card bg-paper p-7 shadow-soft ring-1 ring-black/5 motion-safe:transition motion-safe:hover:-translate-y-1"
             >
               <h3 className="font-serif text-3xl text-forest">{item.title}</h3>
               <p className="mt-3 leading-relaxed text-muted">{item.text}</p>
@@ -192,17 +188,17 @@ function Inclusions() {
         <div className="max-w-2xl">
           <p className={eyebrow}>What you reserve</p>
           <h2 className="mt-3 font-serif text-4xl leading-[1.05] text-forest md:text-6xl">
-            Your Private Resort Includes
+            Your Private Stay Includes
           </h2>
         </div>
         <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {privateInclusions.map((item) => (
             <article
               key={item.title}
-              className="rounded-[1.5rem] border border-line bg-paper p-7 motion-safe:transition motion-safe:hover:-translate-y-1"
+              className="rounded-card border border-line bg-paper p-7 motion-safe:transition motion-safe:hover:-translate-y-1"
             >
               <span className="grid h-12 w-12 place-items-center rounded-full bg-sand text-forest">
-                <InclusionIcon name={item.icon} />
+                <Icon name={item.icon} className="h-6 w-6" />
               </span>
               <h3 className="mt-6 font-serif text-3xl text-forest">{item.title}</h3>
               <p className="mt-3 leading-relaxed text-muted">{item.text}</p>
@@ -219,7 +215,7 @@ function Story() {
     <section className="bg-paper py-20 md:py-28">
       <Container className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
         <figure>
-          <div className="relative aspect-[4/3] overflow-hidden rounded-[1.75rem] lg:aspect-[4/5]">
+          <div className="relative aspect-[4/3] overflow-hidden rounded-panel lg:aspect-[4/5]">
             <LazyImage
               src={privateStoryImage.src}
               alt={privateStoryImage.alt}
@@ -314,7 +310,7 @@ function Packages() {
             Tell us your travel date, group size and vehicle type, and we&apos;ll send a personalised quote for the entire property.
           </p>
         </div>
-        <article className="mt-12 grid gap-10 rounded-[1.75rem] bg-forest p-7 text-ivory shadow-[0_18px_50px_rgba(24,60,53,0.16)] md:p-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16 lg:p-12">
+        <article className="mt-12 grid gap-10 rounded-panel bg-forest p-7 text-ivory shadow-lift md:p-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16 lg:p-12">
           <div className="flex flex-col">
             <h3 className="font-serif text-4xl text-white md:text-5xl">{privatePackage.name}</h3>
             <p className="mt-3 text-sand">{privatePackage.summary}</p>
@@ -324,7 +320,7 @@ function Packages() {
               <ButtonLink href="#quote" variant="sand">
                 {privatePackage.cta}
               </ButtonLink>
-              <ButtonLink href={whatsappHref(whatsappPrivateStay)} variant="ghost" external={hasWhatsapp()}>
+              <ButtonLink href={whatsappHref(whatsappPrivateStay)} variant="ghost" external={hasWhatsapp()} icon="whatsapp">
                 WhatsApp Us
               </ButtonLink>
             </div>
@@ -359,7 +355,7 @@ function AddOns() {
         </div>
         <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {privateAddOns.map((item) => (
-            <article key={item.title} className="rounded-[1.5rem] bg-paper p-7 ring-1 ring-black/5">
+            <article key={item.title} className="rounded-card bg-paper p-7 ring-1 ring-black/5">
               <p className="text-xs font-medium tracking-[0.16em] text-terracotta-deep uppercase">On request</p>
               <h3 className="mt-4 font-serif text-3xl text-forest">{item.title}</h3>
               <p className="mt-3 leading-relaxed text-muted">{item.text}</p>
@@ -381,13 +377,13 @@ function Explore() {
             Stay Together. Explore Together.
           </h2>
           <p className="mt-5 text-lg leading-relaxed text-muted">
-            Set out as a group for the temple, the memorial, the bridge and the shore, then come back to the same private resort.
+            Set out as a group for the temple, the memorial, the bridge and the shore, then come back to the same private stay.
           </p>
         </div>
         <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {privatePlaces.map((place) =>
             place.photo ? (
-              <article key={place.slug} className="overflow-hidden rounded-[1.75rem] bg-sand">
+              <article key={place.slug} className="overflow-hidden rounded-panel bg-sand">
                 <div className="relative aspect-[4/3]">
                   <LazyImage
                     src={place.photo.src}
@@ -403,7 +399,7 @@ function Explore() {
                 </div>
               </article>
             ) : (
-              <article key={place.slug} className="flex min-h-72 flex-col justify-end rounded-[1.75rem] bg-forest p-7">
+              <article key={place.slug} className="flex min-h-72 flex-col justify-end rounded-panel bg-forest p-7">
                 <p className="text-xs tracking-[0.18em] text-sand uppercase">On the island</p>
                 <h3 className="mt-3 font-serif text-3xl text-white">{place.name}</h3>
                 <p className="mt-3 leading-relaxed text-sand/90">{place.description}</p>
@@ -434,7 +430,7 @@ function Gallery() {
           {privateGallery.map((photo) => (
             <figure key={photo.id}>
               {photo.src ? (
-                <div className={cx("relative overflow-hidden rounded-[1.5rem]", photo.tall ? "aspect-[3/4]" : "aspect-[4/3]")}>
+                <div className={cx("relative overflow-hidden rounded-card", photo.tall ? "aspect-[3/4]" : "aspect-[4/3]")}>
                   <LazyImage
                     src={photo.src}
                     alt={photo.alt}
@@ -446,7 +442,7 @@ function Gallery() {
               ) : (
                 <div
                   className={cx(
-                    "flex flex-col justify-between rounded-[1.5rem] bg-sand p-6",
+                    "flex flex-col justify-between rounded-card bg-sand p-6",
                     photo.tall ? "aspect-[3/4]" : "aspect-[4/3]",
                   )}
                 >
@@ -469,7 +465,7 @@ function Fit() {
       <Container>
         <h2 className="max-w-2xl font-serif text-4xl leading-[1.05] text-forest md:text-6xl">Who this stay is for</h2>
         <div className="mt-10 grid gap-5 lg:grid-cols-2">
-          <div className="rounded-[1.75rem] bg-paper p-7 ring-1 ring-black/5 sm:p-8">
+          <div className="rounded-panel bg-paper p-7 ring-1 ring-black/5 sm:p-8">
             <h3 className="font-serif text-3xl text-forest">Perfect if you are...</h3>
             <ul className="mt-6 space-y-3">
               {privateFit.map((item) => (
@@ -480,10 +476,10 @@ function Fit() {
               ))}
             </ul>
           </div>
-          <div className="rounded-[1.75rem] bg-sand/70 p-7 sm:p-8">
+          <div className="rounded-panel bg-sand/70 p-7 sm:p-8">
             <h3 className="font-serif text-3xl text-forest">Not ideal if...</h3>
             <p className="mt-3 leading-relaxed text-charcoal/80">
-              A regular room may suit you better. The private resort is reserved for one group at a time.
+              A regular room may suit you better. A private stay is reserved for one group at a time.
             </p>
             <ul className="mt-6 space-y-3">
               {privateNotFit.map((item) => (
@@ -537,7 +533,7 @@ function Closing() {
   return (
     <section className="bg-forest text-ivory">
       <Container className="py-20 md:py-28">
-        <p className="text-xs font-medium tracking-[0.22em] text-sand uppercase">SHA Stays · Rameshwaram</p>
+        <p className="eyebrow text-sand">SHA Stays · Rameshwaram</p>
         <h2 className="mt-4 max-w-3xl font-serif text-5xl leading-[1.02] text-white md:text-7xl">
           Bring Your People. We&apos;ll Keep the Place.
         </h2>
@@ -552,7 +548,7 @@ function Closing() {
           <ButtonLink href="#quote" variant="terracotta">
             Get My Private Group Quote
           </ButtonLink>
-          <ButtonLink href={whatsappHref(whatsappPrivateStay)} variant="ghost" external={hasWhatsapp()}>
+          <ButtonLink href={whatsappHref(whatsappPrivateStay)} variant="ghost" external={hasWhatsapp()} icon="whatsapp">
             WhatsApp Us
           </ButtonLink>
         </div>
@@ -569,7 +565,7 @@ function Quote() {
     <section className="py-16 md:py-20" id="quote">
       <Container className="grid items-start gap-12 lg:grid-cols-[0.8fr_1.2fr]">
         <div>
-          <p className={eyebrow}>Private resort booking</p>
+          <p className={eyebrow}>Group enquiry</p>
           <h2 className="mt-3 font-serif text-4xl leading-[1.05] text-forest md:text-5xl">Request Your Private Stay Quote</h2>
           <p className="mt-5 text-lg leading-relaxed text-muted">
             Share your travel date, group size and vehicle type. We&apos;ll reply with availability and a package for the entire property.
@@ -587,69 +583,13 @@ function Quote() {
 }
 
 function Check({ light = false }: { light?: boolean }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      className={cx("mt-0.5 h-5 w-5 shrink-0", light ? "text-sand" : "text-forest")}
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.7"
-      aria-hidden="true"
-    >
-      <path strokeLinecap="round" strokeLinejoin="round" d="M5 12.5 9.2 17 19 7" />
-    </svg>
-  );
+  return <Icon name="check" className={cx("mt-0.5", light ? "text-sand" : "text-forest")} />;
 }
 
 function Cross() {
   return (
     <svg viewBox="0 0 24 24" className="mt-0.5 h-5 w-5 shrink-0 text-terracotta-deep" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden="true">
       <path strokeLinecap="round" d="M7 7l10 10M17 7 7 17" />
-    </svg>
-  );
-}
-
-function InclusionIcon({ name }: { name: FeatureIcon }) {
-  const paths: Record<FeatureIcon, ReactNode> = {
-    bed: (
-      <>
-        <path strokeLinecap="round" d="M4 18V9.5M20 18V12" />
-        <path strokeLinecap="round" strokeLinejoin="round" d="M4 14h16v4H4z" />
-        <path strokeLinecap="round" strokeLinejoin="round" d="M7 14v-2.2A1.8 1.8 0 0 1 8.8 10h1.4A1.8 1.8 0 0 1 12 11.8V14" />
-      </>
-    ),
-    home: <path strokeLinecap="round" strokeLinejoin="round" d="M4 11.2 12 4l8 7.2V20a1 1 0 0 1-1 1h-5.2v-5.5h-3.6V21H5a1 1 0 0 1-1-1z" />,
-    car: (
-      <>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M5 16.5h14M6.2 16.5 7.6 12a2 2 0 0 1 1.9-1.4h5a2 2 0 0 1 1.9 1.4l1.4 4.5" />
-        <circle cx="8" cy="16.5" r="1.3" />
-        <circle cx="16" cy="16.5" r="1.3" />
-      </>
-    ),
-    gather: (
-      <>
-        <circle cx="9" cy="8" r="2.1" />
-        <circle cx="16" cy="9" r="1.7" />
-        <path strokeLinecap="round" d="M4.8 18.2c.5-2.5 2.3-3.8 4.4-3.8 2 0 3.8 1.3 4.3 3.8M13.2 14.8c1.3-.5 2.7-.3 3.8.8.7.7 1.2 1.6 1.4 2.6" />
-      </>
-    ),
-    lock: (
-      <>
-        <rect x="6" y="11" width="12" height="8" rx="1.6" />
-        <path strokeLinecap="round" d="M8.5 11V8.4a3.5 3.5 0 0 1 7 0V11" />
-      </>
-    ),
-    pin: (
-      <>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M12 21s6-5.1 6-10a6 6 0 1 0-12 0c0 4.9 6 10 6 10z" />
-        <circle cx="12" cy="11" r="1.8" />
-      </>
-    ),
-  };
-
-  return (
-    <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true">
-      {paths[name]}
     </svg>
   );
 }

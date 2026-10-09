@@ -1,7 +1,9 @@
+import type { IconName } from "@/components/Icon";
 import { photos, places, type Place } from "@/lib/site";
 
 /**
- * Private resort page content.
+ * Private Stay page content (book the entire property for one group).
+ * Say "entire property" or "private stay", not "resort".
  * Pricing is quoted on enquiry and is not shown on the page.
  * Add a `src` to empty gallery slots when group photographs are ready.
  */
@@ -58,9 +60,7 @@ export const privateAudiences = [
   },
 ] as const;
 
-export type FeatureIcon = "bed" | "home" | "car" | "gather" | "lock" | "pin";
-
-export const privateInclusions: { title: string; text: string; icon: FeatureIcon }[] = [
+export const privateInclusions: { title: string; text: string; icon: IconName }[] = [
   {
     title: "6 Private Rooms",
     text: "Accommodation for your entire group across all six rooms — two king rooms and four queen rooms.",
@@ -101,7 +101,7 @@ export const privateSteps = [
   },
   {
     number: "02",
-    title: "Get Your Private Resort Quote",
+    title: "Get Your Private Stay Quote",
     text: "We'll calculate the package based on your group and dates.",
   },
   {
@@ -124,7 +124,7 @@ export const privateStats = [
 ] as const;
 
 export const privatePackage = {
-  name: "Private Resort Stay",
+  name: "Private Stay",
   summary: "The entire SHA Stays, reserved for one group.",
   price: "Price on enquiry",
   priceNote:
@@ -197,7 +197,7 @@ export type PrivateGallerySlot = {
 export const privateGallery: PrivateGallerySlot[] = [
   {
     id: "entrance",
-    caption: "Resort entrance",
+    caption: "Front gate",
     src: "/images/gallery/outdoor-gate.webp",
     alt: "The front gate of SHA Stays, with the garden walkway and trees beyond",
   },
@@ -273,9 +273,9 @@ export const privateNotFit = [
 
 export const privateFaqs = [
   {
-    question: "Can we book the entire resort exclusively?",
+    question: "Can we book the entire property exclusively?",
     answer:
-      "Yes. Our private resort package allows one group to reserve the entire property exclusively for their stay.",
+      "Yes. Our private stay package allows one group to reserve the entire property exclusively for their stay.",
   },
   {
     question: "How many people can stay?",
@@ -285,7 +285,7 @@ export const privateFaqs = [
   {
     question: "Can we come by Tempo Traveller?",
     answer:
-      "Yes. The package is designed for groups travelling together by van, Tempo Traveller, mini bus or multiple cars.",
+      "Yes. The package is designed for groups travelling together by car, 15–21 seater van, Tempo Traveller, mini bus or multiple cars.",
   },
   {
     question: "Can we book for one night?",
@@ -301,7 +301,7 @@ export const privateFaqs = [
   },
   {
     question: "Will other guests stay at the property?",
-    answer: "No. When you book the private resort package, the property is reserved exclusively for your group.",
+    answer: "No. When you book the private stay package, the property is reserved exclusively for your group.",
   },
 ] as const;
 

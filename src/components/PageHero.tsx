@@ -18,7 +18,7 @@ export function PageHero({
     <section className="border-b border-line bg-paper">
       <Container className="py-16 md:py-24">
         <Breadcrumbs items={[{ name: crumb, path }]} />
-        <p className="text-xs font-medium tracking-[0.22em] text-terracotta-deep uppercase">
+        <p className="eyebrow text-terracotta-deep">
           {eyebrow}
         </p>
         <h1 className="mt-4 max-w-3xl font-serif text-5xl leading-[1.02] text-forest md:text-7xl">

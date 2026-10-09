@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import { contact, faqs, rooms, sharedAmenities, site } from "@/lib/site";
+import { contact, faqs, galleryPhotos, rooms, sharedAmenities, site } from "@/lib/site";
 
-const ogImage = {
+export const ogImage = {
   url: "/images/hero-banner.jpg",
-  width: 1672,
-  height: 941,
+  width: 1200,
+  height: 675,
   alt: "The garden entrance and walkway of SHA Stays in Rameshwaram",
   type: "image/jpeg",
 };
@@ -80,7 +80,14 @@ export function siteGraph() {
         description: site.description,
         slogan: site.tagline,
         url,
-        image: `${url}/images/hero-banner.jpg`,
+        logo: `${url}/images/logo.png`,
+        image: [
+          `${url}/images/hero-banner.jpg`,
+          `${url}${galleryPhotos.forecourt.src}`,
+          `${url}${galleryPhotos.archNight.src}`,
+          ...rooms.map((room) => `${url}${room.image}`),
+        ],
+        ...(contact.instagram ? { sameAs: [contact.instagram] } : {}),
         telephone: contact.phone,
         email: contact.email,
         address: {
@@ -125,9 +132,9 @@ export function siteGraph() {
           bed: room.bed,
           url: `${url}/rooms/${room.slug}/`,
           image: room.image ? `${url}${room.image}` : undefined,
-          amenityFeature: sharedAmenities.map((name) => ({
+          amenityFeature: sharedAmenities.map(({ label }) => ({
             "@type": "LocationFeatureSpecification",
-            name,
+            name: label,
             value: true,
           })),
         })),

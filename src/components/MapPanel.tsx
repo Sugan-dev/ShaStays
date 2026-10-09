@@ -3,7 +3,7 @@ import { contact } from "@/lib/site";
 export function MapPanel() {
   return (
     <div>
-      <div className="overflow-hidden rounded-[1.75rem] border border-line bg-sand shadow-[0_18px_50px_rgba(24,60,53,0.06)]">
+      <div className="overflow-hidden rounded-panel border border-line bg-sand shadow-soft">
         <iframe
           title="Map showing SHA Stays near the Dr. A.P.J. Abdul Kalam Memorial in Rameshwaram"
           src={contact.mapEmbedUrl}

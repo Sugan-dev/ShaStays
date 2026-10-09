@@ -4,7 +4,7 @@ import { site } from "@/lib/site";
 export const dynamic = "force-static";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const lastModified = new Date("2026-10-05");
+  const lastModified = new Date("2026-10-07");
   const paths = [
     { path: "", priority: 1, changeFrequency: "weekly" as const },
     { path: "/rooms", priority: 0.9, changeFrequency: "monthly" as const },

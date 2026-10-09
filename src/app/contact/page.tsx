@@ -6,10 +6,11 @@ import { contact, site } from "@/lib/site";
 import {
   displayEmail,
   displayWhatsapp,
+  hasInstagram,
   hasPhone,
   hasWhatsapp,
   phoneHref,
-  whatsappGreeting,
+  whatsappAvailability,
   whatsappHref,
 } from "@/lib/links";
 
@@ -21,6 +22,8 @@ export const metadata = pageMeta({
     "Contact SHA Stays in Rameshwaram for rooms, availability and directions. Call, WhatsApp or email a peaceful boutique stay near the Abdul Kalam Memorial.",
   path: "/contact",
 });
+
+const linkClass = "underline decoration-transparent underline-offset-4 hover:decoration-current";
 
 export default function ContactPage() {
   return (
@@ -37,53 +40,61 @@ export default function ContactPage() {
                 {line}
               </p>
             ))}
-            <dl className="mt-8 space-y-4">
+            <dl className="mt-8 space-y-5">
               <div>
-                <dt className="text-xs tracking-[0.18em] text-terracotta-deep uppercase">Phone</dt>
+                <dt className="eyebrow text-terracotta-deep">Phone</dt>
                 <dd className="mt-1 text-lg">
-                  <a href={phoneHref()} className="underline decoration-transparent underline-offset-4 hover:decoration-current">
+                  <a href={phoneHref()} className={linkClass}>
                     {contact.phoneDisplay}
                   </a>
                   {" / "}
-                  <a href={phoneHref(contact.phoneAlt)} className="underline decoration-transparent underline-offset-4 hover:decoration-current">
+                  <a href={phoneHref(contact.phoneAlt)} className={linkClass}>
                     {contact.phoneAltDisplay}
                   </a>
                 </dd>
               </div>
               <div>
-                <dt className="text-xs tracking-[0.18em] text-terracotta-deep uppercase">WhatsApp</dt>
+                <dt className="eyebrow text-terracotta-deep">WhatsApp</dt>
                 <dd className="mt-1 text-lg">
-                  <a
-                    href={whatsappHref(whatsappGreeting)}
-                    className="underline decoration-transparent underline-offset-4 hover:decoration-current"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
+                  <a href={whatsappHref(whatsappAvailability)} className={linkClass} target="_blank" rel="noopener noreferrer">
                     {displayWhatsapp()}
+                    <span className="sr-only"> (opens in a new tab)</span>
                   </a>
                 </dd>
               </div>
               <div>
-                <dt className="text-xs tracking-[0.18em] text-terracotta-deep uppercase">Email</dt>
+                <dt className="eyebrow text-terracotta-deep">Email</dt>
                 <dd className="mt-1 text-lg">
-                  <a href={`mailto:${contact.email}`} className="underline decoration-transparent underline-offset-4 hover:decoration-current">
+                  <a href={`mailto:${contact.email}`} className={linkClass}>
                     {displayEmail()}
                   </a>
                 </dd>
               </div>
+              {hasInstagram() ? (
+                <div>
+                  <dt className="eyebrow text-terracotta-deep">Instagram</dt>
+                  <dd className="mt-1 text-lg">
+                    <a href={contact.instagram} className={linkClass} target="_blank" rel="noopener noreferrer">
+                      Follow SHA Stays
+                      <span className="sr-only"> on Instagram (opens in a new tab)</span>
+                    </a>
+                  </dd>
+                </div>
+              ) : null}
             </dl>
             <div className="mt-8 flex flex-wrap gap-3">
-              <ButtonLink href={hasPhone() ? phoneHref() : "#enquiry"} variant="forest">
-                Call Us
-              </ButtonLink>
               <ButtonLink
-                href={hasWhatsapp() ? whatsappHref(whatsappGreeting) : "#enquiry"}
-                variant="outline"
+                href={hasWhatsapp() ? whatsappHref(whatsappAvailability) : "#enquiry"}
+                variant="forest"
                 external={hasWhatsapp()}
+                icon="whatsapp"
               >
                 WhatsApp Us
               </ButtonLink>
-              <ButtonLink href={contact.directionsUrl} variant="sand" external>
+              <ButtonLink href={hasPhone() ? phoneHref() : "#enquiry"} variant="outline" icon="phone">
+                Call Us
+              </ButtonLink>
+              <ButtonLink href={contact.directionsUrl} variant="sand" external icon="pin">
                 Get Directions
               </ButtonLink>
             </div>

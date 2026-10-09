@@ -1,84 +1,67 @@
 import Link from "next/link";
 import type { Room } from "@/lib/site";
-import { mattressNote } from "@/lib/site";
+import { AmenityList } from "@/components/AmenityList";
+import { Icon } from "@/components/Icon";
 import { LazyImage } from "@/components/LazyImage";
+import { buttonClass } from "@/components/Buttons";
 import { cx } from "@/lib/links";
 
 export function RoomCard({
   room,
-  featured,
+  layout = "stack",
+  reverse,
   heading = "h3",
 }: {
   room: Room;
-  featured?: boolean;
+  layout?: "stack" | "row";
+  reverse?: boolean;
   heading?: "h2" | "h3";
 }) {
-  const forestPanel = room.number === "01";
   const Title = heading;
+  const row = layout === "row";
+  const alt = room.photos[0]?.alt ?? room.name;
 
   return (
-    <article
-      className={cx(
-        "grid overflow-hidden rounded-[1.75rem] bg-paper shadow-[0_18px_50px_rgba(24,60,53,0.06)] ring-1 ring-black/5 lg:grid-cols-2",
-        featured && "lg:min-h-[460px]",
-      )}
-    >
-      {room.image ? (
-        <div className="relative min-h-72">
+    <article className={cx("group", row && "grid items-center gap-8 lg:grid-cols-2 lg:gap-14")}>
+      <Link
+        href={`/rooms/${room.slug}`}
+        tabIndex={-1}
+        className={cx("relative block aspect-[4/3] overflow-hidden rounded-card bg-sand", row && reverse && "lg:order-2")}
+      >
+        {room.image ? (
           <LazyImage
             src={room.image}
-            alt={room.name}
+            alt={alt}
             fill
-            className="object-cover"
-            sizes="(min-width: 1024px) 50vw, 100vw"
+            className="object-cover transition-transform duration-700 ease-out motion-safe:group-hover:scale-[1.03]"
+            sizes={row ? "(min-width: 1024px) 50vw, 100vw" : "(min-width: 1024px) 45vw, (min-width: 640px) 50vw, 100vw"}
           />
-        </div>
-      ) : (
-        <div
-          className={cx(
-            "relative flex min-h-72 flex-col justify-between p-8 sm:p-10",
-            forestPanel ? "bg-forest text-sand" : "bg-sand text-forest",
-          )}
-        >
-          <div className="flex items-start justify-between gap-6">
-            <p className={cx("text-xs tracking-[0.22em] uppercase", forestPanel ? "text-sand" : "text-forest")}>
-              {room.bed}
-              <span className="mt-2 block tracking-[0.14em] normal-case">{room.countLabel}</span>
-            </p>
-            <span className={cx("font-serif text-6xl leading-none", forestPanel ? "text-white/55" : "text-forest/70")} aria-hidden="true">
-              {room.number}
-            </span>
-          </div>
-          <div>
-            <p className={cx("text-xs tracking-[0.18em] uppercase", forestPanel ? "text-sand" : "text-terracotta-ink")}>
-              SHA Stays
-            </p>
-            <Title className={cx("mt-2 font-serif text-5xl leading-none", forestPanel ? "text-white" : "text-forest")}>
-              {room.name}
-            </Title>
-          </div>
-        </div>
-      )}
-      <div className="flex flex-col p-8 sm:p-10">
-        {room.image ? (
-          <Title className="mb-4 font-serif text-4xl text-forest">{room.name}</Title>
-        ) : null}
-        <p className="text-lg leading-relaxed text-charcoal/85">{room.description}</p>
-        <ul className="mt-6 space-y-2">
-          {room.highlights.map((item) => (
-            <li key={item} className="flex items-start gap-3 text-sm text-muted">
-              <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-terracotta" aria-hidden="true" />
-              {item}
-            </li>
-          ))}
-        </ul>
-        <p className="mt-6 text-sm leading-relaxed text-muted">{mattressNote}</p>
-        <div className="mt-8">
+        ) : (
+          <span className="absolute inset-0 grid place-items-center font-serif text-7xl text-forest/40">{room.number}</span>
+        )}
+      </Link>
+      <div className={cx(!row && "mt-6")}>
+        <p className="eyebrow text-terracotta-deep">
+          {room.bed} · {room.countLabel}
+        </p>
+        <Title className="mt-3 font-serif text-4xl text-forest md:text-[2.75rem]">
+          <Link href={`/rooms/${room.slug}`} className="hover:text-forest-soft">
+            {room.name}
+          </Link>
+        </Title>
+        <p className="mt-3 max-w-lg leading-relaxed text-muted">{room.description}</p>
+        <AmenityList amenities={room.amenities} className="mt-6 max-w-md" />
+        <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-3">
+          <Link href={`/rooms/${room.slug}`} className={buttonClass("forest")}>
+            View Room
+            <span className="sr-only">: {room.name}</span>
+          </Link>
           <Link
-            href={`/rooms/${room.slug}`}
-            className="inline-flex min-h-12 items-center justify-center rounded-full bg-forest px-6 text-sm font-medium text-ivory transition hover:bg-forest-soft"
+            href={`/book?room=${room.slug}`}
+            className="inline-flex min-h-12 items-center gap-2 font-medium text-forest underline decoration-transparent underline-offset-4 transition hover:decoration-current"
           >
-            View {room.name}
+            Check availability
+            <Icon name="arrow" className="h-4 w-4" />
           </Link>
         </div>
       </div>

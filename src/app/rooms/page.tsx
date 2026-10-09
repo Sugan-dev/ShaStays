@@ -3,9 +3,10 @@ import { Container } from "@/components/Container";
 import { FinalCta } from "@/components/FinalCta";
 import { PageHero } from "@/components/PageHero";
 import { RoomCard } from "@/components/RoomCard";
-import { mattressNote, rooms, stayFacts } from "@/lib/site";
+import { mattressNote, rooms, sharedAmenities, stayFacts } from "@/lib/site";
 import { pageMeta } from "@/lib/seo";
-import { hasPhone, phoneHref } from "@/lib/links";
+import { hasWhatsapp, whatsappAvailability, whatsappHref } from "@/lib/links";
+import { AmenityList } from "@/components/AmenityList";
 
 export const metadata = pageMeta({
   title: "Rooms in Rameshwaram",
@@ -17,38 +18,38 @@ export const metadata = pageMeta({
 export default function RoomsPage() {
   return (
     <>
-      <PageHero eyebrow="Six rooms" title="Simple Rooms. Comfortable Stays." crumb="Rooms" path="/rooms">
-        We keep things simple: clean, comfortable rooms, thoughtful essentials and a peaceful place to rest after exploring Rameshwaram. There are two SHA King Rooms and four SHA Queen Rooms.
+      <PageHero eyebrow="Six boutique rooms" title="Rooms made for a comfortable stay." crumb="Rooms" path="/rooms">
+        Two SHA King Rooms and four SHA Queen Rooms: calm, clean and thoughtfully kept, with a peaceful place to rest after a day exploring Rameshwaram.
       </PageHero>
-      <section className="py-16 md:py-20">
-        <Container className="space-y-6">
-          {rooms.map((room) => (
-            <RoomCard key={room.slug} room={room} featured heading="h2" />
+      <section className="py-16 md:py-24">
+        <Container className="space-y-20 md:space-y-28">
+          {rooms.map((room, index) => (
+            <div key={room.slug} className="reveal">
+              <RoomCard room={room} layout="row" reverse={index % 2 === 1} heading="h2" />
+            </div>
           ))}
         </Container>
       </section>
-      <section className="pb-16">
-        <Container>
-          <dl className="grid gap-4 sm:grid-cols-3">
-            {stayFacts.map((fact) => (
-              <div key={fact.label} className="rounded-[1.5rem] bg-paper px-6 py-6 ring-1 ring-line">
-                <dt className="text-sm text-muted">{fact.label}</dt>
-                <dd className="mt-1 font-serif text-3xl text-forest">{fact.value}</dd>
-              </div>
-            ))}
-          </dl>
-          <p className="mt-6 max-w-2xl text-sm leading-relaxed text-muted">{mattressNote}</p>
-          <div className="mt-10 rounded-[1.75rem] bg-forest px-8 py-10 text-ivory">
-            <h2 className="font-serif text-4xl text-white md:text-5xl">Find Your Room</h2>
-            <p className="mt-4 max-w-xl text-sand/90">
-              Choose the room that suits your journey and make SHA Stays your comfortable base in Rameshwaram.
-            </p>
-            <div className="mt-6 flex flex-wrap gap-3">
-              <ButtonLink href="/book" variant="terracotta">
-                Check Availability
-              </ButtonLink>
-              <ButtonLink href={hasPhone() ? phoneHref() : "/contact"} variant="ghost">
-                Call to Book
+      <section className="pb-20 md:pb-28">
+        <Container className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
+          <div className="rounded-panel border border-line bg-paper p-7 md:p-10">
+            <h2 className="font-serif text-3xl text-forest md:text-4xl">In every room</h2>
+            <AmenityList amenities={sharedAmenities} className="mt-6" />
+            <p className="mt-8 max-w-xl text-sm leading-relaxed text-muted">{mattressNote}</p>
+          </div>
+          <div className="flex flex-col rounded-panel bg-forest p-7 text-ivory md:p-10">
+            <dl className="grid gap-4 sm:grid-cols-3 lg:grid-cols-1">
+              {stayFacts.map((fact) => (
+                <div key={fact.label} className="border-b border-white/10 pb-4">
+                  <dt className="text-sm text-sand/80">{fact.label}</dt>
+                  <dd className="mt-1 font-serif text-3xl text-white">{fact.value}</dd>
+                </div>
+              ))}
+            </dl>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <ButtonLink href="/book">Check Availability</ButtonLink>
+              <ButtonLink href={whatsappHref(whatsappAvailability)} variant="ghost" external={hasWhatsapp()} icon="whatsapp">
+                WhatsApp Us
               </ButtonLink>
             </div>
           </div>

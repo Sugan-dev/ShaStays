@@ -2,14 +2,16 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { AmenityList } from "@/components/AmenityList";
 import { ButtonLink } from "@/components/Buttons";
 import { Container } from "@/components/Container";
 import { FinalCta } from "@/components/FinalCta";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
+import { Icon } from "@/components/Icon";
 import { LazyImage } from "@/components/LazyImage";
 import { getRoom, mattressNote, rooms, stayFacts } from "@/lib/site";
 import { pageMeta } from "@/lib/seo";
-import { cx, hasWhatsapp, whatsappGreeting, whatsappHref } from "@/lib/links";
+import { cx, hasWhatsapp, whatsappHref, whatsappRoom } from "@/lib/links";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -39,7 +41,7 @@ export default async function RoomPage({ params }: Props) {
   return (
     <>
       <section className="border-b border-line bg-paper">
-        <Container className="grid items-end gap-10 py-16 md:py-20 lg:grid-cols-2">
+        <Container className="grid items-end gap-10 py-14 md:py-20 lg:grid-cols-2">
           <div>
             <Breadcrumbs
               items={[
@@ -47,16 +49,25 @@ export default async function RoomPage({ params }: Props) {
                 { name: room.name, path: `/rooms/${room.slug}` },
               ]}
             />
-            <p className="text-xs font-medium tracking-[0.22em] text-terracotta-deep uppercase">
+            <p className="eyebrow text-terracotta-deep">
               {room.bed} · {room.countLabel}
             </p>
-            <h1 className="mt-4 font-serif text-5xl leading-[1.02] text-forest md:text-7xl">
-              {room.name}
-            </h1>
+            <h1 className="mt-4 font-serif text-5xl leading-[1.02] text-forest md:text-7xl">{room.name}</h1>
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted">{room.description}</p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <ButtonLink href={`/book?room=${room.slug}`}>Book Your Stay</ButtonLink>
+              <ButtonLink
+                href={whatsappHref(whatsappRoom(room.name))}
+                variant="outline"
+                external={hasWhatsapp()}
+                icon="whatsapp"
+              >
+                WhatsApp Us
+              </ButtonLink>
+            </div>
           </div>
           {room.image ? (
-            <div className="relative aspect-[4/3] overflow-hidden rounded-[1.75rem]">
+            <div className="relative aspect-[4/3] overflow-hidden rounded-panel">
               <Image
                 src={room.image}
                 alt={room.photos[0]?.alt ?? room.name}
@@ -69,7 +80,7 @@ export default async function RoomPage({ params }: Props) {
           ) : (
             <div
               className={cx(
-                "flex min-h-64 flex-col justify-between rounded-[1.75rem] p-8",
+                "flex min-h-64 flex-col justify-between rounded-panel p-8",
                 forestPanel ? "bg-forest text-sand" : "bg-sand text-forest",
               )}
             >
@@ -88,12 +99,12 @@ export default async function RoomPage({ params }: Props) {
       </section>
 
       {room.photos.length > 1 ? (
-        <section className="py-16">
+        <section className="py-16 md:py-20">
           <Container>
             <h2 className="font-serif text-4xl text-forest">A closer look</h2>
             <div className="mt-8 grid gap-4 sm:grid-cols-2">
               {room.photos.slice(1).map((photo) => (
-                <figure key={photo.src} className="relative aspect-[4/3] overflow-hidden rounded-[1.5rem]">
+                <figure key={photo.src} className="relative aspect-[4/3] overflow-hidden rounded-card bg-sand">
                   <LazyImage
                     src={photo.src}
                     alt={photo.alt}
@@ -108,24 +119,17 @@ export default async function RoomPage({ params }: Props) {
         </section>
       ) : null}
 
-      <section className="pb-16">
+      <section className="pb-16 md:pb-20">
         <Container className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr]">
           <div>
             <h2 className="font-serif text-4xl text-forest">In the room</h2>
-            <ul className="mt-6 space-y-3">
-              {room.highlights.map((item) => (
-                <li key={item} className="flex items-center gap-3 border-b border-line py-3 text-charcoal">
-                  <span className="h-1.5 w-1.5 rounded-full bg-terracotta" aria-hidden="true" />
-                  {item}
-                </li>
-              ))}
-            </ul>
-            <p className="mt-6 max-w-xl text-sm leading-relaxed text-muted">{mattressNote}</p>
+            <AmenityList amenities={room.amenities} className="mt-6 max-w-lg" />
+            <p className="mt-8 max-w-xl text-sm leading-relaxed text-muted">{mattressNote}</p>
             <p className="mt-4 max-w-xl text-sm leading-relaxed text-muted">
               Our rooms are suitable for couples and small families depending on the selected room and sleeping arrangement.
             </p>
           </div>
-          <aside className="h-fit rounded-[1.75rem] bg-sand/70 p-7">
+          <aside className="h-fit rounded-panel bg-sand/70 p-7">
             <h2 className="font-serif text-3xl text-forest">Plan the stay</h2>
             <dl className="mt-5 space-y-3">
               {stayFacts.map((fact) => (
@@ -138,9 +142,10 @@ export default async function RoomPage({ params }: Props) {
             <div className="mt-6 flex flex-col gap-3">
               <ButtonLink href={`/book?room=${room.slug}`}>Book Your Stay</ButtonLink>
               <ButtonLink
-                href={whatsappHref(`${whatsappGreeting} I'm asking about the ${room.name}.`)}
+                href={whatsappHref(whatsappRoom(room.name))}
                 variant="outline"
                 external={hasWhatsapp()}
+                icon="whatsapp"
               >
                 WhatsApp Us
               </ButtonLink>
@@ -150,19 +155,17 @@ export default async function RoomPage({ params }: Props) {
       </section>
 
       {other ? (
-        <section className="pb-16">
+        <section className="pb-16 md:pb-20">
           <Container>
             <Link
               href={`/rooms/${other.slug}`}
-              className="flex items-center justify-between gap-6 rounded-[1.75rem] bg-forest px-8 py-8 text-ivory"
+              className="group flex items-center justify-between gap-6 rounded-panel bg-forest px-8 py-8 text-ivory transition hover:bg-forest-soft"
             >
               <span>
-                <span className="text-xs tracking-[0.2em] text-sand uppercase">Also at SHA Stays</span>
+                <span className="eyebrow text-sand">Also at SHA Stays</span>
                 <span className="mt-2 block font-serif text-4xl text-white">{other.name}</span>
               </span>
-              <span aria-hidden="true" className="text-2xl">
-                →
-              </span>
+              <Icon name="arrow" className="h-6 w-6 transition-transform motion-safe:group-hover:translate-x-1" />
             </Link>
           </Container>
         </section>

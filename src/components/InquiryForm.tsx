@@ -131,7 +131,7 @@ export function InquiryForm({ initialRoom = "" }: { initialRoom?: string }) {
       onInput={() => {
         handedOff.current = false;
       }}
-      className="rounded-[1.75rem] bg-paper p-6 shadow-[0_18px_50px_rgba(24,60,53,0.06)] ring-1 ring-black/5 sm:p-8"
+      className="rounded-panel bg-paper p-6 shadow-soft ring-1 ring-black/5 sm:p-8"
     >
       <div className="grid gap-5 sm:grid-cols-2">
         <label className="block text-sm font-medium text-charcoal">

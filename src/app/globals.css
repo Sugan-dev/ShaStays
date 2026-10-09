@@ -3,6 +3,8 @@
 @theme inline {
   --font-serif: "Cormorant Garamond", "Cormorant Garamond Fallback", "Iowan Old Style", Georgia, serif;
   --font-sans: "DM Sans", "DM Sans Fallback", "Avenir Next", "Segoe UI", sans-serif;
+
+  /* Brand palette (see BRANDING.md). */
   --color-forest: #183c35;
   --color-forest-deep: #102822;
   --color-forest-soft: #24564b;
@@ -16,6 +18,44 @@
   --color-charcoal: #252525;
   --color-muted: #5c574f;
   --color-line: #e5dccb;
+
+  /* Semantic roles. Values mirror the palette above; keep them in sync. */
+  --color-primary: #183c35;
+  --color-secondary: #9a5a41;
+  --color-background: #f8f5ef;
+  --color-surface: #fffdfb;
+  --color-text: #252525;
+  --color-border: #e5dccb;
+
+  --radius-card: 1rem;
+  --radius-panel: 1.25rem;
+
+  --shadow-soft: 0 12px 32px rgba(24, 60, 53, 0.06);
+  --shadow-lift: 0 18px 44px rgba(24, 60, 53, 0.12);
+}
+
+@font-face {
+  font-family: "Cormorant Garamond";
+  src: url("/fonts/cormorant.woff2") format("woff2");
+  font-weight: 500 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Cormorant Garamond";
+  src: url("/fonts/cormorant-italic.woff2") format("woff2");
+  font-weight: 500 600;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "DM Sans";
+  src: url("/fonts/dm.woff2") format("woff2");
+  font-weight: 400 600;
+  font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
@@ -36,21 +76,30 @@
   size-adjust: 105.13%;
 }
 
+@utility eyebrow {
+  font-size: 0.75rem;
+  line-height: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 7.5rem;
+  scroll-padding-top: 5.5rem;
 }
 
 body {
-  background: var(--color-ivory);
-  color: var(--color-charcoal);
+  background: var(--color-background);
+  color: var(--color-text);
   font-family: var(--font-sans);
   text-rendering: optimizeLegibility;
+  overflow-x: clip;
 }
 
 ::selection {
-  background: #e8dcc8;
-  color: #183c35;
+  background: var(--color-sand);
+  color: var(--color-forest);
 }
 
 summary::-webkit-details-marker {
@@ -62,7 +111,7 @@ summary {
 }
 
 :focus-visible {
-  outline: 2px solid #b86f52;
+  outline: 2px solid var(--color-terracotta);
   outline-offset: 3px;
 }
 
@@ -93,6 +142,42 @@ summary {
   animation-delay: 0.36s;
 }
 
+/* Scale only, no fade: the hero image is the LCP element and must paint immediately. */
+@keyframes settle {
+  from {
+    transform: scale(1.06);
+  }
+  to {
+    transform: none;
+  }
+}
+
+.hero-settle {
+  animation: settle 1.8s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+/* Section reveal driven by scroll position; browsers without scroll timelines show content as-is. */
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal {
+      animation: reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 35%;
+    }
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -101,7 +186,8 @@ summary {
   .rise,
   .rise-delay-1,
   .rise-delay-2,
-  .rise-delay-3 {
+  .rise-delay-3,
+  .hero-settle {
     animation: none;
   }
 }

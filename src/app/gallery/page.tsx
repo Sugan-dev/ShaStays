@@ -15,11 +15,11 @@ export const metadata = pageMeta({
 export default function GalleryPage() {
   return (
     <>
-      <PageHero eyebrow="SHA Stays" title="Gallery" crumb="Gallery" path="/gallery">
-        Rooms, the garden outside, and a few of the comforts around the stay.
+      <PageHero eyebrow="Gallery" title="A look around SHA Stays." crumb="Gallery" path="/gallery">
+        Real photographs of the stay: the rooms, the garden, the evenings and a few of the comforts around you.
       </PageHero>
       {galleryGroups.map((group) => (
-        <section key={group.id} className="py-16 md:py-20" id={group.id}>
+        <section key={group.id} className="scroll-mt-24 py-16 md:py-20" id={group.id}>
           <Container>
             <h2 className="font-serif text-4xl text-forest md:text-5xl">{group.title}</h2>
             <p className="mt-4 max-w-xl text-lg leading-relaxed text-muted">{group.text}</p>

@@ -1,4 +1,6 @@
 node_modules
+# npm is the package manager (package-lock.json). A yarn.lock makes Cloudflare build with Yarn 4, which fails.
+yarn.lock
 .next
 out
 .DS_Store

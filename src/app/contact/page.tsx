@@ -1,6 +1,7 @@
 import { ButtonLink } from "@/components/Buttons";
 import { Container } from "@/components/Container";
 import { InquiryForm } from "@/components/InquiryForm";
+import { MapPanel } from "@/components/MapPanel";
 import { PageHero } from "@/components/PageHero";
 import Link from "next/link";
 import { contact, languages, site, stayFacts } from "@/lib/site";
@@ -114,8 +115,8 @@ export default function ContactPage() {
               <ButtonLink href={hasPhone() ? phoneHref() : "#enquiry"} variant="outline" icon="phone">
                 Call Us
               </ButtonLink>
-              <ButtonLink href={contact.directionsUrl} variant="sand" external icon="pin">
-                Get Directions
+              <ButtonLink href={contact.googleMapsUrl} variant="sand" external icon="pin">
+                Find us on Google Maps
               </ButtonLink>
             </div>
             <div className="mt-10 border-t border-line pt-8">
@@ -137,6 +138,23 @@ export default function ContactPage() {
             <h2 className="mb-5 font-serif text-3xl text-forest">Message us on WhatsApp</h2>
             <InquiryForm />
           </div>
+        </Container>
+      </section>
+      <section className="scroll-mt-24 border-t border-line bg-paper py-16 md:py-20" id="map">
+        <Container className="grid items-start gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-14">
+          <div>
+            <h2 className="font-serif text-4xl leading-[1.05] text-forest md:text-5xl">Find us on the map</h2>
+            <p className="mt-4 max-w-md leading-relaxed text-muted">
+              SHA Stays is on NH 87 in Rameshwaram, about 200 m from the Dr. A.P.J. Abdul Kalam Memorial and about 5 km
+              from Ramanathaswamy Temple.
+            </p>
+            <div className="mt-6">
+              <ButtonLink href={contact.directionsUrl} variant="forest" external icon="pin">
+                Get Directions
+              </ButtonLink>
+            </div>
+          </div>
+          <MapPanel />
         </Container>
       </section>
     </>

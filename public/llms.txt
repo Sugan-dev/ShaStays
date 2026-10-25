@@ -9,13 +9,15 @@ SHA Stays is not a large hotel. It has two SHA King Rooms and four SHA Queen Roo
 - Name: SHA Stays
 - Type: Boutique stay
 - Town: Rameshwaram (also spelt Rameswaram), Ramanathapuram district, Tamil Nadu
-- Address: 2/1750-5, Near Dr. A.P.J. Abdul Kalam Memorial, Rameshwaram, Tamil Nadu 623526, India
-- Coordinates: 9.286683, 79.274022
-- Map: https://maps.app.goo.gl/CiW3pTEsirE5ejfS7
-- Phone: +91 93458 51313 and +91 74181 43765
+- Address: SHA Stays, 2/1750-5, Near APJ Abdul Kalam Memorial, Rameswaram, Tamil Nadu 623529, India (about 200 m from the Dr. A.P.J. Abdul Kalam Memorial)
+- Coordinates: 9.2866697, 79.2739736
+- Google Maps (Google Business Profile): https://maps.google.com/?cid=16047745359765379535
+- Phone: +91 93458 51313 (primary) and +91 74181 43765
 - WhatsApp: +91 93458 51313
 - Email: shastaysrmm@gmail.com
 - Instagram: https://www.instagram.com/sha.stays/
+- Facebook: https://www.facebook.com/profile.php?id=61594842353888
+- Also listed on: Agoda (property ID 97546122), Booking.com (https://www.booking.com/hotel/in/sha-stays.html)
 - Languages spoken: Tamil, English
 - Website: https://shastays.com
 - Highway: NH 87

@@ -56,11 +56,20 @@ export function pageMeta({
   };
 }
 
-const amenityFeature = [...sharedAmenities, ...propertyAmenities].map(({ label: name }) => ({
+/** Google's hotel amenity wording, where it differs from the label shown on the site. */
+const schemaAmenityNames: Record<string, string> = { "24-hour reception": "24-hour front desk" };
+
+const amenityFeature = [
+  ...[...propertyAmenities, ...sharedAmenities].map(({ label }) => schemaAmenityNames[label] ?? label),
+  "Garden view",
+].map((name) => ({
   "@type": "LocationFeatureSpecification",
   name,
   value: true,
 }));
+
+/** Upper end of the price range on the Google Business Profile; the lower end is the lowest "from" rate. */
+const priceRangeMax = 5000;
 
 export function siteGraph() {
   const url = site.url;
@@ -90,30 +99,30 @@ export function siteGraph() {
           `${url}${galleryPhotos.archNight.src}`,
           ...rooms.map((room) => `${url}${room.image}`),
         ],
-        ...(contact.instagram ? { sameAs: [contact.instagram] } : {}),
+        sameAs: [contact.instagram, contact.facebook, ...contact.listings, contact.googleMapsUrl].filter(Boolean),
         telephone: contact.phone,
         email: contact.email,
         address: {
           "@type": "PostalAddress",
-          streetAddress: "2/1750-5, Near Dr. A.P.J. Abdul Kalam Memorial",
-          addressLocality: "Rameshwaram",
-          addressRegion: "Tamil Nadu",
-          postalCode: "623526",
+          streetAddress: contact.address.street,
+          addressLocality: contact.address.locality,
+          addressRegion: contact.address.region,
+          postalCode: contact.address.postalCode,
           addressCountry: "IN",
         },
         geo: {
           "@type": "GeoCoordinates",
-          latitude: 9.286683,
-          longitude: 79.274022,
+          latitude: contact.geo.latitude,
+          longitude: contact.geo.longitude,
         },
-        hasMap: contact.directionsUrl,
+        hasMap: contact.googleMapsUrl,
         containedInPlace: {
           "@type": "City",
           name: "Rameswaram",
           alternateName: "Rameshwaram",
           sameAs: "https://en.wikipedia.org/wiki/Rameswaram",
         },
-        priceRange: `From ${formatRupees(Math.min(...rooms.map((room) => room.priceFrom)))} per night`,
+        priceRange: `${formatRupees(Math.min(...rooms.map((room) => room.priceFrom)))}-${formatRupees(priceRangeMax)}`,
         currenciesAccepted: "INR",
         paymentAccepted: "UPI, Cash",
         knowsLanguage: languages,

@@ -60,6 +60,13 @@ export function SiteFooter() {
           </address>
           <ul className="mt-5 space-y-3 text-sm">
             <li className="flex items-center gap-2.5">
+              <Icon name="pin" className="h-4 w-4 text-sand/80" />
+              <a href={contact.googleMapsUrl} className="hover:text-white" target="_blank" rel="noopener noreferrer">
+                Find us on Google Maps
+                <span className="sr-only"> (opens in a new tab)</span>
+              </a>
+            </li>
+            <li className="flex items-center gap-2.5">
               <Icon name="phone" className="h-4 w-4 text-sand/80" />
               {hasPhone() ? (
                 <span>

@@ -14,7 +14,7 @@ const absolute = (src: string) => `${site.url}${src}`;
 const unique = (list: string[]) => [...new Set(list)].map(absolute);
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const lastModified = new Date("2026-10-09");
+  const lastModified = new Date("2026-10-24");
   const paths: Entry[] = [
     {
       path: "",

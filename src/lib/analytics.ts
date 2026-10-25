@@ -33,7 +33,9 @@ export function linkEvent(href: string): string | null {
   if (href.startsWith("tel:")) return "phone_click";
   if (href.startsWith("mailto:")) return "email_click";
   if (href.includes("wa.me/")) return "whatsapp_click";
-  if (href.includes("maps.app.goo.gl") || href.includes("google.com/maps")) return "directions_click";
+  if (href.includes("maps.app.goo.gl") || href.includes("google.com/maps") || href.includes("maps.google.com")) {
+    return "directions_click";
+  }
   if (href === "#quote" || /^\/book\/?(\?|#|$)/.test(href)) return "booking_cta_click";
   return null;
 }

@@ -14,30 +14,54 @@ export const site = {
   supporting: "A peaceful boutique stay in Rameshwaram, close to the places that matter.",
   url: "https://shastays.com",
   locale: "en_IN",
-  title: "SHA Stays | Rooms & Family Stay in Rameshwaram",
+  title: "SHA Stays Rameswaram | Rooms & Family Stay in Rameshwaram",
   description:
-    "A six-room stay in Rameshwaram for families, pilgrims and road-trip travellers, near the Dr. A.P.J. Abdul Kalam Memorial and about 5 km from Ramanathaswamy Temple.",
+    "SHA Stays Rameswaram: six rooms for families, pilgrims and road-trip travellers, about 200 m from the Abdul Kalam Memorial and 5 km from Ramanathaswamy Temple.",
 };
+
+/**
+ * Postal address exactly as on the Google Business Profile (postal spelling "Rameswaram").
+ * Name, address and phone must read the same everywhere for Google to match the site to the profile.
+ * Also feeds the JSON-LD.
+ */
+const address = {
+  street: "2/1750-5, Near APJ Abdul Kalam Memorial",
+  locality: "Rameswaram",
+  region: "Tamil Nadu",
+  postalCode: "623529",
+  country: "India",
+};
+
+/** The Google Business Profile pin. */
+const geo = { latitude: 9.2866697, longitude: 79.2739736 };
+
+const googleMapsUrl = "https://maps.google.com/?cid=16047745359765379535";
 
 export const contact = {
   phone: "+919345851313",
-  phoneDisplay: "93458 51313",
+  phoneDisplay: "+91 93458 51313",
   phoneAlt: "+917418143765",
-  phoneAltDisplay: "74181 43765",
+  phoneAltDisplay: "+91 74181 43765",
   /** Digits with country code, no plus or spaces. */
   whatsapp: "919345851313",
-  whatsappDisplay: "93458 51313",
+  whatsappDisplay: "+91 93458 51313",
   email: "shastaysrmm@gmail.com",
-  addressLines: [
-    "2/1750-5, Near Dr. A.P.J. Abdul Kalam Memorial",
-    "Rameshwaram, Tamil Nadu 623526",
-  ],
-  mapEmbedUrl:
-    "https://maps.google.com/maps?q=9.286683,79.274022&z=16&hl=en&output=embed",
-  directionsUrl: "https://maps.app.goo.gl/CiW3pTEsirE5ejfS7",
+  address,
+  addressLines: [address.street, `${address.locality}, ${address.region} ${address.postalCode}, ${address.country}`],
+  geo,
+  /** The Google Business Profile listing. */
+  googleMapsUrl,
+  mapEmbedUrl: "https://www.google.com/maps?cid=16047745359765379535&output=embed",
+  directionsUrl: `https://www.google.com/maps/dir/?api=1&destination=${geo.latitude}%2C${geo.longitude}`,
   mapNote: "The pin marks SHA Stays, near the Dr. A.P.J. Abdul Kalam Memorial.",
   /** Full profile URL, e.g. https://www.instagram.com/<handle>/. Hidden while empty. */
   instagram: "https://www.instagram.com/sha.stays/",
+  facebook: "https://www.facebook.com/profile.php?id=61594842353888",
+  /** Third-party listings of this property; used as `sameAs` in the JSON-LD only. */
+  listings: [
+    "https://www.agoda.com/partners/partnersearch.aspx?hid=97546122",
+    "https://www.booking.com/hotel/in/sha-stays.html",
+  ],
 };
 
 export const propertyPhotos = {
@@ -509,7 +533,7 @@ export const faqs = [
   {
     question: "Where is SHA Stays in Rameshwaram?",
     answer:
-      "SHA Stays is at 2/1750-5, near the Dr. A.P.J. Abdul Kalam Memorial, Rameshwaram, Tamil Nadu 623526. It is on NH 87, about 200 m from the memorial and about 5 km from Ramanathaswamy Temple.",
+      `SHA Stays is at ${contact.addressLines.join(", ")}. It is on NH 87, about 200 m from the Dr. A.P.J. Abdul Kalam Memorial and about 5 km from Ramanathaswamy Temple.`,
   },
   {
     question: "What types of rooms does SHA Stays have?",
@@ -596,7 +620,7 @@ export const faqs = [
   },
   {
     question: "How do I check availability and book?",
-    answer: `Book directly with us. Send your dates and number of guests on WhatsApp (+91 ${contact.whatsappDisplay}), call +91 ${contact.phoneDisplay} or +91 ${contact.phoneAltDisplay}, or use the enquiry form on the Book page. We reply with availability and the rate for your dates. An enquiry does not reserve a room until we confirm it.`,
+    answer: `Book directly with us. Send your dates and number of guests on WhatsApp (${contact.whatsappDisplay}), call ${contact.phoneDisplay} or ${contact.phoneAltDisplay}, or use the enquiry form on the Book page. We reply with availability and the rate for your dates. An enquiry does not reserve a room until we confirm it.`,
   },
 ];
 

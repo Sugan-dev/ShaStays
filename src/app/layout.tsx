@@ -65,8 +65,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   }
 
   return (
-    <html lang="en-IN">
-      <body>
+    // Extensions such as ColorZilla add attributes (cz-shortcut-listen) on html/body before hydration.
+    <html lang="en-IN" suppressHydrationWarning>
+      <body suppressHydrationWarning>
         <a
           href="#content"
           className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[90] focus:rounded-full focus:bg-paper focus:px-4 focus:py-2"

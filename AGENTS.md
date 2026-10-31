@@ -60,7 +60,7 @@ src/
   components/          Presentational components. Shared building blocks: `Icon` (inline SVG icon set),
                        `ButtonLink`/`buttonClass`/`TextLink`, `SectionIntro` (eyebrow + h2 + text),
                        `RoomCard` (layout "stack" | "row"), `AmenityList`, `PhotoGrid` (mosaic),
-                       `Reviews` (renders `reviews` or an empty state), `FinalCta`, `MobileActionBar`,
+                       `Reviews` (homepage slider of `reviews`, or an empty state), `FinalCta`, `MobileActionBar`,
                        `Analytics` (GA4 loader + click tracking).
   lib/
     site.ts            SINGLE SOURCE OF TRUTH for content: name, contact, nav, trustBar, reasons, rooms
@@ -82,7 +82,7 @@ Images/                Raw, uncurated photos from the owner. Not used by the bui
 scripts/optimize-images.mjs   The image pipeline.
 ```
 
-Client components (`"use client"`) are only: `SiteHeader` (mobile menu, scrolled shadow), `MobileActionBar`, `InquiryForm`, `PrivateStayForm`, `LazyImage`, `Analytics`. Keep everything else as server components.
+Client components (`"use client"`) are only: `SiteHeader` (mobile menu, scrolled shadow), `MobileActionBar`, `InquiryForm`, `PrivateStayForm`, `LazyImage`, `Analytics`, `ReviewSlider` (homepage review carousel and expand/collapse). Keep everything else as server components.
 
 Navigation labels: Home, Rooms, Private Stay (`/private-resort`), Rameshwaram (`/experience`), Gallery, Contact, plus a "Book Now" button. The `/private-resort` and `/experience` URLs are kept for SEO stability; only the labels changed.
 
@@ -115,11 +115,11 @@ Prefilled WhatsApp messages live in `links.ts`: `whatsappAvailability` (general)
 - Every page exports `metadata = pageMeta({ title, description, path })`. `path` is used for the canonical URL (trailing slash is added). `pageMeta` appends " | SHA Stays", so don't put the brand in `title`. The root layout deliberately sets no canonical (it would be inherited by the 404 page).
 - One descriptive H1 per page that names the page's subject and "Rameshwaram". On the home and private-stay heroes the small eyebrow line is the H1 and the big tagline ("Stay Close. Feel at Home.", "Your Group. Your Stay. Your SHA.") is a `<p>`; keep it that way.
 - Search intent per page: `/` rooms and family stays in Rameshwaram; `/rooms` rooms; `/private-resort` private group stay; `/location` stay near the Abdul Kalam Memorial (address, directions, parking); `/experience` places to visit in Rameshwaram. Strengthen these pages rather than adding near-duplicate landing pages.
-- `layout.tsx` injects the site-wide graph: `WebSite` + `LodgingBusiness` (address, geo, phones, `sameAs` incl. Instagram, amenities from `sharedAmenities` + `propertyAmenities`, `priceRange` from the lowest `priceFrom`, `knowsLanguage`) containing one `HotelRoom` per room (`@id` `/rooms/<slug>/#room`, bed, `occupancy` from `maxGuests`, `floorSize` from `roomSize`). `Breadcrumbs` injects a `BreadcrumbList`; home and /private-resort inject `FAQPage` graphs from their visible FAQs. Everything is generated from `site.ts`, so updating a fact there updates the JSON-LD.
+- `layout.tsx` injects the site-wide graph: `WebSite` + `LodgingBusiness` (address, geo, phones, `sameAs` incl. Instagram, amenities from `sharedAmenities` + `propertyAmenities`, `priceRange` from the lowest `priceFrom`, `knowsLanguage`) containing one `HotelRoom` per room (`@id` `/rooms/<slug>/#room`, bed, `occupancy` from `maxGuests`, `floorSize` from `roomSize`). `Breadcrumbs` injects a `BreadcrumbList`; home and /private-resort inject `FAQPage` graphs from their visible FAQs. Everything is generated from `site.ts`, so updating a fact there updates the JSON-LD. Guest reviews stay out of this graph: no `Review` and no `AggregateRating`, because the site does not publish an overall rating.
 - `sitemap.ts` lists static paths by hand, derives room URLs from `rooms`, includes image entries, and has a hardcoded `lastModified` (bump it when content changes).
 - `LazyImage` also renders a `<noscript>` image so crawlers that don't run JavaScript still find photos.
 - `robots.ts` allows everything and names two groups explicitly: search and AI-search agents (Googlebot, Bingbot, OAI-SearchBot, ChatGPT-User, Claude-SearchBot, Claude-User, PerplexityBot, Perplexity-User, …) and model-training crawlers (GPTBot, ClaudeBot, Google-Extended, …). Training is allowed by the owner's choice and is a separate decision from search visibility: to opt out of training, disallow only the training group. Never disallow the search group. There are no private routes to block (static site, no API).
-- Extractable facts matter for AI answers: keep key facts as plain HTML text (the room comparison `<table>` on /rooms, the visible FAQs, the `<address>` on /contact), not only in images or client-side UI.
+- Extractable facts matter for AI answers: keep key facts as plain HTML text (the room comparison `<table>` on /rooms, the visible FAQs, the `<address>` on /contact, and each homepage review quotation), not only in images or client-side UI. The review slider only clips long cards visually; the full quotation stays in the HTML. Google scores stay out of 5. Booking.com and Agoda scores stay out of 10, as published.
 - NAP consistency with the Google Business Profile (`https://maps.google.com/?cid=16047745359765379535`): name "SHA Stays", address "2/1750-5, Near APJ Abdul Kalam Memorial, Rameswaram, Tamil Nadu 623529, India", phones "+91 93458 51313" (primary) and "+91 74181 43765", email shastaysrmm@gmail.com. These live once in `address`/`contact` in `site.ts` (with `geo`, `googleMapsUrl`, `facebook` and `listings`); never retype them in JSX. The homepage title and description start with "SHA Stays Rameswaram". "Find us on Google Maps" links (footer, `MapPanel`) and the map embed point to the profile; "Get Directions" uses Google directions to the profile's coordinates.
 - The town is spelt "Rameshwaram" in copy, except the postal address and the homepage title/description lead, which use the postal/Google spelling "Rameswaram"; "Rameswaram" (the Wikipedia/Google Maps spelling) appears as "also spelt" on /location and /experience and as the name of the `containedInPlace` `City` in the JSON-LD (with "Rameshwaram" as `alternateName` and a Wikipedia `sameAs`). Don't add more variants to copy.
 
@@ -147,7 +147,7 @@ This is a real business; inaccurate claims are a problem. From `public/llms.txt`
 - Facts: 6 rooms = 2 SHA King Rooms + 4 SHA Queen Rooms. On NH 87, about 200 m from the Dr. A.P.J. Abdul Kalam Memorial (walkable), about 5 km from Ramanathaswamy Temple (not walkable). Check-in 12:00 PM, check-out 11:00 AM. Reception open 24 hours; late arrivals welcome. Free parking for about 4–5 cars; a 15–21 seater van or mini bus can drive in and park. Pets on request for an extra charge. Room bookings: 30% advance, full refund if cancelled 7+ days before check-in (later cancellations: "contact us", no terms given), UPI or cash, government photo ID for the lead guest, couples welcome with valid ID, children under 5 free when sharing beds. Private stay advance is set per quote. Don't publish anything about local-address IDs. No smoking inside rooms (`smokingAllowed: false` on each `HotelRoom`; nothing is said about outdoor areas). House policies live in `policies` in `site.ts`. Distances to Pamban Bridge, the railway station and the bus stand are not confirmed; don't publish them. Extra mattress on request, subject to availability. Rooms are 110–120 sq ft. Queen Room from ₹1,800/night and sleeps up to 4; King Room from ₹2,500/night and sleeps up to 5 (both with extra mattresses). Private stay: up to 21 guests. Staff speak Tamil and English. Rooms have power backup; the property has 24-hour CCTV (`propertyAmenities`; never present CCTV as an in-room amenity). These live in `site.ts` (`priceFrom`, `maxGuests`, `roomSize`, `maxGroupSize`, `languages`); change them there.
 - **Do not** describe it as beachfront, sea-view or walking distance to the temple. **Do not** invent a pool, restaurant, included meals, reviews, ratings, or prices beyond the confirmed "from" rates. No `Offer` markup for rooms (no live booking engine).
 - The private stay package is "price on enquiry"; never show or estimate a price. Meals, sightseeing, transport and late checkout are only "can be discussed/requested". In copy, say "entire property" or "private stay", never "resort". Groups arriving by car or 15–21 seater van are a key audience.
-- Reviews: `reviews` in `site.ts` is empty on purpose. Only add genuine guest reviews (with source); `Reviews` then renders them, otherwise it shows "Your stay could be our next story." Never add ratings/reviews to JSON-LD.
+- Reviews: `reviews` in `site.ts` holds genuine guest reviews copied word for word, with their source. Google ratings stay out of 5. Booking.com and Agoda scores stay out of 10, shown as published, not converted to stars. `Reviews` renders them, or "Your stay could be our next story." when the list is empty. Never add ratings/reviews to JSON-LD, and never publish an overall rating unless the source states one. Guest wording such as "resort" or "budget" stays inside the quotation; do not adopt it in the site's own copy.
 - Avoid the words cheap, budget, small rooms, basic, best hotel, luxury resort. Don't oversell.
 - Only use photos that are actually of SHA Stays for the property. Leave a field blank rather than guessing: empty contact fields fall back to `/contact` links or placeholder text (`links.ts`), a room without `image` shows a coloured panel, and `privateGallery` slots without `src` render as placeholders.
 - Spelling: "Rameshwaram" (site copy), Indian English (`en-IN`).
@@ -164,11 +164,13 @@ This is a real business; inaccurate claims are a problem. From `public/llms.txt`
 
 **Adding an amenity:** in-room items go in `sharedAmenities`, property-wide ones (parking, CCTV, seating) in `propertyAmenities`; add an `Icon` name if needed. Both feed the rooms pages and `amenityFeature` in JSON-LD. Update the amenity lines in `public/llms.txt`.
 
+**Adding a review:** copy it word for word into `reviews` in `site.ts` (name, source, date, the score as that site shows it, and the listing URL from `contact`). Update the review line in `public/llms.txt` and bump `lastModified` in `sitemap.ts`. Do not add `Review` or `AggregateRating` to `seo.ts`.
+
 **Adding photos:** master into `assets/images/...` → `npm run images` → reference `/images/...webp` with good `alt` → commit both `assets/` and the generated `public/images/` + `image-widths.json`.
 
 ## Known gaps / TODOs
 
-- No genuine reviews yet (`reviews` is empty).
+- Homepage quotes Google, Booking.com and Agoda reviews from October 2026. Add further reviews only when copied word for word from the source.
 - `privateGallery` in `private-resort.ts` has placeholder slots without `src` (van arrival, group at entrance, parking, group relaxing) awaiting real group photos.
 - `propertyPhotos.entrance` and `propertyPhotos.greenery` in `site.ts` are empty.
 - `next lint` is deprecated; migrate to the ESLint CLI before upgrading to Next 16.

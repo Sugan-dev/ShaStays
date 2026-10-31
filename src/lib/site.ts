@@ -518,14 +518,123 @@ export type Review = {
   text: string;
   /** e.g. "Google", "Booking.com". */
   source: string;
+  /** Review title, copied from the source. */
+  title?: string;
   /** Out of 5, exactly as shown on the source platform. */
   rating?: number;
+  /** Score exactly as shown when the source is not out of 5. Agoda shows 10.0. */
+  score?: string;
+  /** What `score` is out of. */
+  scoreOutOf?: number;
   url?: string;
   date?: string;
+  /** Booking.com answer for what could be improved, copied as written. */
+  improve?: string;
 };
 
+const agodaListing = contact.listings.find((url) => url.includes("agoda.com"));
+const bookingListing = contact.listings.find((url) => url.includes("booking.com"));
+
 /** Add genuine guest reviews only, copied word for word from the source. Never invent or edit them. */
-export const reviews: Review[] = [];
+export const reviews: Review[] = [
+  {
+    name: "RTR Gowtham",
+    title: "It was great experience in SHA stays and comfortable to stay here",
+    text: "It was a great location and food is very good .",
+    improve: "Nothing like that",
+    source: "Booking.com",
+    score: "10",
+    scoreOutOf: 10,
+    date: "31 October 2026",
+    url: bookingListing,
+  },
+  {
+    name: "RAJ KUMAR.L.B",
+    text: "A good and peaceful place to stay! 🌿 It's a budget-friendly resort, perfect for a relaxing getaway. The calm atmosphere and comfortable stay make it a great choice for anyone looking to unwind without spending too much. Highly recommended!",
+    source: "Google",
+    rating: 5,
+    date: "28 October 2026",
+    url: contact.googleMapsUrl,
+  },
+  {
+    name: "musthaq rocks",
+    text: "My partner and I had a really lovely stay here! It was so peaceful and relaxing, and we genuinely enjoyed our time here. The staff were incredibly kind and welcoming, which made the whole experience even better. We especially loved the beautiful garden and the calm atmosphere of the place. Having car parking available was also really convenient. Overall, it was a wonderful experience, and we'd happily recommend this place to anyone looking for a peaceful and comfortable stay. 😊",
+    source: "Google",
+    rating: 5,
+    date: "28 October 2026",
+    url: contact.googleMapsUrl,
+  },
+  {
+    name: "Murali Prasad",
+    text: "We had a fantastic 2-day stay as a family! Beautiful garden views, very friendly staff, and ample car parking. A peaceful and comfortable place to stay. Highly recommended! 😊❤️",
+    source: "Google",
+    rating: 5,
+    date: "27 October 2026",
+    url: contact.googleMapsUrl,
+  },
+  {
+    name: "Aruvi Aravind",
+    text: "Overall, my experience was excellent, and everyone treated me with great kindness and respect.",
+    source: "Google",
+    rating: 5,
+    date: "27 October 2026",
+    url: contact.googleMapsUrl,
+  },
+  {
+    name: "Rafiq Md",
+    text: "Good place to stay with family, Rooms were neat, Prime location, Reasonable price.",
+    source: "Google",
+    rating: 5,
+    date: "26 October 2026",
+    url: contact.googleMapsUrl,
+  },
+  {
+    name: "Ajay Mohan",
+    text: "Excellent room service and excellent customer service",
+    source: "Google",
+    rating: 5,
+    date: "25 October 2026",
+    url: contact.googleMapsUrl,
+  },
+  {
+    name: "Jp_Jp_390",
+    text: "Good room stays and excellent service and Good stay",
+    source: "Google",
+    rating: 5,
+    date: "25 October 2026",
+    url: contact.googleMapsUrl,
+  },
+  {
+    name: "Gayathri",
+    title: "Value for money...",
+    text: "It was a truly comfortable stay and we absolutely loved it. The staff were very warm, courteous and attentive, and the room was spotlessly clean and tidy. Altogether, it was a very good experience. Would definitely love to visit again.....",
+    source: "Agoda",
+    score: "10.0",
+    scoreOutOf: 10,
+    date: "October 2026",
+    url: agodaListing,
+  },
+  {
+    name: "Akhil",
+    title: "Just Wow",
+    text: "I highly recommend this place because of its prime location, making it easy to reach nearby attractions. If you have your own vehicle and prefer to stay away from the hustle and bustle of town and enjoy a peaceful atmosphere, this is a great choice. The cabins are simple, cute, and well-maintained, with good cleanliness. Another big plus is the friendly and helpful staff, whose warm behaviour makes the stay even more pleasant. Overall, a lovely place for a peaceful and comfortable stay.",
+    source: "Agoda",
+    score: "10.0",
+    scoreOutOf: 10,
+    date: "October 2026",
+    url: agodaListing,
+  },
+  {
+    name: "Adarsh",
+    title: "Best and comfortable stay",
+    text: "People are so gentle and helpful, and the stay is comfortable. They helped me to explore hidden places, and it's gem.",
+    source: "Agoda",
+    score: "10.0",
+    scoreOutOf: 10,
+    date: "October 2026",
+    url: agodaListing,
+  },
+];
 
 const [kingRoom, queenRoom] = rooms;
 

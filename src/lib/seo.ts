@@ -71,6 +71,7 @@ const amenityFeature = [
 /** Upper end of the price range on the Google Business Profile; the lower end is the lowest "from" rate. */
 const priceRangeMax = 5000;
 
+/** WebSite + LodgingBusiness. Guest reviews stay on the homepage only: do not add Review or AggregateRating. */
 export function siteGraph() {
   const url = site.url;
   return {

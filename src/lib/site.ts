@@ -176,6 +176,7 @@ export const nav = [
   { href: "/private-resort", label: "Private Stay" },
   { href: "/experience", label: "Rameshwaram" },
   { href: "/gallery", label: "Gallery" },
+  { href: "/blog", label: "Blog" },
   { href: "/contact", label: "Contact" },
 ] as const;
 
@@ -184,6 +185,7 @@ export const footerNav = [
   { href: "/private-resort", label: "Private Stay" },
   { href: "/experience", label: "Rameshwaram" },
   { href: "/gallery", label: "Gallery" },
+  { href: "/blog", label: "Blog" },
   { href: "/location", label: "Location" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },

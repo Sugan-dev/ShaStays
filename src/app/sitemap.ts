@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { publishedPosts } from "@/lib/blog";
 import { galleryGroups, homeGallery, rooms, site } from "@/lib/site";
 
 export const dynamic = "force-static";
@@ -8,6 +9,7 @@ type Entry = {
   priority: number;
   changeFrequency: "weekly" | "monthly" | "yearly";
   images?: string[];
+  lastModified?: Date;
 };
 
 const absolute = (src: string) => `${site.url}${src}`;
@@ -39,13 +41,21 @@ export default function sitemap(): MetadataRoute.Sitemap {
       images: unique(galleryGroups.flatMap((group) => group.photos.map((photo) => photo.src))),
     },
     { path: "/about", priority: 0.6, changeFrequency: "yearly" },
+    { path: "/blog", priority: 0.6, changeFrequency: "weekly" },
+    ...publishedPosts().map((post) => ({
+      path: `/blog/${post.slug}`,
+      priority: 0.5,
+      changeFrequency: "yearly" as const,
+      lastModified: new Date(`${post.updated ?? post.date}T00:00:00+05:30`),
+      images: post.image ? [absolute(post.image.src)] : undefined,
+    })),
     { path: "/contact", priority: 0.7, changeFrequency: "yearly" },
     { path: "/book", priority: 0.9, changeFrequency: "monthly" },
   ];
 
-  return paths.map(({ path, priority, changeFrequency, images }) => ({
+  return paths.map(({ path, priority, changeFrequency, images, lastModified: modified }) => ({
     url: `${site.url}${path ? `${path}/` : "/"}`,
-    lastModified,
+    lastModified: modified ?? lastModified,
     changeFrequency,
     priority,
     ...(images?.length ? { images } : {}),

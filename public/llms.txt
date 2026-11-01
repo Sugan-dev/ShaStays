@@ -55,6 +55,7 @@ SHA Stays is not a large hotel. It has two SHA King Rooms and four SHA Queen Roo
 - [Rameshwaram](https://shastays.com/experience/): places to visit in Rameshwaram from SHA Stays: Ramanathaswamy Temple, Abdul Kalam Memorial, Pamban Bridge, Dhanushkodi, Ariyaman Beach, Rameshwaram Island
 - [Location](https://shastays.com/location/): staying near the Dr. A.P.J. Abdul Kalam Memorial: address, map, directions from Pamban Bridge, parking and arrival times
 - [About](https://shastays.com/about/): a six-room stay made for a calmer Rameshwaram trip
+- [Blog](https://shastays.com/blog/): notes from SHA Stays about staying in Rameshwaram. Add a post only in the site's own words, and only with facts already published. Do not invent amenities, distances, prices, meals or reviews. There is no overall rating on these pages.
 - [Gallery](https://shastays.com/gallery/): photographs of the rooms, garden, the stay at night, outdoor seating, RO drinking water and the sugar gliders at the stay
 - [Contact](https://shastays.com/contact/): phone, WhatsApp, email, address, check-in and check-out times, and how booking works
 - [Book](https://shastays.com/book/): an enquiry form that opens WhatsApp with the message ready to send. It does not reserve a room until SHA Stays confirms availability.

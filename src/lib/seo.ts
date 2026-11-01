@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { type BlogPost, publishedPosts } from "@/lib/blog";
 import {
   contact,
   faqs,
@@ -25,14 +26,22 @@ export function pageMeta({
   description,
   path,
   absolute = false,
+  image,
+  article,
 }: {
   title: string;
   description: string;
   path: string;
   absolute?: boolean;
+  image?: { url: string; alt: string; width?: number; height?: number };
+  /** Set on a blog post so the share card is an article, with the publish date. */
+  article?: { publishedTime: string; modifiedTime?: string };
 }): Metadata {
   const canonical = path === "/" ? "/" : `${path.replace(/\/$/, "")}/`;
   const fullTitle = absolute ? title : `${title} | SHA Stays`;
+  const shareImage = image
+    ? { url: image.url, alt: image.alt, width: image.width ?? 1200, height: image.height ?? 800 }
+    : ogImage;
 
   return {
     title: absolute ? { absolute: title } : title,
@@ -44,14 +53,21 @@ export function pageMeta({
       url: canonical,
       siteName: site.name,
       locale: site.locale,
-      type: "website",
-      images: [ogImage],
+      images: [shareImage],
+      ...(article
+        ? {
+            type: "article" as const,
+            publishedTime: article.publishedTime,
+            modifiedTime: article.modifiedTime ?? article.publishedTime,
+            authors: [site.name],
+          }
+        : { type: "website" as const }),
     },
     twitter: {
       card: "summary_large_image",
       title: fullTitle,
       description,
-      images: [ogImage.url],
+      images: [shareImage.url],
     },
   };
 }
@@ -189,6 +205,59 @@ export function faqGraph() {
         text: item.answer,
       },
     })),
+  };
+}
+
+/** Blog index. No Review or AggregateRating. Posts are the site's own writing. */
+export function blogGraph() {
+  const url = `${site.url}/blog/`;
+  const items = publishedPosts();
+  return {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    "@id": `${url}#blog`,
+    name: "Notes from Rameshwaram",
+    description: "Notes from SHA Stays about staying in Rameshwaram.",
+    url,
+    inLanguage: "en-IN",
+    publisher: { "@id": `${site.url}/#lodging` },
+    ...(items.length
+      ? {
+          blogPost: items.map((post) => ({
+            "@type": "BlogPosting",
+            headline: post.title,
+            description: post.description,
+            datePublished: post.date,
+            dateModified: post.updated ?? post.date,
+            url: `${site.url}/blog/${post.slug}/`,
+          })),
+        }
+      : {}),
+  };
+}
+
+/** One blog post. Author is the stay, not a named person. No star rating. */
+export function articleGraph(post: BlogPost) {
+  const url = `${site.url}/blog/${post.slug}/`;
+  return {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "@id": `${url}#article`,
+    mainEntityOfPage: url,
+    headline: post.title,
+    description: post.description,
+    datePublished: post.date,
+    dateModified: post.updated ?? post.date,
+    inLanguage: "en-IN",
+    image: post.image ? `${site.url}${post.image.src}` : undefined,
+    author: { "@type": "Organization", name: site.name, url: site.url },
+    publisher: {
+      "@type": "Organization",
+      name: site.name,
+      url: site.url,
+      logo: { "@type": "ImageObject", url: `${site.url}/images/logo.png` },
+    },
+    isPartOf: { "@id": `${site.url}/blog/#blog` },
   };
 }
 

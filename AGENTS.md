@@ -54,6 +54,7 @@ src/
     book/, contact/    Both embed <InquiryForm />.
     location/          "Stay near the Abdul Kalam Memorial": address, directions, parking, arrival.
     experience/        "Places to visit in Rameshwaram" (renders `places` with their `details`).
+    blog/, blog/[slug]/  Journal. Posts live in `lib/blog.ts` (list, detail, sitemap and BlogPosting JSON-LD).
     about/, gallery/, not-found.tsx
     sitemap.ts, robots.ts, manifest.ts   Static (`dynamic = "force-static"`).
     globals.css        Tailwind import + @theme tokens + @font-face + fallbacks + `eyebrow` utility + animations.
@@ -63,6 +64,7 @@ src/
                        `Reviews` (homepage slider of `reviews`, or an empty state), `FinalCta`, `MobileActionBar`,
                        `Analytics` (GA4 loader + click tracking).
   lib/
+    blog.ts            Posts for /blog. The list, detail page, sitemap and BlogPosting JSON-LD read `posts`.
     site.ts            SINGLE SOURCE OF TRUTH for content: name, contact, nav, trustBar, reasons, rooms
                        (with `priceFrom`, `maxGuests`), `sharedAmenities` (in every room), `propertyAmenities`
                        (property-wide), `roomSize`, `maxGroupSize`, `languages`, `formatRupees()`, `roomFacts()`,
@@ -114,9 +116,9 @@ Prefilled WhatsApp messages live in `links.ts`: `whatsappAvailability` (general)
 ### SEO
 - Every page exports `metadata = pageMeta({ title, description, path })`. `path` is used for the canonical URL (trailing slash is added). `pageMeta` appends " | SHA Stays", so don't put the brand in `title`. The root layout deliberately sets no canonical (it would be inherited by the 404 page).
 - One descriptive H1 per page that names the page's subject and "Rameshwaram". On the home and private-stay heroes the small eyebrow line is the H1 and the big tagline ("Stay Close. Feel at Home.", "Your Group. Your Stay. Your SHA.") is a `<p>`; keep it that way.
-- Search intent per page: `/` rooms and family stays in Rameshwaram; `/rooms` rooms; `/private-resort` private group stay; `/location` stay near the Abdul Kalam Memorial (address, directions, parking); `/experience` places to visit in Rameshwaram. Strengthen these pages rather than adding near-duplicate landing pages.
+- Search intent per page: `/` rooms and family stays in Rameshwaram; `/rooms` rooms; `/private-resort` private group stay; `/location` stay near the Abdul Kalam Memorial (address, directions, parking); `/experience` places to visit in Rameshwaram; `/blog` notes from the stay. Strengthen these pages rather than adding near-duplicate landing pages. A blog post should not repeat a page that already answers the same query.
 - `layout.tsx` injects the site-wide graph: `WebSite` + `LodgingBusiness` (address, geo, phones, `sameAs` incl. Instagram, amenities from `sharedAmenities` + `propertyAmenities`, `priceRange` from the lowest `priceFrom`, `knowsLanguage`) containing one `HotelRoom` per room (`@id` `/rooms/<slug>/#room`, bed, `occupancy` from `maxGuests`, `floorSize` from `roomSize`). `Breadcrumbs` injects a `BreadcrumbList`; home and /private-resort inject `FAQPage` graphs from their visible FAQs. Everything is generated from `site.ts`, so updating a fact there updates the JSON-LD. Guest reviews stay out of this graph: no `Review` and no `AggregateRating`, because the site does not publish an overall rating.
-- `sitemap.ts` lists static paths by hand, derives room URLs from `rooms`, includes image entries, and has a hardcoded `lastModified` (bump it when content changes).
+- `sitemap.ts` lists static paths by hand, derives room URLs from `rooms` and blog URLs from `posts`, includes image entries, and has a hardcoded `lastModified` (bump it when content changes). Each post uses its own date. `/blog` emits a `Blog` graph and each post a `BlogPosting` (author is SHA Stays, the organisation). No `Review` or `AggregateRating` on either.
 - `LazyImage` also renders a `<noscript>` image so crawlers that don't run JavaScript still find photos.
 - `robots.ts` allows everything and names two groups explicitly: search and AI-search agents (Googlebot, Bingbot, OAI-SearchBot, ChatGPT-User, Claude-SearchBot, Claude-User, PerplexityBot, Perplexity-User, …) and model-training crawlers (GPTBot, ClaudeBot, Google-Extended, …). Training is allowed by the owner's choice and is a separate decision from search visibility: to opt out of training, disallow only the training group. Never disallow the search group. There are no private routes to block (static site, no API).
 - Extractable facts matter for AI answers: keep key facts as plain HTML text (the room comparison `<table>` on /rooms, the visible FAQs, the `<address>` on /contact, and each homepage review quotation), not only in images or client-side UI. The review slider only clips long cards visually; the full quotation stays in the HTML. Google scores stay out of 5. Booking.com and Agoda scores stay out of 10, as published.
@@ -155,6 +157,8 @@ This is a real business; inaccurate claims are a problem. From `public/llms.txt`
 ## Checklists
 
 **Adding a page:** create `src/app/<route>/page.tsx` exporting `metadata = pageMeta(...)`; use `PageHero` (which renders breadcrumbs); add to `nav`/`footerNav` in `site.ts` if it should be linked; add to `sitemap.ts`; add a line to `public/llms.txt`.
+
+**Adding a blog post:** add an entry to `posts` in `src/lib/blog.ts` (`slug`, `title`, `description`, `date` as `YYYY-MM-DD`, optional `updated`, optional `image`, and `blocks` of paragraphs, `h2`s and lists). The list, the detail page, the sitemap and the `BlogPosting` JSON-LD pick it up. The title is the H1; include "Rameshwaram" when it reads naturally. Only use confirmed facts, and do not restate a page that already covers the same query. Mention a new fact in `public/llms.txt`. Then bump `lastModified` in `sitemap.ts`.
 
 **Adding a room type:** add to `rooms` in `site.ts` (slug, photos, confirmed `priceFrom` and `maxGuests`, etc.; `sitemap.ts` and JSON-LD pick it up automatically); add its URL to `llms.txt`; update counts in copy (`trustBar`, `reasons`, `stayFacts`, the homepage Rooms/Private Stay copy in `HomePage.tsx`, gallery text, `numberOfRooms` in `seo.ts`, `llms.txt`). Note the layout assumes two room types: `rooms/[slug]/page.tsx` links to a single "Also at SHA Stays" room, and `RoomCard` / the room page alternate forest vs sand panels via `room.number === "01"`.
 

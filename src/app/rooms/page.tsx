@@ -55,7 +55,7 @@ export default function RoomsPage() {
           <h2 id="compare-rooms" className="font-serif text-3xl text-forest md:text-4xl">
             Compare the rooms
           </h2>
-          <div className="mt-6 overflow-x-auto rounded-panel border border-line bg-paper">
+          <div className="mt-6 min-w-0 max-w-full overflow-x-auto overscroll-x-contain contain-paint rounded-panel border border-line bg-paper">
             <table className="w-full min-w-[32rem] text-left text-sm">
               <caption className="sr-only">SHA King Room and SHA Queen Room compared</caption>
               <thead>

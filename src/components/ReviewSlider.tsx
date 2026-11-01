@@ -46,7 +46,7 @@ export function ReviewSlider({ reviews }: { reviews: Review[] }) {
   }
 
   return (
-    <div className="mt-12">
+    <div className="mt-12 min-w-0">
       <div className="mb-4 flex justify-end gap-2">
         <button
           type="button"
@@ -73,7 +73,7 @@ export function ReviewSlider({ reviews }: { reviews: Review[] }) {
         id={listId}
         ref={scrollerRef}
         aria-label="Guest reviews"
-        className="flex snap-x snap-mandatory gap-5 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        className="flex min-w-0 max-w-full snap-x snap-mandatory gap-5 overflow-x-auto overscroll-x-contain contain-paint pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       >
         {reviews.map((review) => (
           <ReviewCard key={`${review.name}-${review.source}-${review.date ?? ""}`} review={review} />
@@ -124,7 +124,7 @@ function ReviewCard({ review }: { review: Review }) {
   );
 
   return (
-    <li className={cx("flex w-[86%] shrink-0 snap-start flex-col sm:w-[calc((100%-1.25rem)/2)] lg:w-[calc((100%-2.5rem)/3)]", expanded ? "h-auto min-h-[23rem]" : cardHeight)}>
+    <li className={cx("flex shrink-0 snap-start basis-[86%] flex-col sm:basis-[calc((100%-1.25rem)/2)] lg:basis-[calc((100%-2.5rem)/3)]", expanded ? "h-auto min-h-[23rem]" : cardHeight)}>
       <article className="flex h-full flex-col rounded-card border border-line bg-paper p-7">
         <ReviewScore review={review} />
         <div className="mt-4 flex min-h-0 flex-1 flex-col">

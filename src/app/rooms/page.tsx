@@ -9,9 +9,11 @@ import {
   mattressNote,
   policies,
   propertyAmenities,
+  roomPriceLabel,
   roomSize,
   rooms,
   sharedAmenities,
+  site,
   stayFacts,
   type Room,
 } from "@/lib/site";
@@ -24,14 +26,15 @@ const comparison: { label: string; value: (room: Room) => string }[] = [
   { label: "Rooms of this type", value: (room) => room.countLabel },
   { label: "Sleeps", value: (room) => `Up to ${room.maxGuests} guests (with extra mattresses)` },
   { label: "Room size", value: () => roomSize.label },
-  { label: "Price", value: (room) => `From ${formatRupees(room.priceFrom)} / night` },
+  { label: "Price", value: (room) => roomPriceLabel(room.priceFrom) },
   { label: "In the room", value: () => sharedAmenities.map((item) => item.label).join(", ") },
 ];
 
 export const metadata = pageMeta({
   title: "Rooms in Rameshwaram: King & Queen Rooms",
-  description:
-    "Rooms in Rameshwaram from ₹1,800 a night: SHA Queen Rooms sleep 4, SHA King Rooms sleep 5. AC, private bathroom, Wi-Fi, power backup and 24-hour CCTV.",
+  description: site.showRoomPrices
+    ? `Rooms in Rameshwaram from ${formatRupees(Math.min(...rooms.map((room) => room.priceFrom)))} a night: SHA Queen Rooms sleep 4, SHA King Rooms sleep 5. AC, private bathroom, Wi-Fi, power backup and 24-hour CCTV.`
+    : "Rooms in Rameshwaram: SHA Queen Rooms sleep 4, SHA King Rooms sleep 5. The rate is confirmed when you enquire. AC, private bathroom, Wi-Fi, power backup and 24-hour CCTV.",
   path: "/rooms",
 });
 
@@ -89,7 +92,9 @@ export default function RoomsPage() {
             </table>
           </div>
           <p className="mt-4 text-sm leading-relaxed text-muted">
-            Rates are starting prices per night and vary by date; we confirm the rate with availability when you enquire.
+            {site.showRoomPrices
+              ? "Rates are starting prices per night and vary by date; we confirm the rate with availability when you enquire."
+              : "The rate depends on your dates, and it can be higher in busy periods. We confirm the price when you enquire."}
           </p>
         </Container>
       </section>

@@ -17,6 +17,7 @@ import {
   roomFacts,
   roomSize,
   rooms,
+  site,
   stayFacts,
 } from "@/lib/site";
 import { pageMeta } from "@/lib/seo";
@@ -34,7 +35,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!room) return {};
   return pageMeta({
     title: `${room.name} in Rameshwaram`,
-    description: `${room.name} at SHA Stays, Rameshwaram: from ${formatRupees(room.priceFrom)} a night, sleeps up to ${room.maxGuests}, ${room.bed.toLowerCase()}, AC, private bathroom and Wi-Fi. Near the Abdul Kalam Memorial.`,
+    description: site.showRoomPrices
+      ? `${room.name} at SHA Stays, Rameshwaram: from ${formatRupees(room.priceFrom)} a night, sleeps up to ${room.maxGuests}, ${room.bed.toLowerCase()}, AC, private bathroom and Wi-Fi. Near the Abdul Kalam Memorial.`
+      : `${room.name} at SHA Stays, Rameshwaram: sleeps up to ${room.maxGuests}, ${room.bed.toLowerCase()}, AC, private bathroom and Wi-Fi. The rate is confirmed when you enquire. Near the Abdul Kalam Memorial.`,
     path: `/rooms/${room.slug}`,
   });
 }
@@ -64,8 +67,14 @@ export default async function RoomPage({ params }: Props) {
             <h1 className="mt-4 font-serif text-5xl leading-[1.02] text-forest md:text-7xl">{room.name}</h1>
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted">{room.description}</p>
             <p className="mt-4 text-muted">
-              From <span className="font-serif text-3xl text-forest">{formatRupees(room.priceFrom)}</span> / night · Sleeps up to{" "}
-              {room.maxGuests} · {roomSize.label}
+              {site.showRoomPrices ? (
+                <>
+                  From <span className="font-serif text-3xl text-forest">{formatRupees(room.priceFrom)}</span> / night
+                </>
+              ) : (
+                <span className="font-medium text-forest">Price on enquiry</span>
+              )}
+              {" · "}Sleeps up to {room.maxGuests} · {roomSize.label}
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <ButtonLink href={`/book?room=${room.slug}`}>Book Your Stay</ButtonLink>

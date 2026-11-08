@@ -139,7 +139,11 @@ export function siteGraph() {
           alternateName: "Rameshwaram",
           sameAs: "https://en.wikipedia.org/wiki/Rameswaram",
         },
-        priceRange: `${formatRupees(Math.min(...rooms.map((room) => room.priceFrom)))}-${formatRupees(priceRangeMax)}`,
+        ...(site.showRoomPrices
+          ? {
+              priceRange: `${formatRupees(Math.min(...rooms.map((room) => room.priceFrom)))}-${formatRupees(priceRangeMax)}`,
+            }
+          : {}),
         currenciesAccepted: "INR",
         paymentAccepted: "UPI, Cash",
         knowsLanguage: languages,

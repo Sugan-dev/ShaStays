@@ -17,6 +17,12 @@ export const site = {
   title: "SHA Stays Rameswaram | Rooms & Family Stay in Rameshwaram",
   description:
     "SHA Stays Rameswaram: six rooms for families, pilgrims and road-trip travellers, about 200 m from the Abdul Kalam Memorial and 5 km from Ramanathaswamy Temple.",
+  /**
+   * Publish the confirmed "from" room rates. Set this to false in peak periods,
+   * when the rate charged is higher than priceFrom: the site then says
+   * "Price on enquiry" and does not show a rupee amount. Also update public/llms.txt.
+   */
+  showRoomPrices: false,
 };
 
 /**
@@ -304,9 +310,14 @@ export function formatRupees(amount: number) {
   return `₹${amount.toLocaleString("en-IN")}`;
 }
 
+/** Visible room rate. "Price on enquiry" while showRoomPrices is off. */
+export function roomPriceLabel(priceFrom: number) {
+  return site.showRoomPrices ? `From ${formatRupees(priceFrom)} / night` : "Price on enquiry";
+}
+
 export function roomFacts(room: Room) {
   return [
-    { label: "Price", value: `From ${formatRupees(room.priceFrom)} / night` },
+    { label: "Price", value: roomPriceLabel(room.priceFrom) },
     { label: "Sleeps", value: `Up to ${room.maxGuests} guests` },
     { label: "Room size", value: roomSize.label },
     { label: "Bed", value: room.bed },
@@ -715,7 +726,9 @@ export const faqs = [
   },
   {
     question: "How much does a room cost?",
-    answer: `${queenRoom.name}s start from ${formatRupees(queenRoom.priceFrom)} per night and ${kingRoom.name}s from ${formatRupees(kingRoom.priceFrom)} per night. The rate depends on your dates, and we confirm it along with availability when you enquire.`,
+    answer: site.showRoomPrices
+      ? `${queenRoom.name}s start from ${formatRupees(queenRoom.priceFrom)} per night and ${kingRoom.name}s from ${formatRupees(kingRoom.priceFrom)} per night. The rate depends on your dates, and we confirm it along with availability when you enquire.`
+      : "The rate depends on your dates, and it can be higher in busy periods. We confirm the price for your dates when you enquire. An enquiry does not reserve a room.",
   },
   {
     question: "Are the rooms suitable for families?",

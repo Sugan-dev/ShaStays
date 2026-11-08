@@ -26,7 +26,7 @@ Peace (a calmer place to stay), Location (convenient for exploring Rameshwaram),
 - Indian/British English spelling: *enquiry, cosy, travellers, personalised, colour*. Use "Rameshwaram" (the alternative spelling "Rameswaram" is mentioned once, as "also spelt Rameswaram", in the Rameshwaram Island text and `llms.txt`).
 - Headline style: short, declarative pairs with full stops — "Stay Close. Feel at Home.", "Your Group. Your Stay. Your SHA.", "Comfort, kept simple." Large marketing headings and button labels use Title Case ("Book Your Stay", "WhatsApp Us", "Explore Rooms"); small section headings can be sentence case ("A closer look", "Plan the stay").
 - Name the place and the guest in headings where it reads naturally ("Rooms in Rameshwaram", "Comfortable rooms for couples and families.") — it helps search without sounding like keyword stuffing. Never repeat a phrase just for search.
-- Prices are only ever "from" rates, written as `From ₹1,800 / night` (use `formatRupees` / `roomFacts` in `site.ts`, Indian digit grouping). The private stay is always "price on enquiry".
+- Prices are only ever "from" rates, written as `From ₹1,800 / night` (use `formatRupees` / `roomPriceLabel` in `site.ts`, Indian digit grouping), and only while `showRoomPrices` is true. When that flag is false, every room rate says "Price on enquiry" and no rupee amount is published. The private stay is always "price on enquiry".
 - Safety and comfort are stated plainly, not dramatised: "Power backup" is a room amenity; "24-hour CCTV" is property-wide (parking and common areas) and must never appear in an in-room list.
 - Factual limits (no beachfront, pool, restaurant, ratings, invented prices…) are listed in `AGENTS.md` → Content rules.
 

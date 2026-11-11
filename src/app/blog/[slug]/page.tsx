@@ -13,7 +13,15 @@ import { site } from "@/lib/site";
 
 type Props = { params: Promise<{ slug: string }> };
 
+/**
+ * Static export (`output: "export"`) rejects a dynamic route when
+ * generateStaticParams returns no paths, which is this page while `posts` is
+ * empty. The placeholder is not a post and not linked; the page 404s for it.
+ */
+const emptyExportSlug = "__empty";
+
 export function generateStaticParams() {
+  if (posts.length === 0) return [{ slug: emptyExportSlug }];
   return posts.map((post) => ({ slug: post.slug }));
 }
 
